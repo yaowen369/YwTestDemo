@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <!--  在 最下面, 包裹了 MapView     -->
+    <FrameLayout
+        android:id="@+id/mBottomLayerFrameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <ywdemo.example.yaoxiaowen.MapView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </FrameLayout>
+
+   <!-- 在 上层， li    -->
+    <ywdemo.example.yaoxiaowen.TouchInterceptFrameLayout
+        android:id="@+id/mTouchInterceptFrameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <WebView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </ywdemo.example.yaoxiaowen.TouchInterceptFrameLayout>
+
+</FrameLayout>

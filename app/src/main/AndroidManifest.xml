@@ -8,6 +8,9 @@
         android:label="@string/app_name"
         tools:targetApi="31">
         <activity
+            android:name=".SpDataStoreTestActivity"
+            android:exported="false" />
+        <activity
             android:name=".BitmapTestActivity"
             android:exported="true">
             <intent-filter>
@@ -20,11 +23,13 @@
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name">
-            <!--            <intent-filter>-->
-            <!--                <action android:name="android.intent.action.MAIN" />-->
 
-            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
-            <!--            </intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
     </application>
 

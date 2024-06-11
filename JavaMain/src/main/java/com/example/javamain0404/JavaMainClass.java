@@ -13,20 +13,6 @@ public class JavaMainClass {
         }
 
         System.out.println("22222");
-//
-//        Scanner scanner = new Scanner(System.in);
-//        while (scanner.hasNext()) {
-//            System.out.println("next输出:" + scanner.next());
-//        }
-//
-//        System.out.println("33333");
-//
-//        while (scanner.hasNextInt()) {
-//            System.out.println("Int输出:" + scanner.nextInt());
-//        }
-//
-//        while (scanner.hasNextInt()) {
-//            System.out.println("Line输出:" + scanner.nextLine());
-//        }
+
     }
 }

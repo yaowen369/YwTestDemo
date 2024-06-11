@@ -7,6 +7,9 @@ plugins {
 //    id 'com.bytedance.btrace.rhea-gradle-plugin' version '2.0.3-rc02' apply false
 }
 
+ext {
+    kotlin_coroutines = '1.8.0'
+}
 
 //buildscript {//这里是gradle脚本执行所需依赖，分别是对应的maven库和插件
 //

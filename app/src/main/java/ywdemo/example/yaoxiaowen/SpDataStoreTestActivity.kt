@@ -2,12 +2,16 @@ package ywdemo.example.yaoxiaowen
 
 import android.app.Activity
 import android.os.Bundle
+import com.tencent.mmkv.MMKV
+
+
+
 
 class SpDataStoreTestActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sp_datastore_test)
-
+        mmkvTest()
     }
 
     fun spTest() {
@@ -21,5 +25,13 @@ class SpDataStoreTestActivity : Activity() {
 
         // 获取 对应的值 值
         val value2 = sp.getString("key2", "")
+    }
+
+    fun mmkvTest(){
+        val kv = MMKV.defaultMMKV()
+        val startTime = System.currentTimeMillis();
+        kv.putString("key1", StringUtil.getLongString())
+
+        LogUtil.i( "保存长字符串耗时:${System.currentTimeMillis() - startTime}")
     }
 }

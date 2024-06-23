@@ -2,10 +2,12 @@ package ywdemo.example.yaoxiaowen
 
 import android.app.Activity
 import android.os.Bundle
+import android.os.Debug
 import android.os.Trace
 import android.util.Log
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import java.lang.Exception
 import kotlin.random.Random
 
@@ -15,12 +17,14 @@ class MainActivity : Activity() {
         findViewById<TextView>(R.id.tv)
     }
 
-     val N = 7
+    val N = 7
     val TAG = "yawen"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         Trace.beginSection("yyysectionTest1")
+//                Debug.startMethodTracing()
+
         setContentView(R.layout.activity_main)
         Log.i(TAG,"enter onCreate()")
         moreThreadCalc()
@@ -50,8 +54,13 @@ class MainActivity : Activity() {
 //        testSleep()
     }
 
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        Toast.makeText(this, "onWindowFocusChanged()", Toast.LENGTH_LONG).show()
+    }
+
     private fun calcFun() {
-        val iterations = 1000000 // 运算迭代次数
+        val iterations = 200000 // 运算迭代次数
 
         val startTime = System.currentTimeMillis()
 

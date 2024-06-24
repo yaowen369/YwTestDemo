@@ -23,6 +23,7 @@ class SplashActivity : Activity(), View.OnClickListener {
         jumpMainBtn.setOnClickListener(this)
         jumpSpBtn.setOnClickListener(this)
         findViewById<Button>(R.id.jumpThreadLocalActy).setOnClickListener(this)
+        findViewById<Button>(R.id.jumpUiLagActy).setOnClickListener(this)
     }
 
     override fun onClick(v: View) {
@@ -37,8 +38,12 @@ class SplashActivity : Activity(), View.OnClickListener {
                 startActivity(intent2)
             }
             R.id.jumpThreadLocalActy -> {
-                val intent2 = Intent(this, ThreadLockActivity::class.java)
-                startActivity(intent2)
+                val intent3 = Intent(this, ThreadLockActivity::class.java)
+                startActivity(intent3)
+            }
+            R.id.jumpUiLagActy -> {
+                val intent4 = Intent(this, UiLagActivity::class.java)
+                startActivity(intent4)
             }
         }
     }

@@ -11,7 +11,7 @@ class SpDataStoreTestActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sp_datastore_test)
-        mmkvTest()
+//        mmkvTest()
     }
 
     fun spTest() {

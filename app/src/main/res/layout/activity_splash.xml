@@ -28,7 +28,15 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_margin="10dp"
-        android:text="jump ThreadLocal Acty"
+        android:text="jump ThreadLocal(线程锁死) Acty"
+        />
+
+    <Button
+        android:id="@+id/jumpUiLagActy"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_margin="10dp"
+        android:text="jump UI卡顿 Acty"
         />
 
 </LinearLayout>

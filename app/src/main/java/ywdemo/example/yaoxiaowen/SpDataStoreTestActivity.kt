@@ -3,15 +3,14 @@ package ywdemo.example.yaoxiaowen
 import android.app.Activity
 import android.os.Bundle
 import com.tencent.mmkv.MMKV
-
-
+import ywdemo.example.yaoxiaowen.until.LogUtil
 
 
 class SpDataStoreTestActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sp_datastore_test)
-//        mmkvTest()
+        mmkvTest()
     }
 
     fun spTest() {

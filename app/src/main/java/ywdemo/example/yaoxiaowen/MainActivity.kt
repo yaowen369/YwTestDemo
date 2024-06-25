@@ -3,17 +3,21 @@ package ywdemo.example.yaoxiaowen
 import android.app.Activity
 import android.os.Bundle
 import android.os.Debug
+import android.os.Handler
+import android.os.Looper
+import android.os.MessageQueue
 import android.os.Trace
 import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import ywdemo.example.yaoxiaowen.until.LogUtil
 import java.lang.Exception
 import kotlin.random.Random
 
 class MainActivity : Activity() {
 
-    val tv:TextView by lazy{
+    val tv: TextView by lazy {
         findViewById<TextView>(R.id.tv)
     }
 
@@ -22,18 +26,28 @@ class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        Trace.beginSection("yyysectionTest1")
-//                Debug.startMethodTracing()
+        val path1 = getExternalFilesDir(null)?.absolutePath
+        val path2 = getExternalFilesDir(null)?.canonicalPath
+
+        LogUtil.i(TAG, "路径-> $path1, $path2")
+
+        Debug.startMethodTracing("debugFile0625-3")
 
         setContentView(R.layout.activity_main)
-        Log.i(TAG,"enter onCreate()")
+
+
+        Log.i(TAG, "enter onCreate()")
         moreThreadCalc()
 
         tv.setOnClickListener {
             moreThreadCalc()
         }
 
-        Trace.endSection()
+        Looper.myQueue().addIdleHandler {
+            Thread(Runnable { Debug.stopMethodTracing() }, "ywIdleThread").start()
+            false
+        }
+
     }
 
     fun moreThreadCalc() {
@@ -42,10 +56,13 @@ class MainActivity : Activity() {
             Thread(Runnable {
                 Log.i(TAG, "子线程运行," + getThreadInfo())
                 calcFun()
-            },  "ywThread-${i}").start()
+            }, "ywThread-${i}").start()
 
         }
-        Log.i(TAG, "这个在主线程运行，当前线程信息：${Thread.currentThread()}, id=${Thread.currentThread().id}")
+        Log.i(
+            TAG,
+            "这个在主线程运行，当前线程信息：${Thread.currentThread()}, id=${Thread.currentThread().id}"
+        )
         calcFun()
     }
 
@@ -74,7 +91,7 @@ class MainActivity : Activity() {
             // 除法运算
             val result2 = number1 / number2
 
-            val result3  = result1 * result2 / result2 / result1 * number1 + number2 / result2
+            val result3 = result1 * result2 / result2 / result1 * number1 + number2 / result2
 
         }
 
@@ -85,7 +102,7 @@ class MainActivity : Activity() {
 
     }
 
-    fun getThreadInfo() :String {
+    fun getThreadInfo(): String {
         return "线程信息：${Thread.currentThread()}, id=${Thread.currentThread().id}"
     }
 }

@@ -1,9 +1,9 @@
 package ywdemo.example.yaoxiaowen
 
 import android.app.Activity
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import ywdemo.example.yaoxiaowen.until.LogUtil
 
 class ThreadLockActivity : Activity() {
     private object lock1

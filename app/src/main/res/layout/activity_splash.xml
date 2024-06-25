@@ -39,4 +39,12 @@
         android:text="jump UI卡顿 Acty"
         />
 
+    <Button
+        android:id="@+id/jumpViewPage2Acty"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_margin="10dp"
+        android:text="jump ViewPage2 Acty"
+        />
+
 </LinearLayout>

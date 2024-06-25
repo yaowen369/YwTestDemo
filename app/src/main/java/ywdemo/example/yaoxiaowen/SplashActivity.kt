@@ -24,6 +24,7 @@ class SplashActivity : Activity(), View.OnClickListener {
         jumpSpBtn.setOnClickListener(this)
         findViewById<Button>(R.id.jumpThreadLocalActy).setOnClickListener(this)
         findViewById<Button>(R.id.jumpUiLagActy).setOnClickListener(this)
+        findViewById<Button>(R.id.jumpViewPage2Acty).setOnClickListener(this)
     }
 
     override fun onClick(v: View) {
@@ -44,6 +45,10 @@ class SplashActivity : Activity(), View.OnClickListener {
             R.id.jumpUiLagActy -> {
                 val intent4 = Intent(this, UiLagActivity::class.java)
                 startActivity(intent4)
+            }
+            R.id.jumpViewPage2Acty -> {
+                val intent5 = Intent(this, ViewPage2Activity::class.java)
+                startActivity(intent5)
             }
         }
     }

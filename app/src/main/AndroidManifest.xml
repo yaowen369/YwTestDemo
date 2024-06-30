@@ -9,6 +9,9 @@
         android:label="@string/app_name"
         tools:targetApi="31">
         <activity
+            android:name=".CoroutineActivity"
+            android:exported="false" />
+        <activity
             android:name=".ViewPage2Activity"
             android:exported="false" />
         <activity

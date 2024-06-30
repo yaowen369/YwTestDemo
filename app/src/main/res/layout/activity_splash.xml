@@ -46,5 +46,12 @@
         android:layout_margin="10dp"
         android:text="jump ViewPage2 Acty"
         />
+    <Button
+        android:id="@+id/jumpCoroutineActy"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_margin="10dp"
+        android:text="jump 协程 Acty"
+        />
 
 </LinearLayout>

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import ywdemo.example.yaoxiaowen.databinding.ActivitySplashBinding
 
 class SplashActivity : Activity(), View.OnClickListener {
 
@@ -25,6 +26,7 @@ class SplashActivity : Activity(), View.OnClickListener {
         findViewById<Button>(R.id.jumpThreadLocalActy).setOnClickListener(this)
         findViewById<Button>(R.id.jumpUiLagActy).setOnClickListener(this)
         findViewById<Button>(R.id.jumpViewPage2Acty).setOnClickListener(this)
+        findViewById<Button>(R.id.jumpCoroutineActy).setOnClickListener(this)
     }
 
     override fun onClick(v: View) {
@@ -46,8 +48,8 @@ class SplashActivity : Activity(), View.OnClickListener {
                 val intent4 = Intent(this, UiLagActivity::class.java)
                 startActivity(intent4)
             }
-            R.id.jumpViewPage2Acty -> {
-                val intent5 = Intent(this, ViewPage2Activity::class.java)
+            R.id.jumpCoroutineActy -> {
+                val intent5 = Intent(this, CoroutineActivity::class.java)
                 startActivity(intent5)
             }
         }

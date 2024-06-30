@@ -24,6 +24,11 @@ class LogUtil  {
         }
 
         @JvmStatic
+        fun iWithThreadInfo(tag: String?, msg: String) {
+            Log.i("$prefix $tag", "${msg}, ${ThreadUtil.getThreadInfo()}")
+        }
+
+        @JvmStatic
         fun w(tag: String?, msg: String) {
             Log.w("$prefix $tag", msg);
         }
@@ -47,6 +52,11 @@ class LogUtil  {
 
         @JvmStatic
         fun i( msg: String) {
+            Log.i("$prefix ", "${msg}, ${ThreadUtil.getThreadInfo()}");
+        }
+
+        @JvmStatic
+        fun iWithThreadInfo( msg: String) {
             Log.i("$prefix ", msg);
         }
 

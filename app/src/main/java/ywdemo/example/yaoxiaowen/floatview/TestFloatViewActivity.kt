@@ -28,6 +28,16 @@ class TestFloatViewActivity : AppCompatActivity() {
         // 设置ViewPager2的Adapter
         viewPager.adapter = MyViewPagerAdapter(fragmentList)
 
+        // 通过反射禁止ViewPager2滑动
+        try {
+            val field = ViewPager2::class.java.getDeclaredField("mUserInputEnabled")
+            field.isAccessible = true
+            field.set(viewPager, false)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+
         // 将TabLayout和ViewPager2关联起来
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             when (position) {

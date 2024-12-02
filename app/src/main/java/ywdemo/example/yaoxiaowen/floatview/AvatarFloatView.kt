@@ -32,13 +32,4 @@ class AvatarFloatView(context: Context) : BaseFloatView(context) {
         })
         return imageView
     }
-
-    override fun getIsCanDrag(): Boolean {
-        return true
-    }
-
-
-    override fun getAdsorbTime(): Long {
-        return 3000
-    }
 }

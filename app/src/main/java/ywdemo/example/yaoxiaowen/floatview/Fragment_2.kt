@@ -37,7 +37,6 @@ class Fragment_2 : Fragment() {
     fun createFloatView(): AvatarFloatView {
         // 创建悬浮球视图
         val floatingBallView = AvatarFloatView(requireContext())
-        floatingBallView.setDragDistance(0.3)
 
         floatingBallView.setOnFloatClickListener(object : OnFloatClickListener {
             override fun onClick(view: View) {

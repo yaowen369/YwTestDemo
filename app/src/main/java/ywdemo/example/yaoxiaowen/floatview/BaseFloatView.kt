@@ -25,6 +25,9 @@ abstract class BaseFloatView : FrameLayout, View.OnTouchListener {
     private var mToolBarHeight = dp2px(56F) // toolbar默认高度
     private var mDragDistance = 0.5 // 默认吸边需要的拖拽距离为屏幕的一半
 
+    //垂直方向的安全距离， 避免 被拖拽的 上下的边缘处消失不见
+    private val mVerticalSafeDistance = 100
+
     constructor(context: Context) : this(context, null)
 
     constructor(context: Context, attributeSet: AttributeSet?) : this(context, attributeSet, 0)
@@ -92,8 +95,10 @@ abstract class BaseFloatView : FrameLayout, View.OnTouchListener {
 
             MotionEvent.ACTION_MOVE -> {
                 isMove = true
-                offsetTopAndBottom((y - mDownY).toInt())
-                offsetLeftAndRight((x - mDownX).toInt())
+                if (event.rawY > mVerticalSafeDistance && event.rawY < (getScreenHeight() - mVerticalSafeDistance)) {
+                    offsetTopAndBottom((y - mDownY).toInt())
+                    offsetLeftAndRight((x - mDownX).toInt())
+                }
             }
 
             MotionEvent.ACTION_UP -> {
@@ -103,8 +108,6 @@ abstract class BaseFloatView : FrameLayout, View.OnTouchListener {
                     mOnFloatClickListener?.onClick(v)
                 }
                 isMove = false
-
-
             }
         }
         return true

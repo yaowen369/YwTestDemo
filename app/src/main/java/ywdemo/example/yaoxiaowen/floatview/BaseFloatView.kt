@@ -8,6 +8,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import android.widget.FrameLayout
+import ywdemo.example.yaoxiaowen.until.LogUtil
 import kotlin.math.abs
 import kotlin.math.roundToInt
 
@@ -18,7 +19,7 @@ import kotlin.math.roundToInt
  * Created by yechao on 2022/7/26.
  * Describe : 随意拖拽+自动吸边
  */
-abstract class BaseFloatView : FrameLayout, View.OnTouchListener {
+abstract class BaseFloatView : FrameLayout {
 
     private var mViewWidth = 0
     private var mViewHeight = 0
@@ -47,7 +48,7 @@ abstract class BaseFloatView : FrameLayout, View.OnTouchListener {
 
         val childView = getChildView()
         addView(childView)
-        setOnTouchListener(this)
+//        setOnTouchListener(this)
 
         post {
             // 获取一下view宽高，方便后面计算，省的bottom-top麻烦
@@ -81,7 +82,49 @@ abstract class BaseFloatView : FrameLayout, View.OnTouchListener {
     private var mFirstX: Int = 0
     private var isMove = false
 
-    override fun onTouch(v: View, event: MotionEvent): Boolean {
+    override fun onInterceptTouchEvent(event: MotionEvent): Boolean {
+        val x = event.x
+        val y = event.y
+        LogUtil.i("onInterceptTouchEvent(), 2, 事件类型:${MotionEvent.actionToString(event.action)}, event坐标:(${x}, ${y})")
+        when (event.action) {
+            MotionEvent.ACTION_DOWN -> {
+                LogUtil.i("onInterceptTouchEvent(), DOWM事件, event坐标:(${x}, ${y})")
+                mDownX = event.x
+                mDownY = event.y
+                // 记录第一次在屏幕上坐标，用于计算初始位置
+                mFirstY = event.rawY.roundToInt()
+                mFirstX = event.rawX.roundToInt()
+
+                return false
+            }
+
+            MotionEvent.ACTION_MOVE -> {
+                isMove = true
+                LogUtil.i("onInterceptTouchEvent(), MOVE事件, event坐标:(${x}, ${y})")
+//
+//                offsetTopAndBottom((y - mDownY).toInt())
+//                offsetLeftAndRight((x - mDownX).toInt())
+
+                return true
+            }
+
+
+            MotionEvent.ACTION_UP -> {
+                LogUtil.i("onInterceptTouchEvent(), UP事件, event坐标:(${x}, ${y})")
+
+//                if (isMove) {
+//                    adsorbLeftAndRight(event)
+//                } else {
+//                    mOnFloatClickListener?.onClick(this)
+//                }
+                isMove = false
+            }
+        }
+
+        return super.onInterceptTouchEvent(event)
+    }
+
+    override fun onTouchEvent(event: MotionEvent): Boolean {
         val x = event.x
         val y = event.y
         when (event.action) {
@@ -95,23 +138,55 @@ abstract class BaseFloatView : FrameLayout, View.OnTouchListener {
 
             MotionEvent.ACTION_MOVE -> {
                 isMove = true
-                if (event.rawY > mVerticalSafeDistance && event.rawY < (getScreenHeight() - mVerticalSafeDistance)) {
-                    offsetTopAndBottom((y - mDownY).toInt())
-                    offsetLeftAndRight((x - mDownX).toInt())
-                }
+                offsetTopAndBottom((y - mDownY).toInt())
+                offsetLeftAndRight((x - mDownX).toInt())
+
             }
 
             MotionEvent.ACTION_UP -> {
                 if (isMove) {
                     adsorbLeftAndRight(event)
                 } else {
-                    mOnFloatClickListener?.onClick(v)
+//                    mOnFloatClickListener?.onClick(v)
                 }
                 isMove = false
             }
         }
-        return true
+        return isMove
     }
+
+
+//    override fun onTouch(v: View, event: MotionEvent): Boolean {
+//        val x = event.x
+//        val y = event.y
+//        when (event.action) {
+//            MotionEvent.ACTION_DOWN -> {
+//                mDownX = event.x
+//                mDownY = event.y
+//                // 记录第一次在屏幕上坐标，用于计算初始位置
+//                mFirstY = event.rawY.roundToInt()
+//                mFirstX = event.rawX.roundToInt()
+//            }
+//
+//            MotionEvent.ACTION_MOVE -> {
+//                isMove = true
+//                if (event.rawY > mVerticalSafeDistance && event.rawY < (getScreenHeight() - mVerticalSafeDistance)) {
+//                    offsetTopAndBottom((y - mDownY).toInt())
+//                    offsetLeftAndRight((x - mDownX).toInt())
+//                }
+//            }
+//
+//            MotionEvent.ACTION_UP -> {
+//                if (isMove) {
+//                    adsorbLeftAndRight(event)
+//                } else {
+//                    mOnFloatClickListener?.onClick(v)
+//                }
+//                isMove = false
+//            }
+//        }
+//        return true
+//    }
 
     /**
      * 左右吸边

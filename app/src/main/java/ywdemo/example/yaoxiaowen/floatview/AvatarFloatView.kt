@@ -6,6 +6,7 @@ import android.view.ViewTreeObserver
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.shape.ShapeAppearanceModel
 import ywdemo.example.yaoxiaowen.R
+import ywdemo.example.yaoxiaowen.until.LogUtil
 
 /**
  * GitHub : https://github.com/yechaoa
@@ -30,6 +31,8 @@ class AvatarFloatView(context: Context) : BaseFloatView(context) {
                     ShapeAppearanceModel().toBuilder().setAllCornerSizes(radius).build()
             }
         })
+
+        imageView.setOnClickListener { LogUtil.i("AvatarFloatView", "处理点击事件") }
         return imageView
     }
 }

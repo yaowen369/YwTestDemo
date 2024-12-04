@@ -1,12 +1,12 @@
 package ywdemo.example.yaoxiaowen.floatview
 
 import android.content.Context
+import android.util.Log
 import android.view.View
 import android.view.ViewTreeObserver
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.shape.ShapeAppearanceModel
 import ywdemo.example.yaoxiaowen.R
-import ywdemo.example.yaoxiaowen.until.LogUtil
 
 /**
  * GitHub : https://github.com/yechaoa
@@ -32,7 +32,7 @@ class AvatarFloatView(context: Context) : BaseFloatView(context) {
             }
         })
 
-        imageView.setOnClickListener { LogUtil.i("AvatarFloatView", "处理点击事件") }
+        imageView.setOnClickListener { Log.i("wenyao, AvatarFloatView", "处理点击事件") }
         return imageView
     }
 }

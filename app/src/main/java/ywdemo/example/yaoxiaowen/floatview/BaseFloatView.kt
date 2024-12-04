@@ -25,8 +25,8 @@ abstract class BaseFloatView : FrameLayout {
     private var mToolBarHeight = dp2px(56F) // toolbar默认高度
     private var mDragDistance = 0.5 // 默认吸边需要的拖拽距离为屏幕的一半
 
-    //垂直方向的安全距离， 避免 被拖拽的 上下的边缘处消失不见
-    private val mVerticalSafeDistance = 100
+    private var mFirstY = 0
+    private var mFirstX = 0
 
     open var TAG: String = "wenyao, BaseFloatView"
 
@@ -82,38 +82,23 @@ abstract class BaseFloatView : FrameLayout {
     }
 
 
-    private var mDownX = 0F
-    private var mDownY = 0F
-    private var mFirstY: Int = 0
-    private var mFirstX: Int = 0
-    private var isMove = false
+    private var lastX = 0f
+    private var lastY = 0f
 
     override fun onInterceptTouchEvent(event: MotionEvent): Boolean {
-        val x = event.x
-        val y = event.y
+
         Log.i(
             TAG,
-            "onInterceptTouchEvent(), 2, 事件类型:${MotionEvent.actionToString(event.action)}, event坐标:(${x}, ${y})"
+            "onInterceptTouchEvent(), 2, 事件类型:${MotionEvent.actionToString(event.action)}, event坐标:(${event.x}, ${event.y})"
         )
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
                 Log.i(TAG, "onInterceptTouchEvent(), DOWM事件, event坐标:(${x}, ${y})")
-                mDownX = event.x
-                mDownY = event.y
-                // 记录第一次在屏幕上坐标，用于计算初始位置
-                mFirstY = event.rawY.roundToInt()
-                mFirstX = event.rawX.roundToInt()
-
                 return false
             }
 
             MotionEvent.ACTION_MOVE -> {
-                isMove = true
                 Log.i(TAG, "onInterceptTouchEvent(), MOVE事件, event坐标:(${x}, ${y})")
-//
-//                offsetTopAndBottom((y - mDownY).toInt())
-//                offsetLeftAndRight((x - mDownX).toInt())
-
                 return true
             }
 
@@ -121,12 +106,7 @@ abstract class BaseFloatView : FrameLayout {
             MotionEvent.ACTION_UP -> {
                 Log.i(TAG, "onInterceptTouchEvent(), UP事件, event坐标:(${x}, ${y})")
 
-//                if (isMove) {
-//                    adsorbLeftAndRight(event)
-//                } else {
-//                    mOnFloatClickListener?.onClick(this)
-//                }
-                isMove = false
+
             }
         }
 
@@ -134,39 +114,41 @@ abstract class BaseFloatView : FrameLayout {
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
+        Log.i(
+            TAG,
+            ">>> onTouchEvent(), 事件类型, ${MotionEvent.actionToString(event.action)}, event坐标:(${event.x}, ${event.y})"
+        )
+
         val x = event.x
         val y = event.y
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                mDownX = event.x
-                mDownY = event.y
-                // 记录第一次在屏幕上坐标，用于计算初始位置
+                lastX = event.x
+                lastY = event.y
+
                 mFirstY = event.rawY.roundToInt()
                 mFirstX = event.rawX.roundToInt()
             }
 
             MotionEvent.ACTION_MOVE -> {
-                isMove = true
-                Log.i(TAG, ">>> onTouchEvent(), MOVE事件, offset移动位置, event坐标:(${x}, ${y})")
-                offsetTopAndBottom((y - mDownY).toInt())
-                offsetLeftAndRight((x - mDownX).toInt())
-
+                val dx = (event.x - lastX).toInt()
+                val dy = (event.y - lastY).toInt()
+                translationX += dx
+                translationY += dy
             }
-
 
             MotionEvent.ACTION_UP,
             MotionEvent.ACTION_CANCEL -> {
-                Log.i(TAG, ">>> onTouchEvent(), UP事件, isMove=${isMove}, event坐标:(${x}, ${y})")
+                Log.i(
+                    TAG,
+                    ">>> onTouchEvent(), ${MotionEvent.actionToString(event.action)}事件, 此时要实现 吸边效果 event原始坐标:(${event.rawX}, ${event.rawY}),屏幕宽度:${getScreenWidth()}, viewWidth=${mViewWidth}"
+                )
 
-                if (isMove) {
-                    adsorbLeftAndRight(event)
-                } else {
-//                    mOnFloatClickListener?.onClick(v)
-                }
-                isMove = false
+                adsorbLeftAndRight(event)
+
             }
         }
-        return isMove
+        return false
     }
 
 
@@ -209,6 +191,7 @@ abstract class BaseFloatView : FrameLayout {
 //                animate().setInterpolator(DecelerateInterpolator()).setDuration(300)
 //                    .x(rightX.toFloat()).start()
                 this.x = rightX.toFloat()
+
             }
         } else {
             // 右半屏

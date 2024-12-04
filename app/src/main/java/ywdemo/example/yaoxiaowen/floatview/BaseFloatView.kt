@@ -4,11 +4,10 @@ import android.app.Activity
 import android.content.Context
 import android.util.AttributeSet
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
-import android.view.animation.DecelerateInterpolator
 import android.widget.FrameLayout
-import ywdemo.example.yaoxiaowen.until.LogUtil
 import kotlin.math.abs
 import kotlin.math.roundToInt
 
@@ -28,6 +27,8 @@ abstract class BaseFloatView : FrameLayout {
 
     //垂直方向的安全距离， 避免 被拖拽的 上下的边缘处消失不见
     private val mVerticalSafeDistance = 100
+
+    open var TAG: String = "wenyao, BaseFloatView"
 
     constructor(context: Context) : this(context, null)
 
@@ -54,6 +55,7 @@ abstract class BaseFloatView : FrameLayout {
             // 获取一下view宽高，方便后面计算，省的bottom-top麻烦
             mViewWidth = this.width
             mViewHeight = this.height
+            Log.i(TAG, "initView(), ${getLocation()}")
         }
     }
 
@@ -75,6 +77,10 @@ abstract class BaseFloatView : FrameLayout {
         mOnFloatClickListener = listener
     }
 
+    private var mRun = Runnable {
+        Log.i(TAG, "当前位置信息: ${getLocation()}")
+    }
+
 
     private var mDownX = 0F
     private var mDownY = 0F
@@ -85,10 +91,13 @@ abstract class BaseFloatView : FrameLayout {
     override fun onInterceptTouchEvent(event: MotionEvent): Boolean {
         val x = event.x
         val y = event.y
-        LogUtil.i("onInterceptTouchEvent(), 2, 事件类型:${MotionEvent.actionToString(event.action)}, event坐标:(${x}, ${y})")
+        Log.i(
+            TAG,
+            "onInterceptTouchEvent(), 2, 事件类型:${MotionEvent.actionToString(event.action)}, event坐标:(${x}, ${y})"
+        )
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                LogUtil.i("onInterceptTouchEvent(), DOWM事件, event坐标:(${x}, ${y})")
+                Log.i(TAG, "onInterceptTouchEvent(), DOWM事件, event坐标:(${x}, ${y})")
                 mDownX = event.x
                 mDownY = event.y
                 // 记录第一次在屏幕上坐标，用于计算初始位置
@@ -100,7 +109,7 @@ abstract class BaseFloatView : FrameLayout {
 
             MotionEvent.ACTION_MOVE -> {
                 isMove = true
-                LogUtil.i("onInterceptTouchEvent(), MOVE事件, event坐标:(${x}, ${y})")
+                Log.i(TAG, "onInterceptTouchEvent(), MOVE事件, event坐标:(${x}, ${y})")
 //
 //                offsetTopAndBottom((y - mDownY).toInt())
 //                offsetLeftAndRight((x - mDownX).toInt())
@@ -110,7 +119,7 @@ abstract class BaseFloatView : FrameLayout {
 
 
             MotionEvent.ACTION_UP -> {
-                LogUtil.i("onInterceptTouchEvent(), UP事件, event坐标:(${x}, ${y})")
+                Log.i(TAG, "onInterceptTouchEvent(), UP事件, event坐标:(${x}, ${y})")
 
 //                if (isMove) {
 //                    adsorbLeftAndRight(event)
@@ -138,12 +147,17 @@ abstract class BaseFloatView : FrameLayout {
 
             MotionEvent.ACTION_MOVE -> {
                 isMove = true
+                Log.i(TAG, ">>> onTouchEvent(), MOVE事件, offset移动位置, event坐标:(${x}, ${y})")
                 offsetTopAndBottom((y - mDownY).toInt())
                 offsetLeftAndRight((x - mDownX).toInt())
 
             }
 
-            MotionEvent.ACTION_UP -> {
+
+            MotionEvent.ACTION_UP,
+            MotionEvent.ACTION_CANCEL -> {
+                Log.i(TAG, ">>> onTouchEvent(), UP事件, isMove=${isMove}, event坐标:(${x}, ${y})")
+
                 if (isMove) {
                     adsorbLeftAndRight(event)
                 } else {
@@ -156,42 +170,13 @@ abstract class BaseFloatView : FrameLayout {
     }
 
 
-//    override fun onTouch(v: View, event: MotionEvent): Boolean {
-//        val x = event.x
-//        val y = event.y
-//        when (event.action) {
-//            MotionEvent.ACTION_DOWN -> {
-//                mDownX = event.x
-//                mDownY = event.y
-//                // 记录第一次在屏幕上坐标，用于计算初始位置
-//                mFirstY = event.rawY.roundToInt()
-//                mFirstX = event.rawX.roundToInt()
-//            }
-//
-//            MotionEvent.ACTION_MOVE -> {
-//                isMove = true
-//                if (event.rawY > mVerticalSafeDistance && event.rawY < (getScreenHeight() - mVerticalSafeDistance)) {
-//                    offsetTopAndBottom((y - mDownY).toInt())
-//                    offsetLeftAndRight((x - mDownX).toInt())
-//                }
-//            }
-//
-//            MotionEvent.ACTION_UP -> {
-//                if (isMove) {
-//                    adsorbLeftAndRight(event)
-//                } else {
-//                    mOnFloatClickListener?.onClick(v)
-//                }
-//                isMove = false
-//            }
-//        }
-//        return true
-//    }
-
     /**
      * 左右吸边
      */
     private fun adsorbLeftAndRight(event: MotionEvent) {
+
+        Log.i(TAG, "**** adsorbLeftAndRight(), 左右吸边, event坐标:(${event.x}, ${event.y})")
+
         /**
          * 1.判断滑动距离是否超过半屏
          * 2.判断起始位置在左/右半屏
@@ -208,13 +193,22 @@ abstract class BaseFloatView : FrameLayout {
             if (centerX < getAdsorbWidth()) {
                 //滑动距离<半屏=吸左
                 val leftX = 0f
-                animate().setInterpolator(DecelerateInterpolator()).setDuration(300).x(leftX)
-                    .start()
+                Log.i(TAG, "**** adsorbLeftAndRight(), 左半屏  吸左, left=${leftX}")
+//                animate().setInterpolator(DecelerateInterpolator()).setDuration(300).x(leftX)
+//                    .start()
+                this.x = leftX
             } else {
                 //滑动距离<半屏=吸右
                 val rightX = getScreenWidth() - mViewWidth
-                animate().setInterpolator(DecelerateInterpolator()).setDuration(300)
-                    .x(rightX.toFloat()).start()
+
+                Log.i(
+                    TAG, "**** adsorbLeftAndRight(), 左半屏  吸右, rightX=${rightX}, " +
+                            "ScreenWidth()=${getScreenWidth()}, mViewWidth=${mViewWidth}"
+                )
+
+//                animate().setInterpolator(DecelerateInterpolator()).setDuration(300)
+//                    .x(rightX.toFloat()).start()
+                this.x = rightX.toFloat()
             }
         } else {
             // 右半屏
@@ -222,15 +216,46 @@ abstract class BaseFloatView : FrameLayout {
             if (centerX < getAdsorbWidth()) {
                 //滑动距离<半屏=吸右
                 val rightX = getScreenWidth() - mViewWidth
-                animate().setInterpolator(DecelerateInterpolator()).setDuration(300)
-                    .x(rightX.toFloat()).start()
+
+                Log.i(
+                    TAG, "**** adsorbLeftAndRight(), 右半屏  吸右, rightX=${rightX}, " +
+                            "ScreenWidth()=${getScreenWidth()}, mViewWidth=${mViewWidth}"
+                )
+
+//                animate().setInterpolator(DecelerateInterpolator()).setDuration(300)
+//                    .x(rightX.toFloat()).start()
+
+                this.x = rightX.toFloat()
             } else {
                 //滑动距离<半屏=吸左
                 val leftX = 0f
-                animate().setInterpolator(DecelerateInterpolator()).setDuration(300).x(leftX)
-                    .start()
+                Log.i(TAG, "**** adsorbLeftAndRight(), 右半屏  吸左, left=${leftX}")
+
+//                animate().setInterpolator(DecelerateInterpolator()).setDuration(300).x(leftX)
+//                    .start()
+
+                this.x = leftX
             }
         }
+
+        postDelayed(mRun, 1 * 1000)
+        postDelayed(mRun, 2 * 1000)
+        postDelayed(mRun, 3 * 1000)
+        postDelayed(mRun, 4 * 1000)
+        postDelayed(mRun, 5 * 1000)
+        postDelayed(mRun, 6 * 1000)
+    }
+
+
+    private fun getLocation(): String {
+
+        val location = IntArray(2)
+        getLocationOnScreen(location)
+        val x = location[0]
+        val y = location[1]
+
+        val sb = StringBuilder("当前坐标:($x, $y), 可见性:${visibility2String()}")
+        return sb.toString()
     }
 
     // 初始位置是否在左边
@@ -283,5 +308,16 @@ abstract class BaseFloatView : FrameLayout {
      */
     fun release() {
         // do something
+    }
+
+
+    private fun visibility2String(): String {
+        when (VISIBLE) {
+            View.VISIBLE -> return "VISIBLE"
+            View.GONE -> return "GONE"
+            View.INVISIBLE -> return "INVISIBLE"
+
+        }
+        return "-"
     }
 }

@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
 import ywdemo.example.yaoxiaowen.R
-import ywdemo.example.yaoxiaowen.floatview.BaseFloatView.OnFloatClickListener
 import ywdemo.example.yaoxiaowen.until.LogUtil
 
 
@@ -27,8 +26,13 @@ class Fragment_2 : Fragment() {
 
         val floatView = createFloatView()
 
-        val container = root.findViewById<FrameLayout>(R.id.fg2Contaner)
-        container.addView(floatView, layoutParams)
+//        val container = root.findViewById<FrameLayout>(R.id.fg2Contaner)
+//        container.addView(floatView, layoutParams)
+
+
+        val content = activity?.findViewById<ViewGroup>(android.R.id.content)
+        LogUtil.i("content = $content")
+        content?.addView(floatView)
 
         // Inflate the layout for this fragment
         return root
@@ -38,11 +42,11 @@ class Fragment_2 : Fragment() {
         // 创建悬浮球视图
         val floatingBallView = AvatarFloatView(requireContext())
 
-        floatingBallView.setOnFloatClickListener(object : OnFloatClickListener {
-            override fun onClick(view: View) {
-                LogUtil.i("悬浮球被点击")
-            }
-        })
+//        floatingBallView.setOnFloatClickListener(object : OnFloatClickListener {
+//            override fun onClick(view: View) {
+//                LogUtil.i("悬浮球被点击")
+//            }
+//        })
 
         return floatingBallView
     }

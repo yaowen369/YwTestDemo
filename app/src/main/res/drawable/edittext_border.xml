@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?><!-- res/drawable/edittext_border.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 背景透明 -->
+    <solid android:color="@android:color/transparent" />
+
+    <!-- 边框：淡红色，宽度 2dp -->
+    <stroke
+        android:width="2dp"
+        android:color="#FFCCCC" /> <!-- 淡红色：#FFCCCC -->
+
+    <!-- 圆角半径 -->
+    <corners android:radius="4dp" />
+
+    <!-- 内边距 -->
+    <padding
+        android:bottom="8dp"
+        android:left="10dp"
+        android:right="10dp"
+        android:top="8dp" />
+</shape>

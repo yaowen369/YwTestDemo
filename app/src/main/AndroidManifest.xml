@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:name=".DemoApplication"
@@ -14,15 +14,17 @@
         android:label="@string/app_name"
         tools:targetApi="31">
         <activity
-            android:name=".TurnOffScreenActivity"
-            android:exported="true"
->
+            android:name=".AiScreenActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".TurnOffScreenActivity"
+            android:exported="true"></activity>
         <activity
             android:name=".SpecialQrCodeActivity"
             android:exported="true">
@@ -37,7 +39,7 @@
         <activity
             android:name=".floatview.TestFloatViewActivity"
             android:exported="true"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".CoroutineActivity"
             android:exported="false" />
@@ -67,11 +69,13 @@
         <activity
             android:name=".BackgroundPopActivity"
             android:exported="true">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
     </application>
 

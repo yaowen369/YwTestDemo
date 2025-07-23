@@ -53,10 +53,22 @@ class TurnOffScreenActivity : Activity() {
             setScreenBrightness(0f)
 
             mainHandler.postDelayed(Runnable {
-                LogUtil.i(TAG, "屏幕亮度设置为255")
-                setScreenBrightness(255f)
-            }, 15 * 1000)
-        }, 15 * 1000)
+                LogUtil.i(TAG, "屏幕亮度设置为0.5")
+                setScreenBrightness(0.5f)
+
+                mainHandler.postDelayed(Runnable {
+                    LogUtil.i(TAG, "屏幕亮度设置为1.0f")
+                    setScreenBrightness(1.0f)
+
+                    mainHandler.postDelayed(Runnable {
+                        LogUtil.i(TAG, "屏幕亮度设置为255")
+                        setScreenBrightness(255f)
+                    }, 20 * 1000)
+
+                }, 20 * 1000)
+
+            }, 20 * 1000)
+        }, 20 * 1000)
 
     }
 

@@ -7,9 +7,11 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        tools:targetApi="31">
+        tools:targetApi="31"
+        tools:replace="android:allowBackup"
+        >
         <activity
-            android:name=".BdFaceActivity"
+            android:name=".baiduface.BdFaceActivity"
             android:exported="true"
             >
             <intent-filter>

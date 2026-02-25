@@ -21,6 +21,13 @@ android {
         vectorDrawables {
             useSupportLibrary true
         }
+
+        ndk {
+            moduleName "facesdk"
+            ldLibs "log"
+            abiFilters "armeabi-v7a", "arm64-v8a" // "armeabi", "x86", "arm64-v8a"
+        }
+        multiDexEnabled true
     }
 
     viewBinding {

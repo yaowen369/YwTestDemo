@@ -81,8 +81,7 @@ dependencies {
 
     // 添加 百度人脸face 相关sdk
     api fileTree(include: ['*.jar'], dir: 'libs')
-    // 注意：不需要显式添加 annotations-java5 依赖，
-    // Kotlin插件已经自动引入了更新的 annotations 库
+    // orbbec_module-debug.aar 已移除内部 libs 目录（避免与 openni2.3.jar 重复）
     api files('libs/orbbec_module-debug.aar')
     api files('libs/ImiSDK.aar')
     api files('libs/deptrumSDK.aar')

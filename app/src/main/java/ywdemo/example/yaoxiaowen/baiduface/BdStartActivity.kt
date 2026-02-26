@@ -2,7 +2,14 @@ package ywdemo.example.yaoxiaowen.baiduface
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.view.View
+import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import ywdemo.example.yaoxiaowen.R
 import ywdemo.example.yaoxiaowen.baiduface.datalibrary.example.datalibrary.listener.SdkInitListener
@@ -13,16 +20,23 @@ import ywdemo.example.yaoxiaowen.until.LogUtil
 import java.util.Timer
 import java.util.TimerTask
 
-class BdStartActivity : Activity() {
+class BdStartActivity : Activity(), View.OnClickListener {
 
     val TAG: String = "BdStartActivity"
 
     private var mContext: Context? = null
+
+    private val mainHandler = Handler(Looper.getMainLooper())
+
+    private val btnStart: Button by lazy { findViewById<Button>(R.id.btn_start) }
+    private val displayTv: TextView by lazy { findViewById<TextView>(R.id.display_tv) }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_bd_start)
         mContext = this
+        btnStart.setOnClickListener(this)
+
 
         val isConfigExit: Boolean = GateConfigUtils.isConfigExit(this)
         val isInitConfig = GateConfigUtils.initConfig()
@@ -60,6 +74,11 @@ class BdStartActivity : Activity() {
                         // TODO yaowen 临时屏蔽
                         LogUtil.i(TAG, "initLicenseSuccess() ")
 //                        startActivity(Intent(mContext, HomeActivity::class.java))
+
+                        mainHandler.post {
+                            displayTv.text = "license加载成功, 可以跳转HomeActivity"
+                            displayTv.setTextColor(Color.BLUE)
+                        }
 //                        finish()
                     }
                 }
@@ -76,6 +95,11 @@ class BdStartActivity : Activity() {
                         // TODO yaowen 临时屏蔽
                         // log 当中提示内容： errorCode:-1, msg:授权码不存在，请重新输入！
                         LogUtil.e(TAG, "initLicenseFail() -> errorCode:${errorCode}, msg:${msg}")
+                        mainHandler.post {
+                            displayTv.text = "license加载失败，errorCode:${errorCode}, msg:${msg}"
+                            displayTv.setTextColor(Color.RED)
+                        }
+
 //                        startActivity(Intent(mContext, ActivitionActivity::class.java))
 //                        finish()
                     }
@@ -92,6 +116,14 @@ class BdStartActivity : Activity() {
                 LogUtil.e(TAG, "initModelFail() -> errorCode:${errorCode}, msg:${msg}")
             }
         })
+    }
+
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.btn_start -> {
+                startActivity(Intent(mContext, BdHomeActivity::class.java))
+            }
+        }
     }
 
 }

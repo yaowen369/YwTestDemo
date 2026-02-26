@@ -12,10 +12,21 @@
         android:id="@+id/btn_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="开始"
+        android:text="跳转HomeActivity"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/display_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="该页面用于激活流程"
+        app:layout_constraintTop_toBottomOf="@id/btn_start"
+        app:layout_constraintLeft_toLeftOf="@id/btn_start"
+        app:layout_constraintRight_toRightOf="@id/btn_start"
+        android:layout_marginTop="20dp"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

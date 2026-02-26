@@ -5,12 +5,12 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".baiduface.BdFaceActivity">
+    tools:context=".baiduface.BdHomeActivity">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="baiduFaceSDk"
+        android:text="该页面用于人脸库加载和摄像头选择"
         android:gravity="center"
         />
 

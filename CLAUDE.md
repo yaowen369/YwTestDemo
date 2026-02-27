@@ -24,6 +24,7 @@
   - 人脸识别功能实现
 
 ## 参考资源
+> 这些参考资源只在有必要时，再去读取内容进行参考
 - **百度官方Demo路径**：`/Users/yaowen/Desktop/八维通/需求-App/pad-天津/0205-百度给的新demo/Baidu_Face_Offline_SDK_Android_8.5/Baidu_Face_Offline_SDK_Android_8.5/FaceSDKAndroid`
 - **百度SDK官方文档**：https://ai.baidu.com/ai-doc/FACE/pk37c1mqu
 

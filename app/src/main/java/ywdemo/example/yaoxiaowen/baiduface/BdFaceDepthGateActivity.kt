@@ -477,11 +477,17 @@ class BdFaceDepthGateActivity : BaseOrbbecActivity(), View.OnClickListener, Devi
 
     @Synchronized
     private fun checkData() {
-        if (bdFaceImageConfig!!.data != null && bdDepthFaceImageConfig != null) {
+        val rgbData = bdFaceImageConfig?.data
+        val depthConfig = bdDepthFaceImageConfig
+        val depthData = depthConfig?.data
+
+        if (rgbData != null && depthConfig != null && depthData != null) {
+            android.util.Log.d(TAG, "checkData: 调用人脸检测，RGB数据长度=${rgbData.size}, Depth数据长度=${depthData.size}")
             FaceSDKManager.getInstance().onDetectCheck(
                 bdFaceImageConfig, null, bdDepthFaceImageConfig,
                 bdFaceCheckConfig, object : FaceDetectCallBack {
                     override fun onFaceDetectCallback(livenessModel: LivenessModel?) {
+                        android.util.Log.d(TAG, "onFaceDetectCallback: livenessModel=$livenessModel")
                         // 输出结果
                         checkCloseDebugResult(livenessModel)
                         // 开发模式
@@ -492,12 +498,15 @@ class BdFaceDepthGateActivity : BaseOrbbecActivity(), View.OnClickListener, Devi
                     }
 
                     override fun onTip(code: Int, msg: String?) {
+                        android.util.Log.d(TAG, "onTip: code=$code, msg=$msg")
                     }
 
                     override fun onFaceDetectDarwCallback(livenessModel: LivenessModel?) {
                         showFrame(livenessModel)
                     }
                 })
+        } else {
+            android.util.Log.d(TAG, "checkData: 条件不满足，rgbData=${rgbData != null}, depthConfig=${depthConfig != null}, depthData=${depthData != null}")
         }
     }
 

@@ -72,7 +72,7 @@ public class BaseConfig {
     // 奥比：3
     // 华捷：4
 //    private int type = FaceLivinessTypeActivity.HJ;
-    private int type = 4;
+    private int type = 3;
     // 是否开启质量检测开关
     private boolean qualityControl = true;
     // 是否开启活体检测开关

@@ -12,7 +12,19 @@
       "Bash(find app/build/intermediates -name *.dex -exec sh -c \"echo \"\"=== {} ===\"\" && strings {} | grep -l \"\"OpenNIView\"\" || true\")",
       "Bash(find:*)",
       "Bash(cp:*)",
-      "Bash(javap:*)"
+      "Bash(javap:*)",
+      "Bash(xargs unzip:*)",
+      "Bash(md5:*)",
+      "Bash(adb install:*)",
+      "Bash(adb shell am start:*)",
+      "Bash(adb logcat:*)",
+      "Bash(adb shell:*)",
+      "Bash(adb uninstall:*)",
+      "Bash(adb root:*)",
+      "Bash(adb push:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git reset:*)"
     ],
     "additionalDirectories": [
       "/Users/yaowen/Desktop/八维通/需求-App/pad-天津/0205-百度给的新demo/Baidu_Face_Offline_SDK_Android_8.5/Baidu_Face_Offline_SDK_Android_8.5/FaceSDKAndroid"

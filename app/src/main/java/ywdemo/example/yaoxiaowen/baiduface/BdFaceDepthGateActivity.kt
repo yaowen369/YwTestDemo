@@ -47,9 +47,12 @@ import ywdemo.example.yaoxiaowen.baiduface.datalibrary.example.datalibrary.utils
 import ywdemo.example.yaoxiaowen.baiduface.datalibrary.example.datalibrary.utils.FileUtils
 import ywdemo.example.yaoxiaowen.baiduface.datalibrary.example.datalibrary.utils.ToastUtils
 import ywdemo.example.yaoxiaowen.baiduface.huajieLibrary.idl.main.huajie.model.SingleBaseConfig
+import ywdemo.example.yaoxiaowen.until.LogUtil
 import java.util.concurrent.TimeoutException
 
 class BdFaceDepthGateActivity : BaseOrbbecActivity(), View.OnClickListener, DeviceOpenListener {
+
+    val TAG: String = "BdFaceActy"
 
     private var isFirstOpenOrbbecSDK = true
 
@@ -322,26 +325,32 @@ class BdFaceDepthGateActivity : BaseOrbbecActivity(), View.OnClickListener, Devi
      */
     private fun initUsbDevice(device: UsbDevice) {
         val opennilist = OpenNI.enumerateDevices()
+        android.util.Log.d("BdFaceDepthGate", "enumerateDevices: ${opennilist.size} devices")
         if (opennilist.size <= 0) {
             Toast.makeText(this, " openni enumerateDevices 0 devices", Toast.LENGTH_LONG).show()
             return
         }
-        this.mDevice = null
+        // 不再显式设置为 null，保持现有值
         // Find mDevice ID
         for (i in opennilist.indices) {
+            android.util.Log.d("BdFaceDepthGate", "Device[$i]: usbProductId=${opennilist[i].usbProductId}, looking for ${device.productId}")
             if (opennilist[i].usbProductId == device.productId) {
+                android.util.Log.d("BdFaceDepthGate", "Found matching device, opening...")
                 this.mDevice = Device.open()
+                android.util.Log.d("BdFaceDepthGate", "Device.open() returned: $mDevice")
                 break
             }
         }
 
         if (this.mDevice == null) {
+            android.util.Log.e("BdFaceDepthGate", "mDevice is still null after initUsbDevice")
             Toast.makeText(
                 this, " openni open devices failed: " + device.deviceName,
                 Toast.LENGTH_LONG
             ).show()
             return
         }
+        android.util.Log.d("BdFaceDepthGate", "initUsbDevice succeeded, mDevice=$mDevice")
     }
 
 
@@ -368,6 +377,14 @@ class BdFaceDepthGateActivity : BaseOrbbecActivity(), View.OnClickListener, Devi
 
     override fun onDeviceOpened(usbDevice: UsbDevice) {
         initUsbDevice(usbDevice)
+        // 添加安全检查，确保 mDevice 不为 null
+        if (this.mDevice == null) {
+            onDeviceOpenFailed("Device is null after initialization")
+            return
+        }
+
+        LogUtil.i(TAG, "onDeviceOpened, usbDevice:$usbDevice")
+
         mDepthStream = VideoStream.create(this.mDevice, SensorType.DEPTH)
         if (mDepthStream != null) {
             val mVideoModes = mDepthStream!!.sensorInfo.supportedVideoModes
@@ -827,10 +844,12 @@ class BdFaceDepthGateActivity : BaseOrbbecActivity(), View.OnClickListener, Devi
     }
 
     override fun onDeviceOpenFailed(msg: String) {
+        LogUtil.e(TAG, "onDeviceOpenFailed, msg:$msg")
         showAlertAndExit("Open Device failed: $msg")
     }
 
     override fun onDeviceNotFound() {
+        LogUtil.e(TAG, "onDeviceNotFound")
         showAlertAndExit("Open Device failed: NotFound")
     }
 

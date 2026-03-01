@@ -72,7 +72,7 @@ public class BaseConfig {
     // 奥比：3
     // 华捷：4
 //    private int type = FaceLivinessTypeActivity.HJ;
-    private int type = 4;
+    private int type = 3;
     // 是否开启质量检测开关
     private boolean qualityControl = true;
     // 是否开启活体检测开关
@@ -83,6 +83,19 @@ public class BaseConfig {
     private float nirLiveScore = 0.80f;
     // Depth活体阀值
     private float depthLiveScore = 0.80f;
+    // 图片保存阈值：RGB和Depth活体得分都大于该值时才保存图片
+    private float saveImageThreshold = 0.80f;
+    // ============================================================
+    // 媒体扫描开关配置（控制保存的图片是否在图库中可见）
+    // ============================================================
+    // 是否开启媒体扫描：true=保存的图片在图库中可见，false=保存的图片不在图库中可见
+    // 默认值：true（开启，保存的图片会出现在图库中）
+    // 使用场景：
+    //   - 开启(true)：需要用户在图库中查看保存的图片
+    //   - 关闭(false)：图片仅保存在文件系统中，不在图库显示（如后台静默保存）
+    private boolean enableMediaScan = true;
+    // ============================================================
+
     // 是否开启暗光恢复
     private boolean darkEnhance = false;
     // 是否开启best image
@@ -341,6 +354,36 @@ public class BaseConfig {
     public void setDepthLiveScore(float depthLiveScore) {
         this.depthLiveScore = depthLiveScore;
     }
+
+    public float getSaveImageThreshold() {
+        return saveImageThreshold;
+    }
+
+    public void setSaveImageThreshold(float saveImageThreshold) {
+        this.saveImageThreshold = saveImageThreshold;
+    }
+
+    // ============================================================
+    // 媒体扫描开关的 Getter 和 Setter 方法
+    // ============================================================
+
+    /**
+     * 获取媒体扫描开关状态
+     * @return true=开启（图片在图库可见），false=关闭（图片不在图库可见）
+     */
+    public boolean isEnableMediaScan() {
+        return enableMediaScan;
+    }
+
+    /**
+     * 设置媒体扫描开关状态
+     * @param enableMediaScan true=开启（图片在图库可见），false=关闭（图片不在图库可见）
+     */
+    public void setEnableMediaScan(boolean enableMediaScan) {
+        this.enableMediaScan = enableMediaScan;
+    }
+
+    // ============================================================
 
     public String getdPass() {
         return dPass;

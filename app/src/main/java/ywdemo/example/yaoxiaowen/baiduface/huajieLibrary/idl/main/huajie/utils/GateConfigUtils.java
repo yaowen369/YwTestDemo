@@ -122,6 +122,9 @@ public class GateConfigUtils {
             SingleBaseConfig.getBaseConfig().setRgbLiveScore(Float.valueOf(jsonObject.get("rgbLiveScore") + ""));
             SingleBaseConfig.getBaseConfig().setNirLiveScore(Float.valueOf(jsonObject.get("nirLiveScore") + ""));
             SingleBaseConfig.getBaseConfig().setDepthLiveScore(Float.valueOf(jsonObject.get("depthLiveScore") + ""));
+            SingleBaseConfig.getBaseConfig().setSaveImageThreshold(Float.valueOf(jsonObject.get("saveImageThreshold") + ""));
+            // 媒体扫描开关配置（控制保存的图片是否在图库中可见）
+            SingleBaseConfig.getBaseConfig().setEnableMediaScan(jsonObject.getBoolean("enableMediaScan"));
             SingleBaseConfig.getBaseConfig().setFramesThreshold(jsonObject.getInt("framesThreshold"));
             SingleBaseConfig.getBaseConfig().setCameraType(jsonObject.getInt("cameraType"));
             SingleBaseConfig.getBaseConfig().setRgbRevert(jsonObject.getBoolean("RGBRevert"));
@@ -387,6 +390,9 @@ public class GateConfigUtils {
             jsonObject.put("rgbLiveScore", SingleBaseConfig.getBaseConfig().getRgbLiveScore());
             jsonObject.put("nirLiveScore", SingleBaseConfig.getBaseConfig().getNirLiveScore());
             jsonObject.put("depthLiveScore", SingleBaseConfig.getBaseConfig().getDepthLiveScore());
+            jsonObject.put("saveImageThreshold", SingleBaseConfig.getBaseConfig().getSaveImageThreshold());
+            // 媒体扫描开关配置（控制保存的图片是否在图库中可见）
+            jsonObject.put("enableMediaScan", SingleBaseConfig.getBaseConfig().isEnableMediaScan());
             jsonObject.put("framesThreshold", SingleBaseConfig.getBaseConfig().getFramesThreshold());
             jsonObject.put("cameraType", SingleBaseConfig.getBaseConfig().getCameraType());
             jsonObject.put("RGBRevert", SingleBaseConfig.getBaseConfig().getRgbRevert());

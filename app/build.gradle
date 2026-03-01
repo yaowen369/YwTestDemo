@@ -22,12 +22,12 @@ android {
             useSupportLibrary true
         }
 
-        ndk {
-            moduleName "facesdk"
-            ldLibs "log"
-            abiFilters "armeabi-v7a", "arm64-v8a" // "armeabi", "x86", "arm64-v8a"
-        }
         multiDexEnabled true
+
+        // 参考百度官方demo，支持 armeabi-v7a 和 arm64-v8a 架构
+        ndk {
+            abiFilters "armeabi-v7a", "arm64-v8a"
+        }
     }
 
     viewBinding {
@@ -41,6 +41,10 @@ android {
         }
     }
 
+    sourceSets.main {
+        jniLibs.srcDirs = ["src/main/jniLibs"]
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -51,11 +55,10 @@ android {
     packagingOptions {
         resources {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
-            // 排除重复的annotations文件
             excludes += 'META-INF/annotations/**'
             excludes += '**/annotations/**'
         }
-        // 处理libc++_shared.so重复问题（百度SDK需要）
+        // 处理libc++_shared.so重复问题（opencv和FaceSDK都包含）
         pickFirst 'lib/arm64-v8a/libc++_shared.so'
         pickFirst 'lib/armeabi-v7a/libc++_shared.so'
     }
@@ -77,12 +80,12 @@ dependencies {
     //   依赖当前平台所对应的平台库
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutines"
 
-    implementation 'com.tencent:mmkv:1.3.5'
+    implementation 'com.tencent:mmkv-static:1.2.16' // 使用支持armeabi-v7a的版本
 
     // 添加 百度人脸face 相关sdk
-    api fileTree(include: ['*.jar'], dir: 'libs')
-    // orbbec_module-debug.aar 已移除内部 libs 目录（避免与 openni2.3.jar 重复）
+    // orbbec_module-debug.aar 包含完整的 OpenNI 库（libs/openni2.3.jar 和 jni/*.so）
     api files('libs/orbbec_module-debug.aar')
+    api fileTree(include: ['*.jar'], dir: 'libs')
     api files('libs/ImiSDK.aar')
     api files('libs/deptrumSDK.aar')
     api files('libs/opencv.aar')

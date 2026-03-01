@@ -37,6 +37,7 @@ import ywdemo.example.yaoxiaowen.baiduface.datalibrary.example.datalibrary.gl.vi
 import ywdemo.example.yaoxiaowen.baiduface.datalibrary.example.datalibrary.listener.SdkInitListener
 import ywdemo.example.yaoxiaowen.baiduface.datalibrary.example.datalibrary.manager.FaceSDKManager
 import ywdemo.example.yaoxiaowen.baiduface.datalibrary.example.datalibrary.manager.SaveImageManager
+import ywdemo.example.yaoxiaowen.baiduface.datalibrary.example.datalibrary.listener.SaveImageListener
 import ywdemo.example.yaoxiaowen.baiduface.datalibrary.example.datalibrary.model.BDFaceCheckConfig
 import ywdemo.example.yaoxiaowen.baiduface.datalibrary.example.datalibrary.model.BDFaceImageConfig
 import ywdemo.example.yaoxiaowen.baiduface.datalibrary.example.datalibrary.model.BDLiveConfig
@@ -135,7 +136,7 @@ class BdFaceDepthGateActivity : BaseOrbbecActivity(), View.OnClickListener, Devi
     private var startTime: Long = 0
     private var detectCount = false
     private lateinit var saveCamera: View
-    private var isSaveImage = false
+    private var isSaveImage = true
     private lateinit var spot: View
     private lateinit var glSurfaceView: GlMantleSurfacView
     private var bdFaceImageConfig: BDFaceImageConfig? = null
@@ -493,7 +494,34 @@ class BdFaceDepthGateActivity : BaseOrbbecActivity(), View.OnClickListener, Devi
                         // 开发模式
                         checkOpenDebugResult(livenessModel)
                         if (isSaveImage) {
-                            SaveImageManager.getInstance().saveImage(livenessModel, bdLiveConfig)
+                            // 检查 livenessModel 是否为 null，避免空指针异常
+                            if (livenessModel != null) {
+                                SaveImageManager.getInstance().saveImage(mContext, livenessModel, bdLiveConfig,
+                                    object : SaveImageListener {
+                                        override fun onSaveSuccess(savedCount: Int, filePaths: MutableList<String>, timestamp: String) {
+                                            // 检查Activity是否已销毁，避免内存泄漏
+                                            if (!isFinishing && !isDestroyed) {
+                                                LogUtil.i(TAG, "图片保存成功: 数量=$savedCount, 时间戳=$timestamp")
+                                                LogUtil.d(TAG, "保存的图片路径: $filePaths")
+                                            }
+                                        }
+
+                                        override fun onSaveFailed(errorCode: Int, errorMsg: String) {
+                                            if (!isFinishing && !isDestroyed) {
+                                                LogUtil.e(TAG, "图片保存失败: errorCode=$errorCode, errorMsg=$errorMsg")
+                                            }
+                                        }
+
+                                        override fun onConditionNotMet(rgbScore: Float, depthScore: Float, threshold: Float) {
+                                            if (!isFinishing && !isDestroyed) {
+                                                LogUtil.d(TAG, String.format("图片未保存: RGB(%.2f) Depth(%.2f) 阈值(%.2f)",
+                                                    rgbScore, depthScore, threshold))
+                                            }
+                                        }
+                                    })
+                            } else {
+                                LogUtil.w(TAG, "livenessModel 为 null，跳过保存图片")
+                            }
                         }
                     }
 
@@ -750,7 +778,9 @@ class BdFaceDepthGateActivity : BaseOrbbecActivity(), View.OnClickListener, Devi
             logoText.visibility = View.GONE
             judgeFirst()
         } else if (id == R.id.save_camera) {
-            isSaveImage = !isSaveImage
+//            isSaveImage = !isSaveImage
+            // 临时屏蔽，先确认其修改
+            isSaveImage = true
             if (isSaveImage) {
                 spot.visibility = View.VISIBLE
                 ToastUtils.toast(this@BdFaceDepthGateActivity, "存图功能已开启再次点击可关闭")

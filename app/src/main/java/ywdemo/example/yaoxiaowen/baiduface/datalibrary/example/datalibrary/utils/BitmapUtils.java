@@ -12,6 +12,7 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.media.ExifInterface;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Environment;
 import android.util.Base64;
@@ -19,6 +20,8 @@ import android.util.Log;
 
 import com.baidu.idl.main.facesdk.model.BDFaceImageInstance;
 import com.baidu.idl.main.facesdk.model.BDFaceSDKCommon;
+
+import ywdemo.example.yaoxiaowen.baiduface.huajieLibrary.idl.main.huajie.model.SingleBaseConfig;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
@@ -503,6 +506,10 @@ public final class BitmapUtils {
     }
 
     public static void saveRgbBitmap(Bitmap bitmap, String dirName, String fileName) {
+        saveRgbBitmap(null, bitmap, dirName, fileName);
+    }
+
+    public static void saveRgbBitmap(Context context, Bitmap bitmap, String dirName, String fileName) {
         String path = Environment.getExternalStorageDirectory().getAbsolutePath();
         File dir = new File(path + "/" + dirName);
         dir.mkdirs();
@@ -520,6 +527,27 @@ public final class BitmapUtils {
             fileOutputStream.flush();
             fileOutputStream.close();
 //            Log.e("Save-Image-tag", "rgb图片保存成功");
+
+            // ============================================================
+            // 媒体扫描开关控制
+            // 根据 enableMediaScan 配置决定是否通知媒体扫描器
+            // - true: 扫描新文件，图片在图库中可见
+            // - false: 不扫描，图片仅保存在文件系统中，不在图库显示
+            // ============================================================
+            if (context != null && jpgFile.exists() && SingleBaseConfig.getBaseConfig().isEnableMediaScan()) {
+                MediaScannerConnection.scanFile(
+                    context,
+                    new String[]{jpgFile.getAbsolutePath()},
+                    null,
+                    new MediaScannerConnection.OnScanCompletedListener() {
+                        @Override
+                        public void onScanCompleted(String path, Uri uri) {
+                            // 扫描完成，图片现在可以在图库中看到了
+                        }
+                    }
+                );
+            }
+            // ============================================================
         } catch (IOException e) {
             e.printStackTrace();
         }

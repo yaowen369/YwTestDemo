@@ -25,7 +25,8 @@ class LogUtil  {
 
         @JvmStatic
         fun iWithThreadInfo(tag: String?, msg: String) {
-            Log.i("$prefix $tag", "${msg}, ${ThreadUtil.getThreadInfo()}")
+            // 已删除 ThreadUtil 引用，使用 Thread.currentThread() 替代
+            Log.i("$prefix $tag", "${msg}, ${Thread.currentThread().name}")
         }
 
         @JvmStatic
@@ -52,7 +53,8 @@ class LogUtil  {
 
         @JvmStatic
         fun i( msg: String) {
-            Log.i("$prefix ", "${msg}, ${ThreadUtil.getThreadInfo()}");
+            // 已删除 ThreadUtil 引用，使用 Thread.currentThread() 替代
+            Log.i("$prefix ", "${msg}, ${Thread.currentThread().name}");
         }
 
         @JvmStatic

@@ -19,15 +19,9 @@
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <uses-feature android:name="android.hardware.camera" />
-    <uses-feature
-        android:name="android.hardware.camera.autofocus"
-        android:required="true" />
-    <uses-feature
-        android:name="android.hardware.camera.front"
-        android:required="true" />
-    <uses-feature
-        android:name="android.hardware.camera.front.autofocus"
-        android:required="true" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-feature android:name="android.hardware.camera.front" />
+    <uses-feature android:name="android.hardware.camera.front.autofocus" />
 
     <application
         android:name=".DemoApplication"
@@ -36,51 +30,22 @@
         android:label="@string/app_name"
         tools:replace="android:allowBackup"
         tools:targetApi="31">
-        <activity
-            android:name=".baiduface.BdFaceDepthGateActivity"
-            android:exported="true" />
+
+        <!-- 百度人脸识别SDK - 启动页面（License激活 + 人脸库加载） -->
         <activity
             android:name=".baiduface.BdStartActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- 百度人脸识别SDK - 人脸识别页面 -->
         <activity
-            android:name=".CoroutineActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ViewPage2Activity"
-            android:exported="false" />
-        <activity
-            android:name=".UiLagActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ThreadLockActivity"
-            android:exported="false" />
-        <activity
-            android:name=".SplashActivity"
-            android:exported="true"></activity>
-        <activity
-            android:name=".SpDataStoreTestActivity"
+            android:name=".baiduface.BdFaceDepthGateActivity"
             android:exported="true" />
-        <activity
-            android:name=".BitmapTestActivity"
-            android:exported="true" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="true"
-            android:label="@string/app_name">
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
     </application>
 
 </manifest>

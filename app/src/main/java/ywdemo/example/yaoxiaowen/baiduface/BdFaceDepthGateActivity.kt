@@ -117,10 +117,11 @@ class BdFaceDepthGateActivity : BaseOrbbecActivity(), View.OnClickListener, Devi
     private lateinit var deveLop: TextView
     private lateinit var preViewRelativeLayout: RelativeLayout
     private lateinit var deveLopRelativeLayout: RelativeLayout
-    private lateinit var textHuanying: RelativeLayout
-    private lateinit var nameImage: ImageView
-    private lateinit var nameText: TextView
-    private lateinit var userNameLayout: RelativeLayout
+    // 已删除冗余的预览模式UI变量（activity_itme_gate 已删除）
+    // private lateinit var textHuanying: RelativeLayout
+    // private lateinit var userNameLayout: RelativeLayout
+    // private lateinit var nameImage: ImageView
+    // private lateinit var nameText: TextView
     private lateinit var detectSurfaceText: TextView
     private lateinit var isRgbCheckImage: ImageView
     private lateinit var isDepthCheckImage: ImageView
@@ -293,10 +294,11 @@ class BdFaceDepthGateActivity : BaseOrbbecActivity(), View.OnClickListener, Devi
 
 
         // ***************预览模式*************
-        textHuanying = findViewById(R.id.huanying_relative)
-        userNameLayout = findViewById(R.id.user_name_layout)
-        nameImage = findViewById(R.id.name_image)
-        nameText = findViewById(R.id.name_text)
+        // 已删除冗余的预览模式UI引用（activity_itme_gate 已删除）
+        // textHuanying = findViewById(R.id.huanying_relative)
+        // userNameLayout = findViewById(R.id.user_name_layout)
+        // nameImage = findViewById(R.id.name_image)
+        // nameText = findViewById(R.id.name_text)
         detectSurfaceText = findViewById(R.id.detect_surface_text)
         mFaceDetectImageView.visibility = View.GONE
         saveCamera.visibility = View.GONE
@@ -549,6 +551,8 @@ class BdFaceDepthGateActivity : BaseOrbbecActivity(), View.OnClickListener, Devi
     private fun checkCloseDebugResult(livenessModel: LivenessModel?) {
         // 当未检测到人脸UI显示
         runOnUiThread(Runnable {
+            // 已删除冗余的预览模式UI操作（activity_itme_gate 已删除）
+            /*
             if (livenessModel == null) {
                 // 对背景色颜色进行改变，操作的属性为"alpha",此处必须这样写
                 // 不能全小写,后面设置的是对view的渐变
@@ -571,33 +575,26 @@ class BdFaceDepthGateActivity : BaseOrbbecActivity(), View.OnClickListener, Devi
                 userNameLayout.visibility = View.GONE
                 return@Runnable
             }
-            isTime = true
-            if (detectCount) {
-                detectCount = false
-                objectAnimator()
-            } else {
-                view.visibility = View.GONE
-            }
-            val user = livenessModel.user
-            if (user == null) {
-                mUser = null
-                if (livenessModel.isMultiFrame) {
-                    textHuanying.visibility = View.GONE
-                    userNameLayout.visibility = View.VISIBLE
-                    nameImage.setImageResource(R.mipmap.ic_tips_gate_fail)
-                    nameText.setTextColor(Color.parseColor("#fec133"))
-                    nameText.text = "抱歉 未能认出您"
+            */
+
+            // 保留核心逻辑
+            if (livenessModel != null) {
+                isTime = true
+                if (detectCount) {
+                    detectCount = false
+                    objectAnimator()
                 } else {
-                    textHuanying.visibility = View.VISIBLE
-                    userNameLayout.visibility = View.GONE
+                    view.visibility = View.GONE
                 }
-            } else {
-                mUser = user
-                textHuanying.visibility = View.GONE
-                userNameLayout.visibility = View.VISIBLE
-                nameImage.setImageResource(R.mipmap.ic_tips_gate_success)
-                nameText.setTextColor(Color.parseColor("#0dc6ff"))
-                nameText.setText(FileUtils.spotString(user.userName) + " 欢迎您")
+
+                val user = livenessModel.user
+                if (user == null) {
+                    mUser = null
+                    // 预览模式UI操作已删除
+                } else {
+                    mUser = user
+                    // 预览模式UI操作已删除
+                }
             }
         })
     }

@@ -267,9 +267,7 @@
         android:visibility="visible"
         tools:ignore="RtlCompat">
 
-        <include
-            android:id="@+id/include"
-            layout="@layout/activity_itme_gate" />
+        <!-- 已删除冗余的 activity_itme_gate 引用 -->
     </RelativeLayout>
 
 

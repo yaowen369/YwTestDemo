@@ -253,22 +253,7 @@
         </RelativeLayout>
 
     </RelativeLayout>
-    <!--预览模式-->
-    <RelativeLayout
-        android:id="@+id/yvlan_relativeLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/logo_text"
-        android:layout_marginBottom="7dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_toEndOf="@+id/face_detect_image_view"
-        android:gravity="center_horizontal"
-        android:visibility="visible"
-        tools:ignore="RtlCompat">
-
-        <!-- 已删除冗余的 activity_itme_gate 引用 -->
-    </RelativeLayout>
+    <!-- 已删除预览模式区域 (yvlan_relativeLayout) -->
 
 
     <TextView

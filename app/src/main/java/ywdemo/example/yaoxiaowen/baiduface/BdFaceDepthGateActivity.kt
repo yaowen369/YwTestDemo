@@ -111,26 +111,21 @@ class BdFaceDepthGateActivity : BaseOrbbecActivity(), View.OnClickListener, Devi
 
     private var rgbLiveScore = 0f
     private var depthLiveScore = 0f
-    private var isCheck = false
-    private var isCompareCheck = false
-    private lateinit var preText: TextView
+    private var isCheck = true  // 默认为开发模式
+    private var isCompareCheck = true
+    // 已删除预览模式相关变量 (preText, preView, preViewRelativeLayout)
     private lateinit var deveLop: TextView
-    private lateinit var preViewRelativeLayout: RelativeLayout
     private lateinit var deveLopRelativeLayout: RelativeLayout
-    // 已删除冗余的预览模式UI变量（activity_itme_gate 已删除）
-    // private lateinit var textHuanying: RelativeLayout
-    // private lateinit var userNameLayout: RelativeLayout
-    // private lateinit var nameImage: ImageView
-    // private lateinit var nameText: TextView
     private lateinit var detectSurfaceText: TextView
     private lateinit var isRgbCheckImage: ImageView
     private lateinit var isDepthCheckImage: ImageView
-    private lateinit var preView: View
+    // 已删除预览模式相关变量 (developView, 但保留用于开发模式)
     private lateinit var developView: View
     private lateinit var view: View
     private lateinit var layoutCompareStatus: RelativeLayout
     private lateinit var textCompareStatus: TextView
     private lateinit var nirSurfaceText: TextView
+    // logoText用于"百度大脑技术支持"文字显示
     private lateinit var logoText: TextView
     private var mUser: User? = null
     private var isTime = true
@@ -237,18 +232,16 @@ class BdFaceDepthGateActivity : BaseOrbbecActivity(), View.OnClickListener, Devi
         // 设置
         val mBtSetting: ImageView = findViewById(R.id.btn_setting)
         mBtSetting.setOnClickListener(this)
-        // 预览模式
-        preText = findViewById(R.id.preview_text)
-        preText.setOnClickListener(this)
-        preText.setTextColor(Color.parseColor("#ffffff"))
-        preViewRelativeLayout = findViewById(R.id.yvlan_relativeLayout)
-        preView = findViewById(R.id.preview_view)
-        // 开发模式
+        // 已删除预览模式相关代码 (preText, preView, preViewRelativeLayout)
+        // 开发模式（默认模式）
         deveLop = findViewById(R.id.develop_text)
-        deveLop.setOnClickListener(this)
+        // 不再需要点击监听，因为只有开发模式
+        // deveLop.setOnClickListener(this)
+        deveLop.setTextColor(Color.parseColor("#ffffff"))
         deveLopRelativeLayout = findViewById(R.id.kaifa_relativeLayout)
+        deveLopRelativeLayout.visibility = View.VISIBLE  // 直接显示开发模式
         developView = findViewById(R.id.develop_view)
-        developView.visibility = View.GONE
+        developView.visibility = View.VISIBLE  // 显示开发模式高亮
         layoutCompareStatus = findViewById(R.id.layout_compare_status)
         layoutCompareStatus.visibility = View.GONE
         textCompareStatus = findViewById(R.id.text_compare_status)
@@ -742,26 +735,12 @@ class BdFaceDepthGateActivity : BaseOrbbecActivity(), View.OnClickListener, Devi
             // TODO 临时屏蔽，该页面 还没有 开始
 //            startActivity(Intent(mContext, GateSettingActivity::class.java))
             finish()
-        } else if (id == R.id.preview_text) {
-            isRgbCheckImage.visibility = View.GONE
-            isDepthCheckImage.visibility = View.GONE
-            mFaceDetectImageView.visibility = View.GONE
-            saveCamera.visibility = View.GONE
-            detectSurfaceText.visibility = View.GONE
-            nirSurfaceText.visibility = View.GONE
-            layoutCompareStatus.visibility = View.GONE
-            mDepthGLView.visibility = View.GONE
-            view.visibility = View.VISIBLE
-            deveLop.setTextColor(Color.parseColor("#a9a9a9"))
-            preText.setTextColor(Color.parseColor("#ffffff"))
-            preView.visibility = View.VISIBLE
-            developView.visibility = View.GONE
-            preViewRelativeLayout.visibility = View.VISIBLE
-            deveLopRelativeLayout.visibility = View.GONE
-            logoText.visibility = View.VISIBLE
-            isCheck = false
-            isCompareCheck = false
+        // 已删除预览模式处理分支 (R.id.preview_text)
+        // 开发模式现在是默认且唯一的模式，不再需要切换
         } else if (id == R.id.develop_text) {
+            // 开发模式点击处理不再需要，因为默认就是开发模式
+            // 原有逻辑已注释，保留此空分支以维持代码结构
+            /*
             isCheck = true
             isCompareCheck = true
             isRgbCheckImage.visibility = View.VISIBLE
@@ -780,6 +759,7 @@ class BdFaceDepthGateActivity : BaseOrbbecActivity(), View.OnClickListener, Devi
             mDepthGLView.visibility = View.VISIBLE
             logoText.visibility = View.GONE
             judgeFirst()
+            */
         } else if (id == R.id.save_camera) {
 //            isSaveImage = !isSaveImage
             // 临时屏蔽，先确认其修改

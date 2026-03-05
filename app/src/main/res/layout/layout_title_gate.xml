@@ -16,48 +16,29 @@
         android:text="返回"
         android:textColor="#ffffff" />
 
+    <!-- 已删除预览模式相关UI元素 (preview_text, preview_view) -->
 
-    <ImageView
-        android:id="@+id/preview_view"
-        android:layout_width="match_parent"
-        android:layout_height="12dp"
-        android:layout_below="@+id/preview_text"
-        android:layout_alignLeft="@id/preview_text"
-        android:layout_alignRight="@id/preview_text"
-        android:layout_marginTop="-12dp"
-        android:src="@mipmap/ic_highlight" />
-    <TextView
-        android:id="@+id/preview_text"
-        android:layout_width="wrap_content"
-        android:layout_height="35dp"
-        android:layout_marginStart="50dp"
-        android:layout_toEndOf="@+id/btn_back"
-        android:layout_centerVertical="true"
-        android:text="预览模式"
-        android:textColor="#d3d3d3"
-        android:textSize="25sp" />
-
-
-
+    <!-- 开发模式高亮指示器 -->
     <ImageView
         android:id="@+id/develop_view"
         android:layout_width="102dp"
         android:layout_height="12dp"
         android:layout_below="@+id/develop_text"
-        android:layout_alignLeft="@id/develop_text"
-        android:layout_alignRight="@id/develop_text"
+        android:layout_alignLeft="@+id/develop_text"
+        android:layout_alignRight="@+id/develop_text"
         android:layout_marginTop="-12dp"
         android:src="@mipmap/ic_highlight"
-        android:visibility="gone" />
+        android:visibility="visible" />
+
     <TextView
         android:id="@+id/develop_text"
         android:layout_width="wrap_content"
         android:layout_height="35dp"
-        android:layout_marginStart="60dp"
-        android:layout_toEndOf="@+id/preview_text"
-        android:text="开发模式"
+        android:layout_marginStart="50dp"
+        android:layout_toEndOf="@id/btn_back"
         android:layout_centerVertical="true"
-        android:textColor="#999999"
+        android:text="开发模式"
+        android:textColor="#ffffff"
         android:textSize="25sp" />
 
     <ImageView

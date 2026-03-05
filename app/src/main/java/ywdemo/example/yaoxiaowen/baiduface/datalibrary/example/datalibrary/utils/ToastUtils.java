@@ -1,5 +1,6 @@
 package ywdemo.example.yaoxiaowen.baiduface.datalibrary.example.datalibrary.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
@@ -13,6 +14,13 @@ public class ToastUtils {
         handler.post(new Runnable() {
             @Override
             public void run() {
+                // 检查 Activity 是否还在运行，避免 BadTokenException
+                if (context instanceof Activity) {
+                    Activity activity = (Activity) context;
+                    if (activity.isFinishing() || activity.isDestroyed()) {
+                        return;
+                    }
+                }
                 Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
             }
         });
@@ -22,6 +30,13 @@ public class ToastUtils {
         handler.post(new Runnable() {
             @Override
             public void run() {
+                // 检查 Activity 是否还在运行，避免 BadTokenException
+                if (context instanceof Activity) {
+                    Activity activity = (Activity) context;
+                    if (activity.isFinishing() || activity.isDestroyed()) {
+                        return;
+                    }
+                }
                 Toast.makeText(context, resId, Toast.LENGTH_SHORT).show();
             }
         });

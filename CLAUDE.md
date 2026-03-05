@@ -3,7 +3,9 @@
 ## 项目简介
 本项目是一个用于接入百度人脸SDK的Android演示项目，主要参考百度官方demo实现人脸识别相关功能。
 
-**当前状态**：项目正在逐步完善中，尚未完全实现所有功能。
+**当前状态**：当前功能已经基本实现
+
+
 
 ## 主要关注范围
 请只关注 `ywdemo.example.yaoxiaowen.baiduface` 包名下的内容，忽略其他测试类。
@@ -12,7 +14,9 @@
 - **BdStartActivity** - 启动页面
   - 负责SDK初始化和License认证
   - 初始配置加载（GateConfigUtils、RegisterConfigUtils）
-  - 跳转到主页面
+  - 跳转到主页面 
+  - 该页面 主要是鉴权,实现激活功能，在pad上实际运行时, 是在线激活方式，使用的是 激活码 "XALX-FRXM-JYWX-7SX6",
+     激活代码相关是:  @app/src/main/java/ywdemo/example/yaoxiaowen/baiduface/idl/face/main/activity/FaceSDKManager.java:155-175
 
 - **BdHomeActivity** - 主页面
   - 人脸库数据库初始化和加载
@@ -22,6 +26,10 @@
 - **BdFaceDepthGateActivity** - 人脸识别深度门页面
   - OpenNI SDK初始化
   - 人脸识别功能实现
+  - 该页面已经可以实现 完成活体检测功能。 @app/src/main/java/ywdemo/example/yaoxiaowen/baiduface/BdFaceDepthGateActivity.kt:502-508, 
+    该处的 onSaveSuccess 回调 实际运行 已经可以实现 保存图片了
+
+
 
 ## 参考资源
 > 这些参考资源只在有必要时，再去读取内容进行参考

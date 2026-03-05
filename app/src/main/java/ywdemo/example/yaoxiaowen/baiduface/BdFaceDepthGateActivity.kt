@@ -150,7 +150,8 @@ class BdFaceDepthGateActivity : BaseOrbbecActivity(), View.OnClickListener, Devi
 
         mContext = this
         initListener()
-        FaceSDKManager.getInstance().initDataBases(this)
+        // 人脸库已在BdStartActivity初始化，此处不再重复初始化
+        // FaceSDKManager.getInstance().initDataBases(this)
 
         setContentView(R.layout.activity_face_depth_gate)
 
@@ -207,6 +208,7 @@ class BdFaceDepthGateActivity : BaseOrbbecActivity(), View.OnClickListener, Devi
 
                     override fun initModelFail(errorCode: Int, msg: String?) {
                         FaceSDKManager.initModelSuccess = false
+                        LogUtil.e(TAG,"initModelFail() -> " + errorCode + "  " + msg)
                         if (errorCode != -12) {
                             ToastUtils.toast(mContext, "模型加载失败，请尝试重启应用")
                         }
@@ -460,7 +462,11 @@ class BdFaceDepthGateActivity : BaseOrbbecActivity(), View.OnClickListener, Devi
 
 
     private fun dealDepth(data: ByteArray) {
-        bdDepthFaceImageConfig!!.setData(data)
+        // 修复: 避免非空断言，安全处理
+        bdDepthFaceImageConfig?.setData(data) ?: run {
+            LogUtil.w(TAG, "bdDepthFaceImageConfig 未初始化，跳过深度数据处理")
+            return
+        }
         checkData()
     }
 
@@ -821,15 +827,21 @@ class BdFaceDepthGateActivity : BaseOrbbecActivity(), View.OnClickListener, Devi
     }
 
 
-    override fun onPause() {
-        super.onPause()
+    /**
+     * 释放深度摄像头资源
+     * 修复: 提取公共方法，避免onPause和onDestroy中的代码重复
+     */
+    private fun releaseDepthResources() {
         exit = true
         if (initOk) {
             if (thread != null) {
                 try {
-                    thread!!.join()
-                } catch (e: java.lang.Exception) {
-                    e.printStackTrace()
+                    // 先设置exit标志，再interrupt
+                    exit = true
+                    thread!!.interrupt()
+                    thread!!.join(1000)  // 等待最多1秒
+                } catch (e: Exception) {
+                    LogUtil.e(TAG, "停止线程失败: ${e.message}")
                 }
             }
             if (mDepthStream != null) {
@@ -846,6 +858,11 @@ class BdFaceDepthGateActivity : BaseOrbbecActivity(), View.OnClickListener, Devi
             mOpenNIHelper!!.shutdown()
             mOpenNIHelper = null
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        releaseDepthResources()
     }
 
     override fun onStop() {
@@ -857,29 +874,7 @@ class BdFaceDepthGateActivity : BaseOrbbecActivity(), View.OnClickListener, Devi
         super.onDestroy()
 
         CameraPreviewManager.getInstance().stopPreview()
-        exit = true
-        if (initOk) {
-            if (thread != null) {
-                try {
-                    thread!!.join()
-                } catch (e: java.lang.Exception) {
-                    e.printStackTrace()
-                }
-            }
-            if (mDepthStream != null) {
-                mDepthStream!!.stop()
-                mDepthStream!!.destroy()
-                mDepthStream = null
-            }
-            if (mDevice != null) {
-                mDevice!!.close()
-                mDevice = null
-            }
-        }
-        if (mOpenNIHelper != null) {
-            mOpenNIHelper!!.shutdown()
-            mOpenNIHelper = null
-        }
+        releaseDepthResources()
     }
 
     override fun onDeviceOpenFailed(msg: String) {

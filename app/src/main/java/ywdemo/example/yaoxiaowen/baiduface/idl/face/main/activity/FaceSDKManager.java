@@ -29,6 +29,13 @@ public class FaceSDKManager {
     public static volatile int initStatus = SDK_UNACTIVATION;
     private BdFaceAuth bdFaceAuth;
 
+    // 激活码 (杭州 这台设备的激活码)
+      String activateCode = "XFRK-FQKW-AJMQ-RFHK";
+
+    // 这是天津那台设备的激活码
+//    String activateCode = "XALX-FRXM-JYWX-7SX6";
+
+
 
     private FaceSDKManager() {
         bdFaceAuth = new BdFaceAuth();
@@ -44,6 +51,7 @@ public class FaceSDKManager {
     public static FaceSDKManager getInstance() {
         return HolderClass.instance;
     }
+
     /**
      * 初始化鉴权，如果鉴权通过，直接初始化模型
      *
@@ -59,16 +67,14 @@ public class FaceSDKManager {
          * 参考： https://ai.baidu.com/ai-doc/FACE/Zk37c1nnn#33-%E7%9B%B8%E5%90%8C%E8%AE%BE%E5%A4%87%E4%B8%8D%E5%90%8C%E5%BA%94%E7%94%A8%E8%83%BD%E5%90%A6%E4%BD%BF%E7%94%A8%E7%9B%B8%E5%90%8C%E6%BF%80%E6%B4%BB%E7%A0%81
          * eg：15475FF1E9E07FF582C3568089751322A8
          */
-        String deviceFingerprint =  new FaceAuth().getDeviceId(context);
+        String deviceFingerprint = new FaceAuth().getDeviceId(context);
 
-        // 激活码
-        String activateCode = "XFRK-FQKW-AJMQ-RFHK";
 
         /**
          * 对于离线激活，实际测试，不管是 设备指纹，还是激活码，发现都无法激活。
          * 报错: code:1005, response=未找到授权文件,请将文件放到/storage/emulated/0目录
          */
-        final String licenseOfflineKey = PreferencesUtil.getString("activate_offline_key", activateCode);
+        final String licenseOfflineKey = PreferencesUtil.getString("activate_offline_key", deviceFingerprint);
 
         /**
          * 对于 在线激活，实际验证发现，使用 激活码是可以的。
@@ -80,85 +86,92 @@ public class FaceSDKManager {
 
         final String licenseBatchlineKey = PreferencesUtil.getString("activate_batchline_key", "");
 
-        // 如果licenseKey 不存在提示授权码为空，并跳转授权页面授权
-        if (TextUtils.isEmpty(licenseOfflineKey) && TextUtils.isEmpty(licenseOnlineKey)
-                && TextUtils.isEmpty(licenseBatchlineKey)) {
-            LogUtil.i(TAG, "三个内容都为null，直接回调失败 ");
-            ToastUtils.toast(context, "未授权设备，请完成授权激活");
-            if (listener != null) {
-                listener.initLicenseFail(-1, "授权码不存在，请重新输入！");
-            }
-            return;
-        }
-        // todo 增加判空处理
-        if (listener != null) {
-            listener.initStart();
-        }
 
         LogUtil.i(TAG, "licenseOnlineKey: " + licenseOnlineKey + ", licenseOfflineKey:" + licenseOfflineKey + ", licenseBatchlineKey:" + licenseBatchlineKey);
-        if (!TextUtils.isEmpty(licenseOnlineKey)) {
-            LogUtil.i(TAG, "在线激活流程 ");
-            // 在线激活
-            bdFaceAuth.initLicenseOnLine(context, licenseOnlineKey, new Callback() {
-                @Override
-                public void onResponse(int code, String response) {
-                    LogUtil.i(TAG, "在线激活流程, code:" + code + ", response=" + response);
-                    if (code == 0) {
-                        initStatus = SDK_INIT_SUCCESS;
-                        if (listener != null) {
-                            listener.initLicenseSuccess();
-                        }
-//                        initModel(context, listener);
-                        return;
-                    } else {
-                        listener.initLicenseFail(code, response);
+
+
+        // 如果licenseKey 不存在提示授权码为空，并跳转授权页面授权
+//        if (TextUtils.isEmpty(licenseOfflineKey) && TextUtils.isEmpty(licenseOnlineKey)
+//                && TextUtils.isEmpty(licenseBatchlineKey)) {
+//            LogUtil.i(TAG, "三个内容都为null，直接回调失败 ");
+//            ToastUtils.toast(context, "未授权设备，请完成授权激活");
+//            if (listener != null) {
+//                listener.initLicenseFail(-1, "授权码不存在，请重新输入！");
+//            }
+//            return;
+//        }
+//        // todo 增加判空处理
+//        if (listener != null) {
+//            listener.initStart();
+//        }
+
+
+        bdFaceAuth.initLicenseOffLine(context, new Callback() {
+            @Override
+            public void onResponse(int code, String response) {
+                LogUtil.i(TAG, "离线激活流程, code:" + code + ", response=" + response);
+                if (code == 0) {
+                    initStatus = SDK_INIT_SUCCESS;
+                    if (listener != null) {
+                        listener.initLicenseSuccess();
                     }
-                }
-            });
-        } else if (!TextUtils.isEmpty(licenseOfflineKey)) {
-            LogUtil.i(TAG, "离线激活流程 ");
-            // 离线激活
-            bdFaceAuth.initLicenseOffLine(context, new Callback() {
-                @Override
-                public void onResponse(int code, String response) {
-                    LogUtil.i(TAG, "离线激活流程, code:" + code + ", response=" + response);
-                    if (code == 0) {
-                        initStatus = SDK_INIT_SUCCESS;
-                        if (listener != null) {
-                            listener.initLicenseSuccess();
-                        }
 //                        initModel(context, listener);
-                        return;
-                    } else {
-                        listener.initLicenseFail(code, response);
-                    }
+                    return;
+                } else {
+//                    listener.initLicenseFail(code, response);
+                    LogUtil.i(TAG, "离线激活流程 失败, 走下一个流程");
+
+                    deviceFingerActive(context, deviceFingerprint, listener);
+
                 }
-            });
-        } else if (!TextUtils.isEmpty(licenseBatchlineKey)) {
-            LogUtil.i(TAG, "应用激活流程 ");
-            // 应用激活
-            bdFaceAuth.initLicenseBatchLine(context, licenseBatchlineKey, new Callback() {
-                @Override
-                public void onResponse(int code, String response) {
-                    LogUtil.i(TAG, "应用激活流程, code:" + code + ", response=" + response);
-                    if (code == 0) {
-                        PreferencesUtil.putString("activate_batchline_key", licenseBatchlineKey);
-                        initStatus = SDK_INIT_SUCCESS;
-                        if (listener != null) {
-                            listener.initLicenseSuccess();
-                        }
-//                        initModel(context, listener);
-                        return;
-                    } else {
-                        listener.initLicenseFail(code, response);
-                    }
-                }
-            });
-        } else {
-            LogUtil.i(TAG, "最后的默认else, 直接回调失败 ");
-            if (listener != null) {
-                listener.initLicenseFail(-1, "授权码不存在，请重新输入！");
             }
-        }
+        });
+
+    }
+
+
+    private void deviceFingerActive(final Context context, String deviceFinger, final SdkInitListener listener) {
+        // 在线激活 设备指纹
+        bdFaceAuth.initLicenseOnLine(context, deviceFinger, new Callback() {
+            @Override
+            public void onResponse(int code, String response) {
+                LogUtil.i(TAG, "在线激活流程, 设备指纹， code:" + code + ", response=" + response);
+                if (code == 0) {
+                    initStatus = SDK_INIT_SUCCESS;
+                    if (listener != null) {
+                        listener.initLicenseSuccess();
+                    }
+//                        initModel(context, listener);
+                    return;
+                } else {
+                    LogUtil.i(TAG, "在线激活流程, 设备指纹 激活失败，走下一个流程 ");
+//                    listener.initLicenseFail(code, response);
+                    onlineActive(context, activateCode, listener);
+                }
+            }
+        });
+    }
+
+    private void onlineActive(final Context context, String activeCode, final SdkInitListener listener) {
+        LogUtil.i(TAG, "在线激活流程, 激活码为:" + activeCode);
+        // 在线激活
+        bdFaceAuth.initLicenseOnLine(context, activeCode, new Callback() {
+            @Override
+            public void onResponse(int code, String response) {
+                LogUtil.i(TAG, "在线激活流程, 激活码， code:" + code + ", response=" + response);
+                if (code == 0) {
+                    LogUtil.i(TAG, "在线激活流程, >>>>> 激活成功， activeCode=" + activeCode);
+                    initStatus = SDK_INIT_SUCCESS;
+                    if (listener != null) {
+                        listener.initLicenseSuccess();
+                    }
+//                        initModel(context, listener);
+                    return;
+                } else {
+                    LogUtil.i(TAG, "在线激活流程, 激活失败， activeCode=" + activeCode);
+                    listener.initLicenseFail(code, response);
+                }
+            }
+        });
     }
 }

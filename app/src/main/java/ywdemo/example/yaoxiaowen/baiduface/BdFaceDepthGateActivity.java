@@ -69,7 +69,6 @@ import ywdemo.example.yaoxiaowen.until.LogUtil;
 public class BdFaceDepthGateActivity extends BaseOrbbecActivity implements View.OnClickListener, DeviceOpenListener {
 
     private static final String TAG = "BdFaceActy";
-    private static final int DEPTH_NEED_PERMISSION = 33;
 
     /*RGB摄像头图像宽和高*/
     private final int RGB_WIDTH = SingleBaseConfig.getBaseConfig().getRgbAndNirWidth();
@@ -80,7 +79,6 @@ public class BdFaceDepthGateActivity extends BaseOrbbecActivity implements View.
     private int depthHeight = SingleBaseConfig.getBaseConfig().getDepthHeight();
 
     private Context mContext;
-    private boolean isFirstOpenOrbbecSDK = true;
 
     // 调试页面控件
     private ImageView mFaceDetectImageView;
@@ -136,9 +134,6 @@ public class BdFaceDepthGateActivity extends BaseOrbbecActivity implements View.
     // logoText用于"百度大脑技术支持"文字显示
     private TextView logoText;
     private User mUser;
-    private boolean isTime = true;
-    private long startTime = 0;
-    private boolean detectCount = false;
     private View saveCamera;
     private boolean isSaveImage = true;
     private View spot;
@@ -308,9 +303,11 @@ public class BdFaceDepthGateActivity extends BaseOrbbecActivity implements View.
         mFaceDetectImageView.setVisibility(View.GONE);
         saveCamera.setVisibility(View.GONE);
         detectSurfaceText.setVisibility(View.GONE);
+        // 蒙层视图 - 开发模式下默认隐藏
         view = findViewById(R.id.mongolia_view);
         view.setAlpha(0.85f);
         view.setBackgroundColor(Color.parseColor("#ffffff"));
+        view.setVisibility(View.GONE);  // 默认隐藏蒙层，避免界面偏白
         nirSurfaceText = findViewById(R.id.depth_surface_text);
         nirSurfaceText.setVisibility(View.GONE);
 
@@ -507,8 +504,8 @@ public class BdFaceDepthGateActivity extends BaseOrbbecActivity implements View.
                         @Override
                         public void onFaceDetectCallback(LivenessModel livenessModel) {
                             android.util.Log.d(TAG, "onFaceDetectCallback: livenessModel=" + livenessModel);
-                            // 输出结果
-                            checkCloseDebugResult(livenessModel);
+                            // 预览模式已删除，不再调用checkCloseDebugResult
+                            // checkCloseDebugResult(livenessModel);
                             // 开发模式
                             checkOpenDebugResult(livenessModel);
                             if (isSaveImage) {
@@ -561,60 +558,7 @@ public class BdFaceDepthGateActivity extends BaseOrbbecActivity implements View.
         }
     }
 
-    // ***************预览模式结果输出*************
-    private void checkCloseDebugResult(final LivenessModel livenessModel) {
-        // 当未检测到人脸UI显示
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                // 已删除冗余的预览模式UI操作（activity_itme_gate 已删除）
-                /*
-                if (livenessModel == null) {
-                    // 对背景色颜色进行改变，操作的属性为"alpha",此处必须这样写
-                    // 不能全小写,后面设置的是对view的渐变
-                    if (isTime) {
-                        isTime = false;
-                        startTime = System.currentTimeMillis();
-                    }
-                    detectCount = true;
-                    long endTime = System.currentTimeMillis() - startTime;
-
-                    if (endTime < 10000) {
-                        textHuanying.visibility = View.VISIBLE
-                        userNameLayout.visibility = View.GONE
-                        return@Runnable
-                    } else {
-                        view.visibility = View.VISIBLE
-                    }
-
-                    textHuanying.visibility = View.VISIBLE
-                    userNameLayout.visibility = View.GONE
-                    return@Runnable
-                }
-                */
-
-                // 保留核心逻辑
-                if (livenessModel != null) {
-                    isTime = true;
-                    if (detectCount) {
-                        detectCount = false;
-                        objectAnimator();
-                    } else {
-                        view.setVisibility(View.GONE);
-                    }
-
-                    User user = livenessModel.getUser();
-                    if (user == null) {
-                        mUser = null;
-                        // 预览模式UI操作已删除
-                    } else {
-                        mUser = user;
-                        // 预览模式UI操作已删除
-                    }
-                }
-            }
-        });
-    }
+    // 已删除预览模式结果输出方法 checkCloseDebugResult() - 预览模式已移除
 
     // ***************开发模式结果输出*************
     private void checkOpenDebugResult(final LivenessModel livenessModel) {
@@ -761,31 +705,6 @@ public class BdFaceDepthGateActivity extends BaseOrbbecActivity implements View.
             // TODO 临时屏蔽，该页面 还没有 开始
 //            startActivity(Intent(mContext, GateSettingActivity.class))
             finish();
-            // 已删除预览模式处理分支 (R.id.preview_text)
-            // 开发模式现在是默认且唯一的模式，不再需要切换
-        } else if (id == R.id.develop_text) {
-            // 开发模式点击处理不再需要，因为默认就是开发模式
-            // 原有逻辑已注释，保留此空分支以维持代码结构
-            /*
-            isCheck = true
-            isCompareCheck = true
-            isRgbCheckImage.visibility = View.VISIBLE
-            isDepthCheckImage.visibility = View.VISIBLE
-            mFaceDetectImageView.visibility = View.VISIBLE
-            saveCamera.visibility = View.VISIBLE
-            detectSurfaceText.visibility = View.VISIBLE
-            nirSurfaceText.visibility = View.VISIBLE
-            view.visibility = View.GONE
-            deveLop.setTextColor(Color.parseColor("#ffffff"))
-            preText.setTextColor(Color.parseColor("#a9a9a9"))
-            preView.visibility = View.GONE
-            developView.visibility = View.VISIBLE
-            deveLopRelativeLayout.visibility = View.VISIBLE
-            preViewRelativeLayout.visibility = View.GONE
-            mDepthGLView.visibility = View.VISIBLE
-            logoText.visibility = View.GONE
-            judgeFirst()
-            */
         } else if (id == R.id.save_camera) {
 //            isSaveImage = !isSaveImage
             // 临时屏蔽，先确认其修改
@@ -799,27 +718,7 @@ public class BdFaceDepthGateActivity extends BaseOrbbecActivity implements View.
         }
     }
 
-    private void judgeFirst() {
-        android.content.SharedPreferences sharedPreferences = this.getSharedPreferences("share", MODE_PRIVATE);
-        boolean isFirstRun = sharedPreferences.getBoolean("isGateFirstSave", true);
-        android.content.SharedPreferences.Editor editor = sharedPreferences.edit();
-        if (isFirstRun) {
-            setFirstView(View.VISIBLE);
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    setFirstView(View.GONE);
-                }
-            }, 3000);
-            editor.putBoolean("isGateFirstSave", false);
-            editor.commit();
-        }
-    }
-
-    private void setFirstView(int visibility) {
-        ((LinearLayout) findViewById(R.id.first_text_tips)).setVisibility(visibility);
-        findViewById(R.id.first_circular_tips).setVisibility(visibility);
-    }
+    // 已删除未使用的方法: judgeFirst() 和 setFirstView()
 
     @Override
     protected void onResume() {
@@ -872,11 +771,6 @@ public class BdFaceDepthGateActivity extends BaseOrbbecActivity implements View.
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
 
@@ -902,14 +796,7 @@ public class BdFaceDepthGateActivity extends BaseOrbbecActivity implements View.
             String[] permissions,
             int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (requestCode == DEPTH_NEED_PERMISSION) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(mContext, "Permission Grant", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(mContext, "Permission Denied", Toast.LENGTH_SHORT).show();
-            }
-        }
+        // 权限请求回调处理，当前未实现具体逻辑
     }
 
     /**
@@ -938,23 +825,5 @@ public class BdFaceDepthGateActivity extends BaseOrbbecActivity implements View.
         builder.show();
     }
 
-    // 蒙层动画
-    private void objectAnimator() {
-        ObjectAnimator animator = ObjectAnimator.ofFloat(view, "alpha", 0.0f, 0.85f);
-        animator.setDuration(500);
-        animator.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                super.onAnimationEnd(animation);
-                animator.cancel();
-            }
-
-            @Override
-            public void onAnimationStart(Animator animation) {
-                super.onAnimationStart(animation);
-                view.setBackgroundColor(Color.parseColor("#ffffff"));
-            }
-        });
-        animator.start();
-    }
+    // 已删除预览模式的蒙层动画方法 objectAnimator() - 预览模式已移除
 }

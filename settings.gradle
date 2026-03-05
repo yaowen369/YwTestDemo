@@ -15,4 +15,5 @@ dependencyResolutionManagement {
 rootProject.name = "YwTestDemo"
 include ':app'
 include ':JavaMain'
-include ':KotlinMain'
+// 已删除KotlinMain模块
+//include ':KotlinMain'

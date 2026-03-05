@@ -121,6 +121,19 @@ public class GlMantleSurfacView extends RelativeLayout {
                 // 检测图片的坐标和显示的坐标不一样，需要转换。
                 FaceOnDrawTexturViewUtil.mapFromOriginalRect(rectF,
                         faceTexture, image);
+
+                // 修复：根据镜像参数翻转人脸框的 X 坐标，确保人脸框与视频预览一致
+                // 当 mirrorRGB == 0 时，视频是镜像的（默认），需要翻转人脸框
+                // 当 mirrorRGB == 1 时，视频不镜像，人脸框也不翻转
+                if (mirrorRGB == 0) {
+                    float viewWidth = faceTexture.getWidth();
+                    // 水平翻转：新X = viewWidth - 旧X
+                    float tempLeft = viewWidth - rectF.right;
+                    float tempRight = viewWidth - rectF.left;
+                    rectF.left = tempLeft;
+                    rectF.right = tempRight;
+                }
+
                 // 人脸框颜色
                 paint.setColor(colors.getColor());
                 // 绘制人脸框
@@ -174,6 +187,17 @@ public class GlMantleSurfacView extends RelativeLayout {
                 // 检测图片的坐标和显示的坐标不一样，需要转换。
                 FaceOnDrawTexturViewUtil.mapFromOriginalRect(rectF,
                         faceTexture, image);
+
+                // 修复：根据镜像参数翻转人脸框的 X 坐标，确保人脸框与视频预览一致
+                if (mirrorRGB == 0) {
+                    float viewWidth = faceTexture.getWidth();
+                    // 水平翻转：新X = viewWidth - 旧X
+                    float tempLeft = viewWidth - rectF.right;
+                    float tempRight = viewWidth - rectF.left;
+                    rectF.left = tempLeft;
+                    rectF.right = tempRight;
+                }
+
                 // 人脸框颜色
                 paint.setColor(colors.getColor());
 

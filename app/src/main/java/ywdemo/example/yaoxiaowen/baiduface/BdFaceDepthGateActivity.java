@@ -313,9 +313,12 @@ public class BdFaceDepthGateActivity extends BaseOrbbecActivity implements View.
 
 
         glSurfaceView = findViewById(R.id.camera_textureview);
+        // 修复：人脸框的镜像参数必须与视频预览的镜像参数一致
+        // 否则会导致人脸框在水平方向上与实际人脸移动方向相反
+        int mirrorVideoRGB = SingleBaseConfig.getBaseConfig().getMirrorVideoRGB();
         glSurfaceView.initSurface(
-                SingleBaseConfig.getBaseConfig().getRgbRevert(),
-                SingleBaseConfig.getBaseConfig().getMirrorVideoRGB(),
+                mirrorVideoRGB == 1,  // 将 int 转换为 boolean
+                mirrorVideoRGB,
                 SingleBaseConfig.getBaseConfig().isOpenGl()
         );
         CameraPreviewManager.getInstance().startPreview(/*mContext, */glSurfaceView,

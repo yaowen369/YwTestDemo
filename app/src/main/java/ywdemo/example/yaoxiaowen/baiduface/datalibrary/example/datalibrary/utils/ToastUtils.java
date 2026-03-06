@@ -21,7 +21,11 @@ public class ToastUtils {
                         return;
                     }
                 }
-                Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
+                try {
+                    Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    // 忽略 Toast 显示异常，避免崩溃
+                }
             }
         });
     }
@@ -37,7 +41,11 @@ public class ToastUtils {
                         return;
                     }
                 }
-                Toast.makeText(context, resId, Toast.LENGTH_SHORT).show();
+                try {
+                    Toast.makeText(context, resId, Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    // 忽略 Toast 显示异常，避免崩溃
+                }
             }
         });
     }

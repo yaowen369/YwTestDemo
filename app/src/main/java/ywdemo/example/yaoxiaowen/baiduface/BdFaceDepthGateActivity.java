@@ -337,7 +337,7 @@ public class BdFaceDepthGateActivity extends BaseOrbbecActivity implements View.
         List<DeviceInfo> opennilist = OpenNI.enumerateDevices();
         android.util.Log.d("BdFaceDepthGate", "enumerateDevices: " + opennilist.size() + " devices");
         if (opennilist.size() <= 0) {
-            Toast.makeText(this, " openni enumerateDevices 0 devices", Toast.LENGTH_LONG).show();
+            showToast("openni enumerateDevices 0 devices");
             return;
         }
         // 不再显式设置为 null，保持现有值
@@ -354,10 +354,7 @@ public class BdFaceDepthGateActivity extends BaseOrbbecActivity implements View.
 
         if (this.mDevice == null) {
             android.util.Log.e("BdFaceDepthGate", "mDevice is still null after initUsbDevice");
-            Toast.makeText(
-                    this, " openni open devices failed: " + device.getDeviceName(),
-                    Toast.LENGTH_LONG
-            ).show();
+            showToast("openni open devices failed: " + device.getDeviceName());
             return;
         }
         android.util.Log.d("BdFaceDepthGate", "initUsbDevice succeeded, mDevice=" + mDevice);
@@ -388,14 +385,6 @@ public class BdFaceDepthGateActivity extends BaseOrbbecActivity implements View.
     @Override
     public void onDeviceOpened(UsbDevice usbDevice) {
         initUsbDevice(usbDevice);
-        // 添加安全检查，确保 mDevice 不为 null
-        if (this.mDevice == null) {
-            onDeviceOpenFailed("Device is null after initialization");
-            return;
-        }
-
-        LogUtil.i(TAG, "onDeviceOpened, usbDevice:" + usbDevice);
-
         mDepthStream = VideoStream.create(this.mDevice, SensorType.DEPTH);
         if (mDepthStream != null) {
             List<VideoMode> mVideoModes = mDepthStream.getSensorInfo().getSupportedVideoModes();
@@ -683,10 +672,7 @@ public class BdFaceDepthGateActivity extends BaseOrbbecActivity implements View.
         int id = v.getId(); // 返回
         if (id == R.id.btn_back) {
             if (!FaceSDKManager.initModelSuccess) {
-                Toast.makeText(
-                        mContext, "SDK正在加载模型，请稍后再试",
-                        Toast.LENGTH_LONG
-                ).show();
+                showToast("SDK正在加载模型，请稍后再试");
                 return;
             }
             if (thread != null) {
@@ -696,10 +682,7 @@ public class BdFaceDepthGateActivity extends BaseOrbbecActivity implements View.
             // 设置
         } else if (id == R.id.btn_setting) {
             if (!FaceSDKManager.initModelSuccess) {
-                Toast.makeText(
-                        mContext, "SDK正在加载模型，请稍后再试",
-                        Toast.LENGTH_LONG
-                ).show();
+                showToast("SDK正在加载模型，请稍后再试");
                 return;
             }
             if (thread != null) {
@@ -722,6 +705,23 @@ public class BdFaceDepthGateActivity extends BaseOrbbecActivity implements View.
     }
 
     // 已删除未使用的方法: judgeFirst() 和 setFirstView()
+
+    /**
+     * 安全地显示 Toast，避免 Activity 销毁后崩溃
+     */
+    private void showToast(final String message) {
+        if (isFinishing() || isDestroyed()) {
+            return;
+        }
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (!isFinishing() && !isDestroyed()) {
+                    Toast.makeText(BdFaceDepthGateActivity.this, message, Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
 
     @Override
     protected void onResume() {

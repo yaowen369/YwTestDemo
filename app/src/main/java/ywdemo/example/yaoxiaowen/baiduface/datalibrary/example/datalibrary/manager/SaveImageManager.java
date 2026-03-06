@@ -179,7 +179,7 @@ public class SaveImageManager {
 
     /**
      * 在主线程显示Toast
-     * 使用 ApplicationContext 避免内存泄漏
+     * 使用 ApplicationContext 避免内存泄漏和崩溃
      */
     private void showToast(final Context context, final String message) {
         if (context == null) {
@@ -189,7 +189,12 @@ public class SaveImageManager {
         mainHandler.post(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(appContext, message, Toast.LENGTH_SHORT).show();
+                try {
+                    Toast.makeText(appContext, message, Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    // 忽略 Toast 显示异常，避免崩溃
+                    LogUtil.e(TAG, "显示Toast失败: " + e.getMessage());
+                }
             }
         });
     }

@@ -1,0 +1,868 @@
+
+ * ▗ ▗   ▖ ▖ *   Claude Code v2.0.71
+*             *  glm-4.7 · API Usage Billing
+ *   ▘▘ ▝▝   *   ~/code/my_code/YwTestDemo
+
+  /model to try Opus 4.5
+══════════════════ Conversation compacted · ctrl+o for history ═════════════════
+  ⎿ Read app/src/main/java/ywdemo/example/yaoxiaowen/baiduface/datalibrary/examp
+    le/datalibrary/activity/BaseOrbbecActivity.java (269 lines)
+  ⎿  Read app/build.gradle (102 lines)
+  ⎿  Read docs/abi_configuration_summary.md (225 lines)
+  ⎿ Referenced file app/src/main/java/ywdemo/example/yaoxiaowen/baiduface/BdFace
+    DepthGateActivity.java
+  ⎿ Read app/src/main/java/ywdemo/example/yaoxiaowen/baiduface/datalibrary/examp
+    le/datalibrary/api/FaceApi.java (429 lines)
+
+⏺ 继续调试 OpenNI 驱动提取问题。根据之前的分析，问题是应用没有权限写入 /data/data/{package}/lib/ 目录。让我先查看当前代码状态，然后尝试找到解决方案。
+
+⏺ Read(app/src/main/java/ywdemo/example/yaoxiaowen/baiduface/datalibrary/example
+      /datalibrary/activity/BaseOrbbecActivity.java)
+  ⎿  Read 269 lines
+
+⏺ 我发现代码中有重复的方法定义（第 215-238 行）。让我先修复这个问题，然后尝试使用应用有权限写入的目录来存放驱动文件。
+
+⏺ Update(app/src/main/java/ywdemo/example/yaoxiaowen/baiduface/datalibrary/examp
+        le/datalibrary/activity/BaseOrbbecActivity.java)
+  ⎿  Removed 27 lines                                                    
+       211        }
+       212    
+       213        /**
+       214 -       * 从APK文件中提取指定文件
+       215 -      private boolean extractFileFromApk(String apkPath, 
+           - String entryPath, File targetFile) {
+       216 -          java.util.zip.ZipFile zipFile = null;
+       217 -          try {
+       218 -              zipFile = new java.util.zip.ZipFile(apkPath);
+       219 -              java.util.zip.ZipEntry entry = 
+           - zipFile.getEntry(entryPath);
+       220 -              if (entry == null) {
+       221 -                  return false;
+       222 -              }
+       223 -  
+       224 -              InputStream is = zipFile.getInputStream(entry);
+       225 -              copyStream(is, targetFile);
+       226 -              return true;
+       227 -          } catch (Exception e) {
+       228 -              return false;
+       229 -          } finally {
+       230 -              if (zipFile != null) {
+       231 -                  try {
+       232 -                      zipFile.close();
+       233 -                  } catch (IOException e) {
+       234 -                      // Ignore
+       235 -                  }
+       236 -              }
+       237 -          }
+       238 -      }
+       239 -  
+       240 -      /**
+       214         * 复制文件
+       215         */
+       216        private void copyFile(File source, File target) throws 
+             IOException {
+
+⏺ 现在修改代码，使用应用有权限的目录来存放驱动文件。关键问题是 OpenNI 需要知道驱动文件的位置。让我检查百度官方 demo 是如何处理的。
+
+⏺ Read(~/Desktop/八维通/需求-App/pad-天津/0205-百度给的新demo/Baidu_Face_Offline
+      _SDK_Android_8.5/Baidu_Face_Offline_SDK_Android_8.5/FaceSDKAndroid/app/src
+      /main/java/com/baidu/frs/activity/OrbbecDepthGateActivity.java)
+  ⎿  Error reading file
+
+⏺ Search(pattern: "**/*Orbbec*.java", path:
+        "~/Desktop/八维通/需求-App/pad-天津/0205-百度给的新demo/Baidu_Face_Offli
+        ne_SDK_Android_8.5/Baidu_Face_Offline_SDK_Android_8.5/FaceSDKAndroid")
+  ⎿  Found 1 file (ctrl+o to expand)
+
+⏺ Read(~/Desktop/八维通/需求-App/pad-天津/0205-百度给的新demo/Baidu_Face_Offline
+      _SDK_Android_8.5/Baidu_Face_Offline_SDK_Android_8.5/FaceSDKAndroid/datalib
+      rary/src/main/java/com/example/datalibrary/activity/BaseOrbbecActivity.jav
+      a)
+  ⎿  Read 32 lines
+
+⏺ Read(~/Desktop/八维通/需求-App/pad-天津/0205-百度给的新demo/Baidu_Face_Offline
+      _SDK_Android_8.5/Baidu_Face_Offline_SDK_Android_8.5/FaceSDKAndroid/app/bui
+      ld.gradle)
+  ⎿  Read 84 lines
+
+⏺ 让我检查一下当前项目的 jniLibs 目录结构和 nativeLibraryDir 情况，以理解为什么官方 demo 可以简单调用 OpenNI.initialize()。
+
+⏺ Bash(ls -la /Users/yaowen/code/my_code/YwTestDemo/app/src/main/jniLibs/)
+  ⎿  total 16                                         
+     drwxr-xr-x@  4 yaowen  staff   128  3  5 19:02 .
+     drwxr-xr-x   8 yaowen  staff   256  3  5 13:54 ..
+     … +2 lines (ctrl+o to expand)
+
+⏺ Bash(ls -la
+      /Users/yaowen/code/my_code/YwTestDemo/app/src/main/jniLibs/armeabi-v7a/
+      2>/dev/null || echo "目录不存在或为空")
+  ⎿  total 13600                                         
+     drwxr-xr-x@ 13 yaowen  staff      416  3  1 12:06 .
+     drwxr-xr-x@  4 yaowen  staff      128  3  5 19:02 ..
+     … +13 lines (ctrl+o to expand)
+
+⏺ Bash(cd /Users/yaowen/code/my_code/YwTestDemo && ./gradlew assembleDebug 2>&1
+      | tail -20)
+  ⎿  > Task :app:processDebugJavaRes NO-SOURCE        
+     > Task :app:mergeDebugJavaResource UP-TO-DATE
+     > Task :app:checkDebugDuplicateClasses UP-TO-DATE
+     … +17 lines (ctrl+o to expand)
+
+⏺ Bash(unzip -l /Users/yaowen/code/my_code/YwTestDemo/app/build/outputs/apk/debu
+      g/app-debug.apk | grep -E "lib/\.(so|jar)" | grep -i openni)
+  ⎿  No matches found
+
+⏺ Bash(unzip -l /Users/yaowen/code/my_code/YwTestDemo/app/build/outputs/apk/debu
+      g/app-debug.apk | grep "lib/.*\.so" | head -30)
+  ⎿     881240  01-01-1981 01:01   lib/armeabi-v7a/lib1180Driver.so   
+       1467264  01-01-1981 01:01   lib/armeabi-v7a/lib3000Driver.so
+        112048  01-01-1981 01:01   lib/armeabi-v7a/libImiCamera.jni.so
+     … +20 lines (ctrl+o to expand)
+
+⏺ 我发现 APK 中确实包含了所有 OpenNI 驱动文件：
+  - libOniFile.so
+  - libOpenNI2.jni.so
+  - libOpenNI2.so
+  - liborbbec.so
+  - liborbbecusb2.so
+
+  这些文件会被 Android 系统自动提取到应用的 nativeLibraryDir。让我简化代码，使用官方 demo 的方式，移除手动提取逻辑。
+
+⏺ Write(app/src/main/java/ywdemo/example/yaoxiaowen/baiduface/datalibrary/exampl
+       e/datalibrary/activity/BaseOrbbecActivity.java)
+  ⎿  Added 2 lines, removed 201 lines                                    
+        1    package ywdemo.example.yaoxiaowen.baiduface.datalibrary.exam
+            ple.datalibrary.activity;
+        2    
+        3 -  import android.content.Context;
+        3    import android.os.Bundle;
+        4    import android.util.Log;
+        5    
+        6    import org.openni.OpenNI;
+        7    
+        8 -  import java.io.File;
+        9 -  import java.io.FileInputStream;
+       10 -  import java.io.FileOutputStream;
+       11 -  import java.io.IOException;
+       12 -  import java.io.InputStream;
+       13 -  import java.io.OutputStream;
+       14 -  
+        8    public class BaseOrbbecActivity extends BaseActivity {
+        9    
+       10        private static final String TAG = "BaseOrbbecActivity";
+       11        private boolean isFirstOpenOrbbecSDK = true;
+       12 -      private static boolean driversExtracted = false;
+       12    
+       13        @Override
+       14        protected void onCreate(Bundle savedInstanceState) {
+     ...
+        30    
+        31        /**
+        32         * 初始化 OpenNI SDK
+        33 -       *
+        34 -       * 说明：
+        35 -       * 1. OpenNIHelper 会自动提取 assets/openni/ 
+           - 目录下的配置文件（.ini）
+        36 -       * 2. 但是 so 驱动文件需要手动提取到 
+           - /data/data/.../lib/ 目录
+        37 -       * 3. 所以这里只负责提取 so 文件，配置文件由 
+           - OpenNIHelper 处理
+        33 +       * 参考百度官方demo的实现方式
+        34         */
+        35        public void initializeOpenNI() {
+        36            try {
+        37                Log.d(TAG, "Starting OpenNI 
+             initialization...");
+        38    
+        39 -              // 首先提取 so 驱动文件（必须在 
+           - OpenNI.initialize() 之前完成）
+        40 -              extractOpenNIDrivers();
+        41 -  
+        39                // 设置SDK Log 日志是否输出
+        40                OpenNI.setLogAndroidOutput(true);
+        41                // 设置Log日志输出级别
+        42                OpenNI.setLogMinSeverity(0);
+        43                // 初始化SDK
+        44                OpenNI.initialize();
+        45 +  
+        46                Log.d(TAG, "OpenNI initialized successfully");
+        47            } catch (Exception e) {
+        48                Log.e(TAG, "Failed to initialize OpenNI", e);
+        49            }
+        50        }
+        51 -  
+        52 -      /**
+        53 -       * 将 OpenNI so 驱动文件从 APK 中提取到应用数据目录
+        54 -       *
+        55 -       * 注意：OpenNIHelper 只提取配置文件，不提取 so 文件
+        56 -       * 所以必须手动提取这些 so 文件到 /data/data/.../lib/ 
+           - 目录
+        57 -       *
+        58 -       * 重要：当 APK 只包含 armeabi-v7a 时，64 位设备会以 32
+           -  位兼容模式运行
+        59 -       * 此时需要从 APK 的 lib/armeabi-v7a/ 目录提取文件
+        60 -       */
+        61 -      private synchronized void extractOpenNIDrivers() {
+        62 -          if (driversExtracted) {
+        63 -              Log.d(TAG, "Drivers already extracted, 
+           - skipping...");
+        64 -              return;
+        65 -          }
+        66 -  
+        67 -          try {
+        68 -              Context context = getApplicationContext();
+        69 -              String dataDirPath = 
+           - context.getApplicationInfo().dataDir;
+        70 -              String targetLibPath = dataDirPath + "/lib";
+        71 -  
+        72 -              Log.d(TAG, "Target lib path: " + 
+           - targetLibPath);
+        73 -  
+        74 -              File targetDir = new File(targetLibPath);
+        75 -              if (!targetDir.exists()) {
+        76 -                  boolean created = targetDir.mkdirs();
+        77 -                  Log.d(TAG, "Target dir created: " + 
+           - created);
+        78 -              }
+        79 -  
+        80 -              // OpenNI 需要的驱动文件列表
+        81 -              String[] driverFiles = {
+        82 -                  "libOniFile.so",
+        83 -                  "liborbbec.so",
+        84 -                  "liborbbecusb2.so",
+        85 -                  "libOpenNI2.so",
+        86 -                  "libOpenNI2.jni.so"
+        87 -              };
+        88 -  
+        89 -              // 首先尝试从 nativeLibraryDir 
+           - 复制（系统已解压的 so 文件）
+        90 -              int copiedCount = 0;
+        91 -              boolean needExtractFromApk = false;
+        92 -              String nativeLibraryDir = 
+           - context.getApplicationInfo().nativeLibraryDir;
+        93 -  
+        94 -              for (String driver : driverFiles) {
+        95 -                  File targetFile = new File(targetLibPath, 
+           - driver);
+        96 -                  if (!targetFile.exists()) {
+        97 -                      // 尝试从 nativeLibraryDir 复制
+        98 -                      File sourceFile = new 
+           - File(nativeLibraryDir, driver);
+        99 -                      if (sourceFile.exists()) {
+       100 -                          copyFile(sourceFile, targetFile);
+       101 -                          Log.d(TAG, "Copied driver: " + 
+           - driver + " from " + nativeLibraryDir);
+       102 -                          copiedCount++;
+       103 -                      } else {
+       104 -                          needExtractFromApk = true;
+       105 -                          break;
+       106 -                      }
+       107 -                  } else {
+       108 -                      Log.d(TAG, "Driver already exists: " + 
+           - driver);
+       109 -                      copiedCount++;
+       110 -                  }
+       111 -              }
+       112 -  
+       113 -              // 如果 nativeLibraryDir 中没有文件，从 APK 
+           - 中提取
+       114 -              if (needExtractFromApk) {
+       115 -                  Log.d(TAG, "Drivers not found in 
+           - nativeLibraryDir, extracting from APK...");
+       116 -                  extractDriversFromApk(context, 
+           - targetLibPath, driverFiles);
+       117 -              }
+       118 -  
+       119 -              driversExtracted = true;
+       120 -              Log.d(TAG, "OpenNI drivers extracted 
+           - successfully (" + copiedCount + "/" + driverFiles.length + 
+           - ")");
+       121 -          } catch (Exception e) {
+       122 -              Log.e(TAG, "Error extracting OpenNI drivers", 
+           - e);
+       123 -              driversExtracted = true; // 
+           - 标记为已处理，避免重复尝试
+       124 -          }
+       125 -      }
+       126 -  
+       127 -      /**
+       128 -       * 从 APK 中提取驱动文件
+       129 -       * 会尝试两种架构：armeabi-v7a 和 
+           - arm64-v8a，哪个存在就用哪个
+       130 -       */
+       131 -      private void extractDriversFromApk(Context context, 
+           - String targetLibPath, String[] driverFiles) {
+       132 -          try {
+       133 -              String apkPath = context.getPackageCodePath();
+       134 -              Log.d(TAG, "APK path: " + apkPath);
+       135 -  
+       136 -              // 尝试的架构列表（按优先级）
+       137 -              String[] abisToTry = {"armeabi-v7a", 
+           - "arm64-v8a"};
+       138 -  
+       139 -              int copiedCount = 0;
+       140 -              for (String abi : abisToTry) {
+       141 -                  boolean allFound = true;
+       142 -                  for (String driver : driverFiles) {
+       143 -                      File targetFile = new 
+           - File(targetLibPath, driver);
+       144 -                      if (!targetFile.exists()) {
+       145 -                          String entryPath = "lib/" + abi + 
+           - "/" + driver;
+       146 -                          if (extractFileFromApk(apkPath, 
+           - entryPath, targetFile)) {
+       147 -                              Log.d(TAG, "Extracted from APK 
+           - (" + abi + "): " + driver);
+       148 -                              copiedCount++;
+       149 -                          } else {
+       150 -                              allFound = false;
+       151 -                              break; // 
+           - 这个架构不完整，尝试下一个
+       152 -                          }
+       153 -                      } else {
+       154 -                          copiedCount++;
+       155 -                      }
+       156 -                  }
+       157 -                  if (allFound || copiedCount == 
+           - driverFiles.length) {
+       158 -                      Log.d(TAG, "Using ABI: " + abi);
+       159 -                      break; // 找到完整的架构了
+       160 -                  }
+       161 -                  // 
+           - 如果这个架构不完整，清空已复制的文件，尝试下一个架构
+       162 -                  if (copiedCount < driverFiles.length) {
+       163 -                      for (String driver : driverFiles) {
+       164 -                          new File(targetLibPath, 
+           - driver).delete();
+       165 -                      }
+       166 -                      copiedCount = 0;
+       167 -                  }
+       168 -              }
+       169 -  
+       170 -              Log.d(TAG, "Extracted " + copiedCount + "/" + 
+           - driverFiles.length + " drivers from APK");
+       171 -          } catch (Exception e) {
+       172 -              Log.e(TAG, "Error extracting drivers from APK",
+           -  e);
+       173 -          }
+       174 -      }
+       175 -  
+       176 -      /**
+       177 -       * 从APK文件中提取指定文件
+       178 -       */
+       179 -      private boolean extractFileFromApk(String apkPath, 
+           - String entryPath, File targetFile) {
+       180 -          java.util.zip.ZipFile zipFile = null;
+       181 -          try {
+       182 -              zipFile = new java.util.zip.ZipFile(apkPath);
+       183 -              java.util.zip.ZipEntry entry = 
+           - zipFile.getEntry(entryPath);
+       184 -              if (entry == null) {
+       185 -                  Log.w(TAG, "Entry not found in APK: " + 
+           - entryPath);
+       186 -                  return false;
+       187 -              }
+       188 -  
+       189 -              InputStream is = zipFile.getInputStream(entry);
+       190 -              copyStream(is, targetFile);
+       191 -              Log.d(TAG, "Successfully extracted: " + 
+           - entryPath + " to " + targetFile.getAbsolutePath());
+       192 -              return true;
+       193 -          } catch (Exception e) {
+       194 -              Log.e(TAG, "Error extracting file from APK: " +
+           -  entryPath, e);
+       195 -              return false;
+       196 -          } finally {
+       197 -              if (zipFile != null) {
+       198 -                  try {
+       199 -                      zipFile.close();
+       200 -                  } catch (IOException e) {
+       201 -                      // Ignore
+       202 -                  }
+       203 -              }
+       204 -          }
+       205 -      }
+       206 -  
+       207 -      /**
+       208 -       * 复制文件
+       209 -       */
+       210 -      private void copyFile(File source, File target) throws 
+           - IOException {
+       211 -          try (FileInputStream fis = new 
+           - FileInputStream(source);
+       212 -               FileOutputStream fos = new 
+           - FileOutputStream(target)) {
+       213 -              byte[] buffer = new byte[8192];
+       214 -              int len;
+       215 -              while ((len = fis.read(buffer)) > 0) {
+       216 -                  fos.write(buffer, 0, len);
+       217 -              }
+       218 -          }
+       219 -      }
+       220 -  
+       221 -      /**
+       222 -       * 复制流
+       223 -       */
+       224 -      private void copyStream(InputStream is, File 
+           - targetFile) throws IOException {
+       225 -          try (OutputStream os = new 
+           - FileOutputStream(targetFile)) {
+       226 -              byte[] buffer = new byte[8192];
+       227 -              int len;
+       228 -              while ((len = is.read(buffer)) > 0) {
+       229 -                  os.write(buffer, 0, len);
+       230 -              }
+       231 -          } finally {
+       232 -              is.close();
+       233 -          }
+       234 -      }
+        51    }
+
+⏺ Bash(./gradlew assembleDebug 2>&1 | tail -10)
+  ⎿  > Task :app:validateSigningDebug UP-TO-DATE           
+     > Task :app:writeDebugAppMetadata UP-TO-DATE
+     > Task :app:writeDebugSigningConfigVersions UP-TO-DATE
+     … +7 lines (ctrl+o to expand)
+
+⏺ Bash(adb install -r /Users/yaowen/code/my_code/YwTestDemo/app/build/outputs/ap
+      k/debug/app-debug.apk)
+  ⎿  Performing Streamed Install
+     Success
+
+⏺ Bash(adb logcat -c && adb shell am start -n
+      ywdemo.example.yaoxiaowen/.BdStartActivity && sleep 3 && adb logcat -d |
+      grep -E "(BaseOrbbecActivity|OpenNI|orbbec|Devic…)
+  ⎿ Starting: Intent { cmp=ywdemo.example.yaoxiaowen/.BdStartActivity }    
+    Error type 3
+    Error: Activity class {ywdemo.example.yaoxiaowen/ywdemo.example.yaoxiao
+    wen.BdStartActivity} does not exist.
+
+
+⏺ Bash(adb shell pm list packages | grep yaowen)
+  ⎿  No matches found
+
+⏺ Bash(adb shell pm list packages | grep ywdemo)
+  ⎿  package:ywdemo.example.yaoxiaowen
+
+⏺ Search(pattern: "BdStartActivity", path: "app/src/main/AndroidManifest.xml",
+        output_mode: "content")
+  ⎿  Found 1 line (ctrl+o to expand)
+
+⏺ Bash(adb logcat -c && adb shell am start -n
+      ywdemo.example.yaoxiaowen/.baiduface.BdStartActivity && sleep 5 && adb
+      logcat -d | grep -E "(BaseOrbbecActivity|OpenNI|or…)
+  ⎿ Starting: Intent { cmp=ywdemo.example.yaoxiaowen/.baiduface.BdStartActi
+    vity }
+    03-05 19:08:02.425 31651 31651 W System.err: 	at ywdemo.example.yaoxiao
+    … +165 lines (ctrl+o to expand)
+
+
+
+⏺ 现在我发现了问题的根本原因！从日志中可以看到：
+
+  I OpenNI  : Using '/data/app/ywdemo.example.yaoxiaowen-2/base.apk!/lib/armeabi-v7a/' as driver path
+  E OpenNI  : Failed to get path: /data/data/ywdemo.example.yaoxiaowen/lib//libOniFile.so
+  E OpenNI  : Failed to get path: /data/data/ywdemo.example.yaoxiaowen/files//libOniFile.so
+  E OpenNI  : Failed to get path libOniFile.so for lib: /system/lib/libOniFile.so
+
+  问题是：
+  1. OpenNI 识别到 APK 中的驱动路径是 base.apk!/lib/armeabi-v7a/
+  2. 但它查找驱动的实际路径是 /data/data/.../lib/ 和 /system/lib/，这些路径都找不到文件
+  3. 正确的 nativeLibraryDir 路径是 /data/app/ywdemo.example.yaoxiaowen-2/lib/arm/
+
+  让我检查 OpenNI.ini 配置文件，看看是否可以通过配置指定正确的驱动路径。
+
+⏺ Read(app/src/main/assets/openni/OpenNI.ini)
+  ⎿  Read 18 lines
+
+⏺ Bash(adb shell "ls -la /data/app/ywdemo.example.yaoxiaowen-2/lib/arm/ | grep
+      -E '(libOniFile|liborbbec|libOpenNI2)'")
+  ⎿  Error: Exit code 1
+
+⏺ Bash(adb shell "run-as ywdemo.example.yaoxiaowen ls -la lib/ | grep -E
+      '(libOniFile|liborbbec|libOpenNI2)'")
+  ⎿  Error: Exit code 1
+
+⏺ Bash(adb shell run-as ywdemo.example.yaoxiaowen ls -la lib/)
+  ⎿  total 16                                           
+     drwxr-xr-x 2 system system 4096 2026-03-05 19:07 .
+     drwxr-xr-x 3 system system 4096 2026-03-05 19:07 ..
+
+⏺ Bash(unzip -l /Users/yaowen/code/my_code/YwTestDemo/app/build/outputs/apk/debu
+      g/app-debug.apk | grep "lib/armeabi-v7a/.*\.so" | wc -l)
+  ⎿  22
+
+⏺ Bash(adb shell run-as ywdemo.example.yaoxiaowen ls -la)
+  ⎿  total 72                                              
+     drwx------  7 u0_a159 u0_a159 4096 2026-03-05 19:07 .
+     drwxrwx--x 88 system  system  4096 2026-03-05 19:03 ..
+     … +9 lines (ctrl+o to expand)
+
+⏺ Bash(adb shell "ls -la /data/app/ywdemo.example.yaoxiaowen-2/lib/arm/" | head
+      -20)
+  ⎿  total 16                                           
+     drwxr-xr-x 2 system system 4096 2026-03-05 19:07 .
+     drwxr-xr-x 3 system system 4096 2026-03-05 19:07 ..
+
+⏺ Bash(adb shell "dumpsys package ywdemo.example.yaoxiaowen | grep -E
+      '(primaryCpuAbi|nativeLibraryPath)'")
+  ⎿      primaryCpuAbi=armeabi-v7a
+
+⏺ Search(pattern: "System\.loadLibrary.*OpenNI", path:
+        "~/code/my_code/YwTestDemo", output_mode: "content")
+  ⎿  Found 0 lines 
+
+⏺ Bash(unzip -l
+      /Users/yaowen/code/my_code/YwTestDemo/app/libs/orbbec_module-debug.aar |
+      grep -E '\.(jar|class)$')
+  ⎿        662  02-01-1980 00:00   classes.jar       
+         41218  02-01-1980 00:00   libs/openni2.3.jar
+
+⏺ Bash(cd /tmp && rm -rf orbbec_aar && mkdir orbbec_aar && cd orbbec_aar &&
+      unzip -q
+      /Users/yaowen/code/my_code/YwTestDemo/app/libs/orbbec_module-debug.aar
+      classes.jar…)
+  ⎿  No matches found
+
+⏺ Bash(cd /tmp/orbbec_aar && unzip -q ../orbbec_module-debug.aar
+      libs/openni2.3.jar && javap -cp libs/openni2.3.jar org.openni.OpenNI 2>&1
+      | head -30)
+  ⎿  Error: Exit code 9
+     unzip:  cannot find or open ../orbbec_module-debug.aar, 
+     ../orbbec_module-debug.aar.zip or ../orbbec_module-debug.aar.ZIP.
+
+⏺ Bash(cd /tmp/orbbec_aar && unzip -q
+      /Users/yaowen/code/my_code/YwTestDemo/app/libs/orbbec_module-debug.aar
+      libs/openni2.3.jar && javap -cp libs/openni2.3.jar org.ope…)
+  ⎿  Compiled from "OpenNI.java"                                 
+     public class org.openni.OpenNI {
+       public static final int TIMEOUT_FOREVER;
+     … +27 lines (ctrl+o to expand)
+  ⎿  Shell cwd was reset to /Users/yaowen/code/my_code/YwTestDemo
+
+⏺ Bash(cd /tmp/orbbec_aar && javap -cp libs/openni2.3.jar
+      org.openni.NativeMethods 2>&1 | head -50)
+  ⎿  Compiled from "NativeMethods.java"                          
+     class org.openni.NativeMethods {
+       public static final int STREAM_PROPERTY_CROPPING;
+     … +55 lines (ctrl+o to expand)
+  ⎿  Shell cwd was reset to /Users/yaowen/code/my_code/YwTestDemo
+
+⏺ 现在我明白了问题的根本原因！
+
+  问题分析：
+  1. OpenNI 的 Java 类没有静态初始化块来加载 native 库
+  2. 因此 Android 系统不会自动将对应的 .so 文件提取到 nativeLibraryDir
+  3. 当 OpenNI.initialize() 被调用时，它尝试查找驱动文件，但 nativeLibraryDir 是空的
+
+  解决方案：在 OpenNI.initialize() 之前显式加载必要的库。
+
+  让我修改 BaseOrbbecActivity.java 来添加显式加载库的代码：
+
+⏺ Read(app/src/main/java/ywdemo/example/yaoxiaowen/baiduface/datalibrary/example
+      /datalibrary/activity/BaseOrbbecActivity.java)
+  ⎿  Read 43 lines
+
+⏺ Update(app/src/main/java/ywdemo/example/yaoxiaowen/baiduface/datalibrary/examp
+        le/datalibrary/activity/BaseOrbbecActivity.java)
+  ⎿  Added 21 lines                                                     
+       10        private static final String TAG = "BaseOrbbecActivity";
+       11        private boolean isFirstOpenOrbbecSDK = true;
+       12    
+       13 +      // 静态初始化块，加载 OpenNI 相关的 native 库
+       14 +      // 这样可以确保 Android 系统将这些 .so 文件提取到 
+          + nativeLibraryDir
+       15 +      static {
+       16 +          try {
+       17 +              Log.d(TAG, "Loading OpenNI native 
+          + libraries...");
+       18 +              // 加载 OpenNI 核心库（按依赖顺序）
+       19 +              System.loadLibrary("OpenNI2");
+       20 +              System.loadLibrary("OniFile");
+       21 +              System.loadLibrary("orbbec");
+       22 +              System.loadLibrary("orbbecusb2");
+       23 +              Log.d(TAG, "OpenNI native libraries loaded 
+          + successfully");
+       24 +          } catch (UnsatisfiedLinkError e) {
+       25 +              Log.e(TAG, "Failed to load OpenNI native 
+          + libraries", e);
+       26 +          }
+       27 +      }
+       28 +  
+       29 +  public class BaseOrbbecActivity extends BaseActivity {
+       30 +  
+       31 +      private static final String TAG = "BaseOrbbecActivity";
+       32 +      private boolean isFirstOpenOrbbecSDK = true;
+       33 +  
+       34        @Override
+       35        protected void onCreate(Bundle savedInstanceState) {
+       36            super.onCreate(savedInstanceState);
+
+⏺ Read(app/src/main/java/ywdemo/example/yaoxiaowen/baiduface/datalibrary/example
+      /datalibrary/activity/BaseOrbbecActivity.java)
+  ⎿  Read 64 lines
+
+⏺ Write(app/src/main/java/ywdemo/example/yaoxiaowen/baiduface/datalibrary/exampl
+       e/datalibrary/activity/BaseOrbbecActivity.java)
+  ⎿  Removed 5 lines                                                    
+       26            }
+       27        }
+       28    
+       29 -  public class BaseOrbbecActivity extends BaseActivity {
+       30 -  
+       31 -      private static final String TAG = "BaseOrbbecActivity";
+       32 -      private boolean isFirstOpenOrbbecSDK = true;
+       33 -  
+       29        @Override
+       30        protected void onCreate(Bundle savedInstanceState) {
+       31            super.onCreate(savedInstanceState);
+
+⏺ Bash(./gradlew assembleDebug 2>&1 | tail -10)
+  ⎿  > Task :app:validateSigningDebug UP-TO-DATE           
+     > Task :app:writeDebugAppMetadata UP-TO-DATE
+     > Task :app:writeDebugSigningConfigVersions UP-TO-DATE
+     … +7 lines (ctrl+o to expand)
+
+⏺ Bash(adb install -r /Users/yaowen/code/my_code/YwTestDemo/app/build/outputs/ap
+      k/debug/app-debug.apk)
+  ⎿  Performing Streamed Install
+     Success
+
+⏺ Bash(adb logcat -c && adb shell am start -n
+      ywdemo.example.yaoxiaowen/.baiduface.BdStartActivity && sleep 5 && adb
+      logcat -d | grep -E "(BaseOrbbecActivity|OpenNI|or…)
+  ⎿ Starting: Intent { cmp=ywdemo.example.yaoxiaowen/.baiduface.BdStartActi
+    vity }
+    03-05 19:10:56.406 31811 31811 D BaseOrbbecActivity: Loading OpenNI nat
+    … +145 lines (ctrl+o to expand)
+
+
+
+⏺ Bash(adb shell "ls -la /data/app/ywdemo.example.yaoxiaowen-1/lib/arm/ | grep
+      -E '(libOniFile|liborbbec|libOpenNI2)'")
+  ⎿  Error: Exit code 1
+
+⏺ Bash(adb shell "ls -la /data/app/ywdemo.example.yaoxiaowen-1/lib/arm/")
+  ⎿  total 16                                           
+     drwxr-xr-x 2 system system 4096 2026-03-05 19:10 .
+     drwxr-xr-x 3 system system 4096 2026-03-05 19:10 ..
+
+⏺ Bash(adb shell "ls -la /data/app/ywdemo.example.yaoxiaowen-1/")
+  ⎿  total 156424                                             
+     drwxr-xr-x  4 system system      4096 2026-03-05 19:10 .
+     drwxrwx--x 11 system system      4096 2026-03-05 19:10 ..
+     … +3 lines (ctrl+o to expand)
+
+⏺ Bash(adb shell "find /data/app/ywdemo.example.yaoxiaowen-1/lib -type f -name
+      '*.so' | head -20")
+  ⎿  (No content)
+
+⏺ 现在我理解了问题的根本原因：
+
+  1. System.loadLibrary() 成功加载了库到内存中（没有 UnsatisfiedLinkError）
+  2. 但 OpenNI 的驱动查找机制需要在文件系统中找到这些库文件
+  3. OpenNI 尝试查找的路径是：
+    - /data/data/ywdemo.example.yaoxiaowen/lib/（没有权限）
+    - /data/data/ywdemo.example.yaoxiaowen/files/（有权限）
+
+  我需要修改代码，手动将驱动文件从 APK 提取到 /data/data/.../files/ 目录：
+
+⏺ Write(app/src/main/java/ywdemo/example/yaoxiaowen/baiduface/datalibrary/exampl
+       e/datalibrary/activity/BaseOrbbecActivity.java)
+  ⎿  Added 113 lines, removed 17 lines                                   
+        1    package ywdemo.example.yaoxiaowen.baiduface.datalibrary.exam
+            ple.datalibrary.activity;
+        2    
+        3 +  import android.content.Context;
+        4    import android.os.Bundle;
+        5    import android.util.Log;
+        6    
+        7    import org.openni.OpenNI;
+        8    
+        9 +  import java.io.File;
+       10 +  import java.io.FileOutputStream;
+       11 +  import java.io.InputStream;
+       12 +  import java.util.zip.ZipEntry;
+       13 +  import java.util.zip.ZipFile;
+       14 +  
+       15    public class BaseOrbbecActivity extends BaseActivity {
+       16    
+       17        private static final String TAG = "BaseOrbbecActivity";
+       18        private boolean isFirstOpenOrbbecSDK = true;
+       19 +      private static boolean driversExtracted = false;
+       20    
+       21 -      // 静态初始化块，加载 OpenNI 相关的 native 库
+       22 -      // 这样可以确保 Android 系统将这些 .so 文件提取到 
+          - nativeLibraryDir
+       23 -      static {
+       24 -          try {
+       25 -              Log.d(TAG, "Loading OpenNI native 
+          - libraries...");
+       26 -              // 加载 OpenNI 核心库（按依赖顺序）
+       27 -              System.loadLibrary("OpenNI2");
+       28 -              System.loadLibrary("OniFile");
+       29 -              System.loadLibrary("orbbec");
+       30 -              System.loadLibrary("orbbecusb2");
+       31 -              Log.d(TAG, "OpenNI native libraries loaded 
+          - successfully");
+       32 -          } catch (UnsatisfiedLinkError e) {
+       33 -              Log.e(TAG, "Failed to load OpenNI native 
+          - libraries", e);
+       34 -          }
+       35 -      }
+       36 -  
+       21        @Override
+       22        protected void onCreate(Bundle savedInstanceState) {
+       23            super.onCreate(savedInstanceState);
+     ...
+       37    
+       38        /**
+       39         * 初始化 OpenNI SDK
+       40 -       * 参考百度官方demo的实现方式
+       40 +       *
+       41 +       * 说明：
+       42 +       * 1. 在 32 位兼容模式下运行时，OpenNI 
+          + 无法自动找到驱动文件
+       43 +       * 2. 需要手动将驱动文件从 APK 提取到 
+          + /data/data/.../files/ 目录
+       44 +       * 3. 这样 OpenNI 才能找到并加载驱动
+       45         */
+       46        public void initializeOpenNI() {
+       47            try {
+       48                Log.d(TAG, "Starting OpenNI initialization...");
+       49    
+       50 +              // 首先提取驱动文件到应用可访问的目录
+       51 +              extractOpenNIDrivers();
+       52 +  
+       53                // 设置SDK Log 日志是否输出
+       54                OpenNI.setLogAndroidOutput(true);
+       55                // 设置Log日志输出级别
+     ...
+        55                Log.e(TAG, "Failed to initialize OpenNI", e);
+        56            }
+        57        }
+        58 +  
+        59 +      /**
+        60 +       * 将 OpenNI 驱动文件从 APK 中提取到应用数据目录
+        61 +       *
+        62 +       * 重要：在 32 位兼容模式下，OpenNI 在 
+           + /data/data/.../files/ 目录查找驱动
+        63 +       */
+        64 +      private synchronized void extractOpenNIDrivers() {
+        65 +          if (driversExtracted) {
+        66 +              Log.d(TAG, "Drivers already extracted, 
+           + skipping...");
+        67 +              return;
+        68 +          }
+        69 +  
+        70 +          try {
+        71 +              Context context = getApplicationContext();
+        72 +              // 使用 files 目录，应用对这个目录有写权限
+        73 +              File targetDir = new 
+           + File(context.getFilesDir(), "lib");
+        74 +              if (!targetDir.exists()) {
+        75 +                  boolean created = targetDir.mkdirs();
+        76 +                  Log.d(TAG, "Target dir created: " + 
+           + created);
+        77 +              }
+        78 +  
+        79 +              Log.d(TAG, "Target driver path: " + 
+           + targetDir.getAbsolutePath());
+        80 +  
+        81 +              // OpenNI 需要的驱动文件列表
+        82 +              String[] driverFiles = {
+        83 +                  "libOniFile.so",
+        84 +                  "liborbbec.so",
+        85 +                  "liborbbecusb2.so",
+        86 +                  "libOpenNI2.so",
+        87 +                  "libOpenNI2.jni.so"
+        88 +              };
+        89 +  
+        90 +              int copiedCount = 0;
+        91 +              String apkPath = context.getPackageCodePath();
+        92 +  
+        93 +              for (String driver : driverFiles) {
+        94 +                  File targetFile = new File(targetDir, 
+           + driver);
+        95 +                  if (!targetFile.exists()) {
+        96 +                      // 从 APK 中提取（仅尝试 
+           + armeabi-v7a，因为应用只支持这个架构）
+        97 +                      String entryPath = "lib/armeabi-v7a/" +
+           +  driver;
+        98 +                      if (extractFileFromApk(apkPath, 
+           + entryPath, targetFile)) {
+        99 +                          Log.d(TAG, "Extracted driver: " + 
+           + driver);
+       100 +                          copiedCount++;
+       101 +                      } else {
+       102 +                          Log.e(TAG, "Failed to extract 
+           + driver: " + driver);
+       103 +                      }
+       104 +                  } else {
+       105 +                      Log.d(TAG, "Driver already exists: " + 
+           + driver);
+       106 +                      copiedCount++;
+       107 +                  }
+       108 +              }
+       109 +  
+       110 +              driversExtracted = true;
+       111 +              Log.d(TAG, "OpenNI drivers extracted 
+           + successfully (" + copiedCount + "/" + driverFiles.length + 
+           + ")");
+       112 +          } catch (Exception e) {
+       113 +              Log.e(TAG, "Error extracting OpenNI drivers", 
+           + e);
+       114 +              driversExtracted = true; // 
+           + 标记为已处理，避免重复尝试
+       115 +          }
+       116 +      }
+       117 +  
+       118 +      /**
+       119 +       * 从APK文件中提取指定文件
+       120 +       */
+       121 +      private boolean extractFileFromApk(String apkPath, 
+           + String entryPath, File targetFile) {
+       122 +          ZipFile zipFile = null;
+       123 +          try {
+       124 +              zipFile = new ZipFile(apkPath);
+       125 +              ZipEntry entry = zipFile.getEntry(entryPath);
+       126 +              if (entry == null) {
+       127 +                  Log.w(TAG, "Entry not found in APK: " + 
+           + entryPath);
+       128 +                  return false;
+       129 +              }
+       130 +  
+       131 +              InputStream is = zipFile.getInputStream(entry);
+       132 +              try (FileOutputStream os = new 
+           + FileOutputStream(targetFile)) {
+       133 +                  byte[] buffer = new byte[8192];
+       134 +                  int len;
+       135 +                  while ((len = is.read(buffer)) > 0) {
+       136 +                      os.write(buffer, 0, len);
+       137 +                  }
+       138 +              }
+       139 +              is.close();
+       140 +              Log.d(TAG, "Successfully extracted: " + 
+           + entryPath + " to " + targetFile.getAbsolutePath());
+       141 +              return true;
+       142 +          } catch (Exception e) {
+       143 +              Log.e(TAG, "Error extracting file from APK: " +
+           +  entryPath, e);
+       144 +              return false;
+       145 +          } finally {
+       146 +              if (zipFile != null) {
+       147 +                  try {
+       148 +                      zipFile.close();
+       149 +                  } catch (Exception e) {
+       150 +                      // Ignore
+       151 +                  }
+       152 +              }
+       153 +          }
+       154 +      }
+       155    }
+  ⎿  API Error: 429 {"error":{"code":"1308","message":"已达到 5 
+     小时的使用上限。您的限额将在 2026-03-05 20:26:00 
+     重置。"},"request_id":"20260305191431c1e7936de9f84fc8"}
+
+
+

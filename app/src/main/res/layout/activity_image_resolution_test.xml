@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- 1倍图区域 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv_1x"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:src="@drawable/ic_img_1x"
+            android:scaleType="fitCenter" />
+
+        <TextView
+            android:id="@+id/tv_1x"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:textSize="14sp"
+            android:textColor="#333333" />
+
+    </LinearLayout>
+
+    <!-- 2倍图区域 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv_2x"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:src="@drawable/ic_img_2x"
+            android:scaleType="fitCenter" />
+
+        <TextView
+            android:id="@+id/tv_2x"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:textSize="14sp"
+            android:textColor="#333333" />
+
+    </LinearLayout>
+
+    <!-- 3倍图区域 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv_3x"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:src="@drawable/ic_img_3x"
+            android:scaleType="fitCenter" />
+
+        <TextView
+            android:id="@+id/tv_3x"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:textSize="14sp"
+            android:textColor="#333333" />
+
+    </LinearLayout>
+
+</LinearLayout>

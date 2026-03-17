@@ -91,6 +91,9 @@ public class BdFaceDepthGateActivity extends BaseOrbbecActivity implements View.
     private TextView mTvDepth;
     private TextView mTvDepthScore;
 
+    // 遮挡检测提示
+    private TextView mTvOcclusionTip;
+
     private TextView mTvFeature;
     private TextView mTvAll;
     private TextView mTvAllTime;
@@ -285,6 +288,8 @@ public class BdFaceDepthGateActivity extends BaseOrbbecActivity implements View.
         // depth活体
         mTvDepth = findViewById(R.id.tv_depth_live_time);
         mTvDepthScore = findViewById(R.id.tv_depth_live_score);
+        // 遮挡检测提示
+        mTvOcclusionTip = findViewById(R.id.tv_occlusion_tip);
         // 特征提取
         mTvFeature = findViewById(R.id.tv_feature_time);
         // 检索
@@ -569,6 +574,7 @@ public class BdFaceDepthGateActivity extends BaseOrbbecActivity implements View.
                     mTvLiveScore.setText(String.format("RGB活体得分 ：%s", 0));
                     mTvDepth.setText(String.format("Depth活体检测耗时 ：%s ms", 0));
                     mTvDepthScore.setText(String.format("Depth活体得分 ：%s", 0));
+                    mTvOcclusionTip.setVisibility(View.GONE);
                     mTvFeature.setText(String.format("特征抽取耗时 ：%s ms", 0));
                     mTvAll.setText(String.format("特征比对耗时 ：%s ms", 0));
                     mTvAllTime.setText(String.format("总耗时 ：%s ms", 0));
@@ -609,8 +615,25 @@ public class BdFaceDepthGateActivity extends BaseOrbbecActivity implements View.
                     if (isCompareCheck) {
                         layoutCompareStatus.setVisibility(View.VISIBLE);
                         textCompareStatus.setTextColor(Color.parseColor("#FFFEC133"));
-                        //                                                textCompareStatus.setMaxEms(6);
-                        textCompareStatus.setText("请正视摄像头");
+
+                        // 获取遮挡检测结果
+                        String occlusionTip = livenessModel.getQualityOcclusion();
+                        String detectTip = livenessModel.getQualityDetect();
+
+                        // 优先显示遮挡提示，其次显示其他质量检测提示
+                        if (occlusionTip != null && !occlusionTip.isEmpty()) {
+                            textCompareStatus.setText(occlusionTip);
+                            // 在开发模式下也显示遮挡提示
+                            mTvOcclusionTip.setVisibility(View.VISIBLE);
+                            mTvOcclusionTip.setTextColor(Color.parseColor("#FFFEC133"));
+                            mTvOcclusionTip.setText("遮挡检测：" + occlusionTip);
+                        } else if (detectTip != null && !detectTip.isEmpty()) {
+                            textCompareStatus.setText(detectTip);
+                            mTvOcclusionTip.setVisibility(View.GONE);
+                        } else {
+                            textCompareStatus.setText("请正视摄像头");
+                            mTvOcclusionTip.setVisibility(View.GONE);
+                        }
                     }
                 } else if (rgbLivenessScore < rgbLiveScore || depthLivenessScore < depthLiveScore) {
                     if (isCompareCheck) {
@@ -620,7 +643,11 @@ public class BdFaceDepthGateActivity extends BaseOrbbecActivity implements View.
                         //                            textCompareStatus.setMaxEms(7);
                         textCompareStatus.setText("活体检测未通过");
                     }
+                    // 隐藏遮挡提示
+                    mTvOcclusionTip.setVisibility(View.GONE);
                 } else {
+                    // 隐藏遮挡提示
+                    mTvOcclusionTip.setVisibility(View.GONE);
                     User user = livenessModel.getUser();
                     if (user == null) {
                         mUser = null;

@@ -98,6 +98,10 @@ public class FaceSDKManager {
     private boolean checkMouthMask = false;
     private boolean isMultiIdentify = false;
 
+    // 存储最近一次质量检测的失败信息
+    private String lastQualityDetectFail = "";
+    private String lastQualityOcclusionFail = "";
+
     private FaceSDKManager() {
         faceAuth = new FaceAuth();
         faceAuth.setCoreConfigure(BDFaceSDKCommon.BDFaceCoreRunMode.BDFACE_LITE_POWER_NO_BIND, 2);
@@ -119,6 +123,20 @@ public class FaceSDKManager {
 
     public void setMultiIdentify(boolean isMultiFaceIdentify) {
         this.isMultiIdentify = isMultiFaceIdentify;
+    }
+
+    /**
+     * 获取最近一次质量检测的遮挡失败信息
+     */
+    public String getLastQualityOcclusionFail() {
+        return lastQualityOcclusionFail;
+    }
+
+    /**
+     * 获取最近一次质量检测的其他失败信息（模糊、光照、姿态等）
+     */
+    public String getLastQualityDetectFail() {
+        return lastQualityDetectFail;
     }
 
     private static class HolderClass {
@@ -609,6 +627,9 @@ public class FaceSDKManager {
 
                                     if (!onQualityCheck(
                                             faceInfos, bdFaceCheckConfig.bdQualityConfig, faceDetectCallBack)) {
+                                        // 将遮挡检测信息设置到 livenessModel
+                                        livenessModel.setQualityOcclusion(lastQualityOcclusionFail);
+                                        livenessModel.setQualityDetect(lastQualityDetectFail);
                                         livenessModel.setQualityCheck(true);
                                         livenessModel.clearIdentifyResults();
                                         rgbInstance.destory();
@@ -1735,9 +1756,15 @@ public class FaceSDKManager {
         final FaceDetectCallBack faceDetectCallBack) {
 
         if (bdQualityConfig == null) {
+            lastQualityDetectFail = "";
+            lastQualityOcclusionFail = "";
             return true;
         }
         boolean qualityCheck = false;
+        // 用于存储检测失败信息
+        StringBuffer detectFailBuffer = new StringBuffer();
+        StringBuffer occlusionFailBuffer = new StringBuffer();
+
         if (faceInfos != null) {
             int size = faceInfos.length;
             for (int i = 0; i < size; ++i) {
@@ -1746,12 +1773,15 @@ public class FaceSDKManager {
                 // 角度过滤
                 if (Math.abs(faceInfo.yaw) > bdQualityConfig.gesture) {
                     faceDetectCallBack.onTip(-1, "人脸左右偏转角超出限制");
+                    detectFailBuffer.append("人脸左右偏转角超出限制");
                     checkItem = false;
                 } else if (Math.abs(faceInfo.roll) > bdQualityConfig.gesture) {
                     faceDetectCallBack.onTip(-1, "人脸平行平面内的头部旋转角超出限制");
+                    detectFailBuffer.append("人脸平行平面内的头部旋转角超出限制");
                     checkItem = false;
                 } else if (Math.abs(faceInfo.pitch) > bdQualityConfig.gesture) {
                     faceDetectCallBack.onTip(-1, "人脸上下偏转角超出限制");
+                    detectFailBuffer.append("人脸上下偏转角超出限制");
                     checkItem = false;
                 }
 
@@ -1759,6 +1789,7 @@ public class FaceSDKManager {
                 float blur = faceInfo.bluriness;
                 if (blur > bdQualityConfig.blur) {
                     faceDetectCallBack.onTip(-1, "图片模糊");
+                    detectFailBuffer.append("图片模糊");
                     checkItem = false;
                 }
 
@@ -1767,6 +1798,7 @@ public class FaceSDKManager {
                 Log.e("illum", "illum = " + illum);
                 if (illum < bdQualityConfig.illum) {
                     faceDetectCallBack.onTip(-1, "图片光照不通过");
+                    detectFailBuffer.append("图片光照不通过");
                     checkItem = false;
                 }
 
@@ -1779,43 +1811,58 @@ public class FaceSDKManager {
                         if (occlusion.leftEye > bdQualityConfig.leftEye) {
                             // 左眼遮挡置信度
                             faceDetectCallBack.onTip(-1, "左眼遮挡");
+                            occlusionFailBuffer.append("左眼遮挡");
                             checkItem = false;
                         } else if (occlusion.rightEye > bdQualityConfig.rightEye) {
                             // 右眼遮挡置信度
                             faceDetectCallBack.onTip(-1, "右眼遮挡");
+                            occlusionFailBuffer.append("右眼遮挡");
                             checkItem = false;
                         } else if (occlusion.nose > bdQualityConfig.nose) {
                             // 鼻子遮挡置信度
                             faceDetectCallBack.onTip(-1, "鼻子遮挡");
+                            occlusionFailBuffer.append("鼻子遮挡");
                             checkItem = false;
                         } else if (occlusion.mouth > bdQualityConfig.mouth) {
                             // 嘴巴遮挡置信度
                             faceDetectCallBack.onTip(-1, "嘴巴遮挡");
+                            occlusionFailBuffer.append("嘴巴遮挡");
                             checkItem = false;
                         } else if (occlusion.leftCheek > bdQualityConfig.leftCheek) {
                             // 左脸遮挡置信度
                             faceDetectCallBack.onTip(-1, "左脸遮挡");
+                            occlusionFailBuffer.append("左脸遮挡");
                             checkItem = false;
                         } else if (occlusion.rightCheek > bdQualityConfig.rightCheek) {
                             // 右脸遮挡置信度
                             faceDetectCallBack.onTip(-1, "右脸遮挡");
+                            occlusionFailBuffer.append("右脸遮挡");
                             checkItem = false;
                         } else if (occlusion.chin > bdQualityConfig.chinContour) {
                             // 下巴遮挡置信度
                             faceDetectCallBack.onTip(-1, "下巴遮挡");
+                            occlusionFailBuffer.append("下巴遮挡");
+                            checkItem = false;
                         }
                     }
                 }
                 else{
+                    lastQualityDetectFail = "";
+                    lastQualityOcclusionFail = "";
                     return true;
                 }
 
                 if (checkItem) {
+                    lastQualityDetectFail = "";
+                    lastQualityOcclusionFail = "";
                     qualityCheck = true;
                     return qualityCheck;
                 }
             }
         }
+        // 保存失败信息到成员变量
+        lastQualityDetectFail = detectFailBuffer.toString();
+        lastQualityOcclusionFail = occlusionFailBuffer.toString();
         return qualityCheck;
     }
 

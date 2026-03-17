@@ -224,6 +224,16 @@
                     android:textColor="#ffffff"
                     android:textSize="12sp" />
 
+                <!-- 遮挡检测提示 -->
+                <TextView
+                    android:id="@+id/tv_occlusion_tip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="遮挡检测：无"
+                    android:textColor="#ffffff"
+                    android:textSize="12sp"
+                    android:visibility="gone" />
+
                 <TextView
                     android:id="@+id/tv_feature_time"
                     android:layout_width="wrap_content"

@@ -33,3 +33,5 @@ freeline_project_description.json
 .idea/misc.xml
 lint-result.html
 lint-result.xml
+keystore.properties
+app/release-demo.keystore

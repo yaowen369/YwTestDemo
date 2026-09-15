@@ -3,6 +3,22 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('keystore.properties')
+if (keystorePropertiesFile.exists()) {
+    keystorePropertiesFile.withInputStream { stream ->
+        keystoreProperties.load(stream)
+    }
+}
+def releaseStoreFile = keystorePropertiesFile.exists()
+        ? rootProject.file(keystoreProperties.getProperty('storeFile', ''))
+        : null
+def hasReleaseKeystore = releaseStoreFile != null
+        && releaseStoreFile.exists()
+        && keystoreProperties.getProperty('storePassword')
+        && keystoreProperties.getProperty('keyAlias')
+        && keystoreProperties.getProperty('keyPassword')
+
 //apply plugin: 'com.android.library'
 //apply plugin: 'kotlin-android'
 
@@ -14,8 +30,8 @@ android {
         applicationId "ywdemo.example.yaoxiaowen"
         minSdk 24
         targetSdk 33
-        versionCode 1
-        versionName "1.0"
+        versionCode 5
+        versionName "1.4"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -23,9 +39,25 @@ android {
         }
     }
 
+    signingConfigs {
+        release {
+            if (hasReleaseKeystore) {
+                storeFile releaseStoreFile
+                storePassword keystoreProperties.getProperty('storePassword')
+                keyAlias keystoreProperties.getProperty('keyAlias')
+                keyPassword keystoreProperties.getProperty('keyPassword')
+            }
+        }
+    }
+
 
     buildTypes {
         release {
+            if (hasReleaseKeystore) {
+                signingConfig signingConfigs.release
+            } else {
+                signingConfig signingConfigs.debug
+            }
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }

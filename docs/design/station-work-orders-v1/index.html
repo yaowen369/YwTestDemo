@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>智慧车站 · 工单一期设计评审</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="review-header">
+    <a class="brand" href="./index.html"><span class="brand-symbol" aria-hidden="true"><i data-lucide="train-front"></i></span><span>智慧车站<small>巡检工单 · 首轮设计</small></span></a>
+    <nav class="review-modes" aria-label="评审内容">
+      <button data-mode="app" aria-pressed="true">手机端</button>
+      <button data-mode="screen" aria-pressed="false">大屏下发</button>
+      <button data-mode="assets" aria-pressed="false">12 项场景</button>
+    </nav>
+    <span class="review-version">需求 V1.4 <span>／</span> 2026.11.11</span>
+  </header>
+  <main class="review-layout">
+    <aside class="review-intro">
+      <p class="eyebrow">首轮 · 视觉与主流程</p>
+      <h1>看清问题，<br>从容处理。</h1>
+      <p class="intro-copy">让现场人员先找到问题与位置，再完成核查和处理。每一步都有明确反馈。</p>
+      <div class="review-rule"></div>
+      <div class="review-route"><span>01</span><div><strong>发现与进入</strong><p>列表 → 工单详情</p></div></div>
+      <div class="review-route"><span>02</span><div><strong>现场处理</strong><p>开始处理 → 选择结果 → 填写材料</p></div></div>
+      <div class="review-route"><span>03</span><div><strong>提交与留存</strong><p>本页提交 → 完成记录</p></div></div>
+      <p class="scope-note">本轮确认信息层级、视觉样式与主操作位置。隐藏调试、场景配置和延时通知在下一轮补齐。</p>
+      <a class="review-doc-link" href="./设计说明.md">查看设计说明 <i data-lucide="arrow-up-right"></i></a>
+    </aside>
+    <section class="review-stage" id="app-stage" aria-label="手机界面预览">
+      <div class="preview-toolbar">
+        <div class="segmented" aria-label="设备宽度"><button data-width="320" aria-pressed="true">MC62 · 320</button><button data-width="390" aria-pressed="false">手机 · 390</button></div>
+        <label class="font-control">字号 <select id="font-scale" aria-label="字体比例"><option value="1">100%</option><option value="1.25">125%</option><option value="1.5">150%</option></select></label>
+      </div>
+      <div class="device-wrap">
+        <div class="device" id="device">
+          <div class="system-status"><span>09:41</span><span><i data-lucide="signal"></i><i data-lucide="wifi"></i><i data-lucide="battery-full"></i></span></div>
+          <div class="app" id="app" aria-label="智慧车站"></div>
+          <div class="system-navigation" aria-hidden="true"><span></span></div>
+          <div id="app-toast" class="app-toast" role="status" hidden></div>
+          <div id="photo-overlay" class="photo-overlay" hidden></div>
+        </div>
+      </div>
+      <div class="preview-caption"><span id="viewport-label">320 × 533 · 触屏交互</span><button id="reset-review">恢复首屏</button></div>
+    </section>
+    <aside id="app-notes" class="review-notes">
+      <span class="notes-number">当前页面</span><h2 id="current-page">我的工单</h2>
+      <div id="page-notes"></div>
+      <div class="tokens"><p class="notes-number">视觉基准</p><div class="swatches"><span style="--swatch:#0b192b">底色</span><span style="--swatch:#15283e">卡片</span><span style="--swatch:#52e0c4">主操作</span></div><dl><dt>页面边距</dt><dd>12dp</dd><dt>正文 / 辅助</dt><dd>16 / 14sp</dd><dt>页面标题</dt><dd>20sp</dd><dt>主按钮 / 触控区</dt><dd>52 / ≥48dp</dd></dl></div>
+      <p class="preview-boundary">浏览器用于交互与布局预览。拍照、文件保存和上传状态不代表 Android 实机能力已验证。</p>
+    </aside>
+    <section id="screen-stage" class="screen-stage" hidden aria-label="大屏局部预览"></section>
+    <section id="asset-stage" class="asset-stage" hidden aria-label="检查点与素材对照"></section>
+  </main>
+  <input type="file" id="camera-input" accept="image/*" capture="environment" hidden>
+  <input type="file" id="album-input" accept="image/*" multiple hidden>
+  <script src="assets/lucide.min.js"></script>
+  <script src="prototype.js"></script>
+</body>
+</html>

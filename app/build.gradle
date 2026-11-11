@@ -3,86 +3,41 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
-def keystoreProperties = new Properties()
-def keystorePropertiesFile = rootProject.file('keystore.properties')
-if (keystorePropertiesFile.exists()) {
-    keystorePropertiesFile.withInputStream { stream ->
-        keystoreProperties.load(stream)
-    }
-}
-def releaseStoreFile = keystorePropertiesFile.exists()
-        ? rootProject.file(keystoreProperties.getProperty('storeFile', ''))
-        : null
-def hasReleaseKeystore = releaseStoreFile != null
-        && releaseStoreFile.exists()
-        && keystoreProperties.getProperty('storePassword')
-        && keystoreProperties.getProperty('keyAlias')
-        && keystoreProperties.getProperty('keyPassword')
-
-//apply plugin: 'com.android.library'
-//apply plugin: 'kotlin-android'
-
 android {
     namespace 'ywdemo.example.yaoxiaowen'
     compileSdk 33
-
     defaultConfig {
-        applicationId "ywdemo.example.yaoxiaowen"
+        applicationId 'ywdemo.example.yaoxiaowen'
         minSdk 24
         targetSdk 33
-        versionCode 5
-        versionName "1.4"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary true
-        }
+        versionCode 6
+        versionName '2.0'
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
-
-    signingConfigs {
-        release {
-            if (hasReleaseKeystore) {
-                storeFile releaseStoreFile
-                storePassword keystoreProperties.getProperty('storePassword')
-                keyAlias keystoreProperties.getProperty('keyAlias')
-                keyPassword keystoreProperties.getProperty('keyPassword')
-            }
-        }
-    }
-
-
     buildTypes {
         release {
-            if (hasReleaseKeystore) {
-                signingConfig signingConfigs.release
-            } else {
-                signingConfig signingConfigs.debug
-            }
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    kotlinOptions {
-        jvmTarget = '1.8'
-    }
-    packagingOptions {
-        resources {
-            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+    kotlinOptions { jvmTarget = '1.8' }
+    testOptions {
+        unitTests.includeAndroidResources = true
+        unitTests.all {
+            // Android 文件提供器测试在新版 Java 下需要访问文件描述符。
+            jvmArgs '--add-opens=java.base/java.io=ALL-UNNAMED'
         }
     }
 }
 
 dependencies {
-
     implementation 'androidx.core:core-ktx:1.8.0'
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
     testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.robolectric:robolectric:4.11.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-
 }

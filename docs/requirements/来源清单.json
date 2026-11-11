@@ -1,0 +1,237 @@
+{
+  "日期": "2026-11-11",
+  "说明": "共享前端文档归入 App 项目的快照，原件保留。正文及图片未改动；Markdown 行尾双空格已转换为等效换行语法以通过格式检查。已确认原型与当前 Android 实现分别记录，历史阶段状态不覆盖用户当前验收与提交授权。",
+  "文件": [
+    {
+      "来源": "车站巡检工单一期-两端模拟演示需求-2026-11-11.md",
+      "项目内副本": "docs/车站巡检工单一期-两端模拟演示需求-2026-11-11.md",
+      "SHA256": "aa662762de29852e0011e61e42a251abc77be935032f5624f8bb8492dcdc7750",
+      "来源SHA256": "c3722fc773a2394028bbff93d3f50c28a85b5c13732eab32290d67135aaeba49",
+      "格式处理": "Markdown 行尾换行规范化"
+    },
+    {
+      "来源": "design/station-work-orders-v1/index.html",
+      "项目内副本": "docs/design/station-work-orders-v1/index.html",
+      "SHA256": "adf772e94802bb07f8ca7963d5c6e02d9398fe25044f791961b57789b1994040",
+      "来源SHA256": "adf772e94802bb07f8ca7963d5c6e02d9398fe25044f791961b57789b1994040",
+      "格式处理": "无"
+    },
+    {
+      "来源": "design/station-work-orders-v1/styles.css",
+      "项目内副本": "docs/design/station-work-orders-v1/styles.css",
+      "SHA256": "283be9fcff0e47d99cfc9b341e6c83369f55e6fdf245a7f5bfb025cff2b9d6ba",
+      "来源SHA256": "283be9fcff0e47d99cfc9b341e6c83369f55e6fdf245a7f5bfb025cff2b9d6ba",
+      "格式处理": "无"
+    },
+    {
+      "来源": "design/station-work-orders-v1/设计说明.md",
+      "项目内副本": "docs/design/station-work-orders-v1/设计说明.md",
+      "SHA256": "24b0ad2eaac7ab8b4c1e0a45b0a9bbf3f17b49895265419ca6ab1cd149abab3d",
+      "来源SHA256": "3fdf41ca13abc767ef275d814ade6bdb812d5317f63c61842407fa0949540ad3",
+      "格式处理": "Markdown 行尾换行规范化"
+    },
+    {
+      "来源": "design/station-work-orders-v1/prototype.js",
+      "项目内副本": "docs/design/station-work-orders-v1/prototype.js",
+      "SHA256": "45b4449b34d112aa87619ddc49b40a7d8a2f08d6d82acb9ea85b0b32484ab820",
+      "来源SHA256": "45b4449b34d112aa87619ddc49b40a7d8a2f08d6d82acb9ea85b0b32484ab820",
+      "格式处理": "无"
+    },
+    {
+      "来源": "design/station-work-orders-v1/review/05-materials-320.png",
+      "项目内副本": "docs/design/station-work-orders-v1/review/05-materials-320.png",
+      "SHA256": "3a2dc41d8d5367f79d7ae0ab24252c33e05df5d9535f0a79d94a9bc228a4fd93",
+      "来源SHA256": "3a2dc41d8d5367f79d7ae0ab24252c33e05df5d9535f0a79d94a9bc228a4fd93",
+      "格式处理": "无"
+    },
+    {
+      "来源": "design/station-work-orders-v1/review/10-browser-320.png",
+      "项目内副本": "docs/design/station-work-orders-v1/review/10-browser-320.png",
+      "SHA256": "684fb1f402a474a34f76837aef54bf99ee38923e813c2b904c2d237dc33f919f",
+      "来源SHA256": "684fb1f402a474a34f76837aef54bf99ee38923e813c2b904c2d237dc33f919f",
+      "格式处理": "无"
+    },
+    {
+      "来源": "design/station-work-orders-v1/review/01-list-desktop.png",
+      "项目内副本": "docs/design/station-work-orders-v1/review/01-list-desktop.png",
+      "SHA256": "d68c324d6ff8927b7949aef205c8e6b472d1219b89cfc26a4761c471c226a758",
+      "来源SHA256": "d68c324d6ff8927b7949aef205c8e6b472d1219b89cfc26a4761c471c226a758",
+      "格式处理": "无"
+    },
+    {
+      "来源": "design/station-work-orders-v1/review/03-results-320.png",
+      "项目内副本": "docs/design/station-work-orders-v1/review/03-results-320.png",
+      "SHA256": "e6c06c2b01a1663908e9533ebeaa605a6419c1c049eed692e045cbf1aef66083",
+      "来源SHA256": "e6c06c2b01a1663908e9533ebeaa605a6419c1c049eed692e045cbf1aef66083",
+      "格式处理": "无"
+    },
+    {
+      "来源": "design/station-work-orders-v1/review/检查结果.json",
+      "项目内副本": "docs/design/station-work-orders-v1/review/检查结果.json",
+      "SHA256": "65c00cfdc59e01bf768a04f129e0d5e7b258c81ea1c6af5ff44f18cc7e2aebda",
+      "来源SHA256": "65c00cfdc59e01bf768a04f129e0d5e7b258c81ea1c6af5ff44f18cc7e2aebda",
+      "格式处理": "无"
+    },
+    {
+      "来源": "design/station-work-orders-v1/review/02-detail-320.png",
+      "项目内副本": "docs/design/station-work-orders-v1/review/02-detail-320.png",
+      "SHA256": "33d8138853cc740fa36b4b364529c130c0b5347921390e0cffb5aacc52905248",
+      "来源SHA256": "33d8138853cc740fa36b4b364529c130c0b5347921390e0cffb5aacc52905248",
+      "格式处理": "无"
+    },
+    {
+      "来源": "design/station-work-orders-v1/review/首轮页面预览.png",
+      "项目内副本": "docs/design/station-work-orders-v1/review/首轮页面预览.png",
+      "SHA256": "695ae7e7c536872aee185d56019b3e4619fdaaf840f5b6536edab3d4fc66c9a6",
+      "来源SHA256": "695ae7e7c536872aee185d56019b3e4619fdaaf840f5b6536edab3d4fc66c9a6",
+      "格式处理": "无"
+    },
+    {
+      "来源": "design/station-work-orders-v1/review/01-list-320.png",
+      "项目内副本": "docs/design/station-work-orders-v1/review/01-list-320.png",
+      "SHA256": "2f1fb35c541e0928484df5aa1a60462d6dce0d04d9935d6dc7baa8e5f6259934",
+      "来源SHA256": "2f1fb35c541e0928484df5aa1a60462d6dce0d04d9935d6dc7baa8e5f6259934",
+      "格式处理": "无"
+    },
+    {
+      "来源": "design/station-work-orders-v1/review/08-assets.png",
+      "项目内副本": "docs/design/station-work-orders-v1/review/08-assets.png",
+      "SHA256": "794415337253c6d1f84abd05e3c21ca876ae8b4547fcfb83e03e01dee414fb33",
+      "来源SHA256": "794415337253c6d1f84abd05e3c21ca876ae8b4547fcfb83e03e01dee414fb33",
+      "格式处理": "无"
+    },
+    {
+      "来源": "design/station-work-orders-v1/review/04-validation-320.png",
+      "项目内副本": "docs/design/station-work-orders-v1/review/04-validation-320.png",
+      "SHA256": "5e3e98ccd3a60aa2b10da8db32126a3809ba728739a75152ada212682717786e",
+      "来源SHA256": "5e3e98ccd3a60aa2b10da8db32126a3809ba728739a75152ada212682717786e",
+      "格式处理": "无"
+    },
+    {
+      "来源": "design/station-work-orders-v1/review/01-empty-320.png",
+      "项目内副本": "docs/design/station-work-orders-v1/review/01-empty-320.png",
+      "SHA256": "0bf4b02f8f16cd508423b1526cabfb5ca9fe88587340ae801cbf3e9cf8b9ac0e",
+      "来源SHA256": "0bf4b02f8f16cd508423b1526cabfb5ca9fe88587340ae801cbf3e9cf8b9ac0e",
+      "格式处理": "无"
+    },
+    {
+      "来源": "design/station-work-orders-v1/review/06-complete-320.png",
+      "项目内副本": "docs/design/station-work-orders-v1/review/06-complete-320.png",
+      "SHA256": "c71df2cfa95e0ffad565bd5a5493a0d486c38757ba8b6d1914058259a344bd92",
+      "来源SHA256": "c71df2cfa95e0ffad565bd5a5493a0d486c38757ba8b6d1914058259a344bd92",
+      "格式处理": "无"
+    },
+    {
+      "来源": "design/station-work-orders-v1/review/source-images.jpg",
+      "项目内副本": "docs/design/station-work-orders-v1/review/source-images.jpg",
+      "SHA256": "f13be1a487e82b4c44f4121be69e394820156caad9fbd5fc5d155f754275f644",
+      "来源SHA256": "f13be1a487e82b4c44f4121be69e394820156caad9fbd5fc5d155f754275f644",
+      "格式处理": "无"
+    },
+    {
+      "来源": "design/station-work-orders-v1/review/09-font150-320.png",
+      "项目内副本": "docs/design/station-work-orders-v1/review/09-font150-320.png",
+      "SHA256": "b7cc0eab975ee7c6ca827d639f66e171ce3712c4b4bdcc7c0bae4c4d375efa0c",
+      "来源SHA256": "b7cc0eab975ee7c6ca827d639f66e171ce3712c4b4bdcc7c0bae4c4d375efa0c",
+      "格式处理": "无"
+    },
+    {
+      "来源": "design/station-work-orders-v1/review/07-screen-dispatched.png",
+      "项目内副本": "docs/design/station-work-orders-v1/review/07-screen-dispatched.png",
+      "SHA256": "cab54d0cbb506e643f8bb26b28dc341e047927570db20e0636631e20464e783d",
+      "来源SHA256": "cab54d0cbb506e643f8bb26b28dc341e047927570db20e0636631e20464e783d",
+      "格式处理": "无"
+    },
+    {
+      "来源": "design/station-work-orders-v1/assets/gate-running-status.jpg",
+      "项目内副本": "docs/design/station-work-orders-v1/assets/gate-running-status.jpg",
+      "SHA256": "fb49ee27cf302cefa01a2e75fdebd49e5cc6623fa0de0e67b11fe85e8c7ce9d0",
+      "来源SHA256": "fb49ee27cf302cefa01a2e75fdebd49e5cc6623fa0de0e67b11fe85e8c7ce9d0",
+      "格式处理": "无"
+    },
+    {
+      "来源": "design/station-work-orders-v1/assets/tvm-status.jpg",
+      "项目内副本": "docs/design/station-work-orders-v1/assets/tvm-status.jpg",
+      "SHA256": "22d408cde51cca63546170ae1045d7c104af4d8a1cfebb97f908bb50c42ef755",
+      "来源SHA256": "22d408cde51cca63546170ae1045d7c104af4d8a1cfebb97f908bb50c42ef755",
+      "格式处理": "无"
+    },
+    {
+      "来源": "design/station-work-orders-v1/assets/rolling-door-status.png",
+      "项目内副本": "docs/design/station-work-orders-v1/assets/rolling-door-status.png",
+      "SHA256": "83a24f87ae30bbeb67bcd96594a61d30b7bb6be7c3f4594da513356919b05c79",
+      "来源SHA256": "83a24f87ae30bbeb67bcd96594a61d30b7bb6be7c3f4594da513356919b05c79",
+      "格式处理": "无"
+    },
+    {
+      "来源": "design/station-work-orders-v1/assets/escalator-a02.jpg",
+      "项目内副本": "docs/design/station-work-orders-v1/assets/escalator-a02.jpg",
+      "SHA256": "f961dd18b4637ed5ff7e7eb197426e3b5080deef77c8b79f1f2275b78dfda905",
+      "来源SHA256": "f961dd18b4637ed5ff7e7eb197426e3b5080deef77c8b79f1f2275b78dfda905",
+      "格式处理": "无"
+    },
+    {
+      "来源": "design/station-work-orders-v1/assets/escalator-a01.jpg",
+      "项目内副本": "docs/design/station-work-orders-v1/assets/escalator-a01.jpg",
+      "SHA256": "4a7962c8be76a349eba1eead46bbda376518bb0ee40cafe9fbf422e73d69426a",
+      "来源SHA256": "4a7962c8be76a349eba1eead46bbda376518bb0ee40cafe9fbf422e73d69426a",
+      "格式处理": "无"
+    },
+    {
+      "来源": "design/station-work-orders-v1/assets/trash-overflow.jpg",
+      "项目内副本": "docs/design/station-work-orders-v1/assets/trash-overflow.jpg",
+      "SHA256": "c1e3dfb16dc3148e25ae7c2c88d2cf2d0a863daa1ca12c5943e53f19ee0ccf6a",
+      "来源SHA256": "c1e3dfb16dc3148e25ae7c2c88d2cf2d0a863daa1ca12c5943e53f19ee0ccf6a",
+      "格式处理": "无"
+    },
+    {
+      "来源": "design/station-work-orders-v1/assets/passenger-fight.jpg",
+      "项目内副本": "docs/design/station-work-orders-v1/assets/passenger-fight.jpg",
+      "SHA256": "d3aa4ecf6a580fb54b0ba5867ebcb66b4c5fa08157a0ca7824f22ff52da0c172",
+      "来源SHA256": "d3aa4ecf6a580fb54b0ba5867ebcb66b4c5fa08157a0ca7824f22ff52da0c172",
+      "格式处理": "无"
+    },
+    {
+      "来源": "design/station-work-orders-v1/assets/emergency-exit-sign.jpg",
+      "项目内副本": "docs/design/station-work-orders-v1/assets/emergency-exit-sign.jpg",
+      "SHA256": "340b771087a5b14bdc6cfa044150e92b3bfbef11fec91ef580558a9139a7f70c",
+      "来源SHA256": "340b771087a5b14bdc6cfa044150e92b3bfbef11fec91ef580558a9139a7f70c",
+      "格式处理": "无"
+    },
+    {
+      "来源": "design/station-work-orders-v1/assets/flood-supplies.jpg",
+      "项目内副本": "docs/design/station-work-orders-v1/assets/flood-supplies.jpg",
+      "SHA256": "74e38b1bd6c645daf1122f8054ee8e2446358e4de29a22cdd5e804d88d762877",
+      "来源SHA256": "74e38b1bd6c645daf1122f8054ee8e2446358e4de29a22cdd5e804d88d762877",
+      "格式处理": "无"
+    },
+    {
+      "来源": "design/station-work-orders-v1/assets/passenger-lying.jpg",
+      "项目内副本": "docs/design/station-work-orders-v1/assets/passenger-lying.jpg",
+      "SHA256": "045cbcf9ca01ddcd72d2c67ce443c927889cf287301c0bb56966dbf3fc8544cb",
+      "来源SHA256": "045cbcf9ca01ddcd72d2c67ce443c927889cf287301c0bb56966dbf3fc8544cb",
+      "格式处理": "无"
+    },
+    {
+      "来源": "design/station-work-orders-v1/assets/lucide.min.js",
+      "项目内副本": "docs/design/station-work-orders-v1/assets/lucide.min.js",
+      "SHA256": "ab85225ecc1daa2033607856f03dd2dabcbc08e2d260a5b97e17c690aa929766",
+      "来源SHA256": "ab85225ecc1daa2033607856f03dd2dabcbc08e2d260a5b97e17c690aa929766",
+      "格式处理": "无"
+    },
+    {
+      "来源": "design/station-work-orders-v1/assets/hydrant-door.jpg",
+      "项目内副本": "docs/design/station-work-orders-v1/assets/hydrant-door.jpg",
+      "SHA256": "e1a58bc886e992c6dc8d600057ee68bd02bb1f1931c108c9170d39fee1f558b2",
+      "来源SHA256": "e1a58bc886e992c6dc8d600057ee68bd02bb1f1931c108c9170d39fee1f558b2",
+      "格式处理": "无"
+    },
+    {
+      "来源": "design/station-work-orders-v1/assets/lighting-brightness.png",
+      "项目内副本": "docs/design/station-work-orders-v1/assets/lighting-brightness.png",
+      "SHA256": "a571685f8faac8444d0e83a5c927b2b7ffe1f04bb2e32cd7569d0d00b8458457",
+      "来源SHA256": "a571685f8faac8444d0e83a5c927b2b7ffe1f04bb2e32cd7569d0d00b8458457",
+      "格式处理": "无"
+    }
+  ]
+}

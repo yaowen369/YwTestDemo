@@ -1,0 +1,213 @@
+{
+  "description": "官方型号网页中与设备适配相关的参数摘录；空白的通用模板字段已排除。",
+  "sources": [
+    {
+      "name": "中文官网 MC62 Android 13",
+      "url": "https://www.chainway.cn/Products/Info/96",
+      "resolved_url": "https://www.chainway.cn/Products/Info/96",
+      "fetched_at": "2026-11-09T11:19:29+08:00",
+      "selected_spec_rows": [
+        {
+          "source_label": "整机尺寸",
+          "source_value": "163.5 x 67.0 x 17.1mm"
+        },
+        {
+          "source_label": "整机重量",
+          "source_value": "256g（含电池）"
+        },
+        {
+          "source_label": "显示屏",
+          "source_value": "4英寸，480 x 800 分辨率"
+        },
+        {
+          "source_label": "触控屏",
+          "source_value": "支持多点触控，支持手套或湿手操作"
+        },
+        {
+          "source_label": "电池容量",
+          "source_value": "主机可拆卸 5000mAh 电池，支持快充"
+        },
+        {
+          "source_label": "扩展插槽",
+          "source_value": "一个SIM卡槽，一个SIM或者TF卡槽"
+        },
+        {
+          "source_label": "通讯接口",
+          "source_value": "USB Type-C，USB 2.0，OTG"
+        },
+        {
+          "source_label": "音频",
+          "source_value": "2个麦克风，1个用于降噪，背面；1个扬声器；听筒"
+        },
+        {
+          "source_label": "键盘",
+          "source_value": "左右扫描键 + 多功能键 + 主键盘"
+        },
+        {
+          "source_label": "传感器",
+          "source_value": "重力传感器、距离传感器、光线传感器；陀螺仪(选配)、地 磁(选配)"
+        },
+        {
+          "source_label": "通知",
+          "source_value": "声音、LED 指示灯、振动"
+        },
+        {
+          "source_label": "CPU",
+          "source_value": "八核 2.0GHz"
+        },
+        {
+          "source_label": "RAM+ROM",
+          "source_value": "3GB + 32GB/4GB + 64GB"
+        },
+        {
+          "source_label": "扩展内存",
+          "source_value": "MicroSD (TF) 卡可扩展至 256GB"
+        },
+        {
+          "source_label": "操作系统",
+          "source_value": "Android 13"
+        },
+        {
+          "source_label": "工作温度",
+          "source_value": "-20 °C 至 50 °C"
+        },
+        {
+          "source_label": "储存温度",
+          "source_value": "-40 °C 至 70 °C"
+        },
+        {
+          "source_label": "环境湿度",
+          "source_value": "5%RH - 95%RH (无凝结)"
+        },
+        {
+          "source_label": "跌落规格",
+          "source_value": "在操作温度范围内，6面均能承受多次从1.5米高度跌落至混凝土地面的冲击"
+        },
+        {
+          "source_label": "防护等级",
+          "source_value": "主机 IP67，达到 IEC 密封标准"
+        },
+        {
+          "source_label": "WLAN",
+          "source_value": "支持802.11d/e/h/i/j/k/r/v/w with companion D-die； 双波段 (2.4GHz和5GHz) 单流 802.11 a/b/g/n/ac 射频， 20/40/80MHz 带宽；5G PA"
+        },
+        {
+          "source_label": "WWAN",
+          "source_value": "2G: GSM (B2 / B3 / B5 / B8) 3G: WCDMA (B1 / B2 / B4 / B5 / B8) TD-SCDMA (B34 / B39) 4G: FDD-LTE (B1 / B2 / B3 / B4 / B5 / B7 /B8 / B12 / B17 / B20 / B28A / B28B) TDD-LTE (B34 / B38 / B39 / B40 / B41)"
+        },
+        {
+          "source_label": "蓝牙",
+          "source_value": "5.0"
+        },
+        {
+          "source_label": "GNSS",
+          "source_value": "集成 GPS、北斗、GLONASS 和 Galileo，支持 AGPS"
+        },
+        {
+          "source_label": "前置摄像头",
+          "source_value": "500 万像素"
+        },
+        {
+          "source_label": "后置摄像头",
+          "source_value": "1300 万像素，支持闪光灯"
+        },
+        {
+          "source_label": "二维扫描引擎",
+          "source_value": "Zebra: SE4710; CB300T; CM60"
+        }
+      ]
+    },
+    {
+      "name": "英文官网 MC62 Android 13",
+      "url": "https://www.chainway.net/Products/Info/157",
+      "resolved_url": "https://www.chainway.net/Products/Info/157",
+      "fetched_at": "2026-11-09T11:19:59+08:00",
+      "selected_spec_rows": [
+        {
+          "source_label": "Dimensions",
+          "source_value": "163.5 x 67.0 x 17.1mm/6.44 x 2.64 x 0.67in"
+        },
+        {
+          "source_label": "Weight",
+          "source_value": "256g / 9.03oz (device with battery)"
+        },
+        {
+          "source_label": "Display",
+          "source_value": "4-inch, 480 x 800"
+        },
+        {
+          "source_label": "Touch Panel",
+          "source_value": "Multi-touch panel, gloves and wet hands supported"
+        },
+        {
+          "source_label": "Power",
+          "source_value": "5000mAh removable battery, support quick charge"
+        },
+        {
+          "source_label": "Keypad",
+          "source_value": "Main keypad , 2 scan keys, multi-function keys"
+        },
+        {
+          "source_label": "Sensors",
+          "source_value": "Gravity sensor, distance sensor, light sensor; Gyroscope (optional), geomagnetic sensor (optional)"
+        },
+        {
+          "source_label": "WLAN",
+          "source_value": "802.11d/e/h/i/j/k/r/v/w with companion D-die, Dualband( 2.4GHz and 5GHz) single stream 802.11 a/b/g/n/ac RF, 20/40/80MHz bandwidth, 5G PA"
+        },
+        {
+          "source_label": "WWAN",
+          "source_value": "2G: GSM (B2 / B3 / B5 / B8) 3G: WCDMA (B1 / B2 / B4 / B5 / B8) TD-SCDMA (B34 / B39) 4G: FDD-LTE (B1 / B2 / B3 / B4 / B5 / B7 /B8 / B12 / B17 / B20 / B28A / B28B) TDD-LTE (B34 / B38 / B39 / B40 / B41)"
+        },
+        {
+          "source_label": "Bluetooth",
+          "source_value": "Bluetooth 5.0"
+        },
+        {
+          "source_label": "GNSS",
+          "source_value": "GPS/AGPS, GLONASS, BeiDou, Galileo"
+        },
+        {
+          "source_label": "Operating System",
+          "source_value": "Android 13; GMS"
+        },
+        {
+          "source_label": "CPU",
+          "source_value": "Octa-core, 2.0GHz"
+        },
+        {
+          "source_label": "RAM+ROM",
+          "source_value": "4GB + 64GB"
+        },
+        {
+          "source_label": "Expansion",
+          "source_value": "Supports up to 256GB Micro SD (TF) card"
+        },
+        {
+          "source_label": "Operating Temp.",
+          "source_value": "-4 °F to 122 °F / -20 °C to 50 °C"
+        },
+        {
+          "source_label": "Storage Temp.",
+          "source_value": "-40 °F to 158 °F / -40 °C to 70 °C"
+        },
+        {
+          "source_label": "Sealing",
+          "source_value": "IP67 per IEC sealing specifications"
+        },
+        {
+          "source_label": "2D Scanner",
+          "source_value": "Zebra: SE4710; CM60"
+        },
+        {
+          "source_label": "Front Camera",
+          "source_value": "5MP"
+        },
+        {
+          "source_label": "Rear Camera",
+          "source_value": "13MP Autofocus with flash"
+        }
+      ]
+    }
+  ]
+}

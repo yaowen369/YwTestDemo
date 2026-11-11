@@ -1,0 +1,194 @@
+{
+  "记录时间": "2026-11-11T16:05:22.766843+08:00",
+  "应用名称": "智慧车站",
+  "包名": "ywdemo.example.yaoxiaowen",
+  "版本": "2.0",
+  "版本号": 6,
+  "测试包": "app/build/outputs/apk/debug/智慧车站-2.0-debug.apk",
+  "字节数": 13742409,
+  "SHA256": "5f5ed368b0944c9860fd85fa26978f2d74ecfd9dde342ac8745bac087c508c26",
+  "签名验证": "通过，APK v2 签名",
+  "构建": "assembleDebug、testDebugUnitTest、lintDebug 均成功",
+  "测试": [
+    {
+      "测试类": "ywdemo.example.yaoxiaowen.StationAndroidTest",
+      "用例数": 15,
+      "失败数": 0,
+      "错误数": 0
+    },
+    {
+      "测试类": "ywdemo.example.yaoxiaowen.StationRepositoryTest",
+      "用例数": 38,
+      "失败数": 0,
+      "错误数": 0
+    }
+  ],
+  "静态检查": {
+    "错误数": 0,
+    "警告数": 13,
+    "警告明细": [
+      {
+        "级别": "Warning",
+        "类型": "ExifInterface",
+        "说明": "Avoid using `android.media.ExifInterface`; use `androidx.exifinterface.media.ExifInterface` instead"
+      },
+      {
+        "级别": "Warning",
+        "类型": "OldTargetApi",
+        "说明": "Not targeting the latest versions of Android; compatibility modes apply. Consider testing and updating this version. Consult the android.os.Build.VERSION_CODES javadoc for details."
+      },
+      {
+        "级别": "Warning",
+        "类型": "UnusedAttribute",
+        "说明": "Attribute `dataExtractionRules` is only used in API level 31 and higher (current min is 24)"
+      },
+      {
+        "级别": "Warning",
+        "类型": "DrawAllocation",
+        "说明": "Avoid object allocations during draw/layout operations (preallocate and reuse instead)"
+      },
+      {
+        "级别": "Warning",
+        "类型": "DrawAllocation",
+        "说明": "Avoid object allocations during draw/layout operations (preallocate and reuse instead)"
+      },
+      {
+        "级别": "Warning",
+        "类型": "DrawAllocation",
+        "说明": "Avoid object allocations during draw/layout operations (preallocate and reuse instead)"
+      },
+      {
+        "级别": "Warning",
+        "类型": "ObsoleteSdkInt",
+        "说明": "This folder configuration (`v24`) is unnecessary; `minSdkVersion` is 24. Merge all the resources in this folder into `drawable`."
+      },
+      {
+        "级别": "Warning",
+        "类型": "ObsoleteSdkInt",
+        "说明": "This folder configuration (`v23`) is unnecessary; `minSdkVersion` is 24. Merge all the resources in this folder into `values`."
+      },
+      {
+        "级别": "Warning",
+        "类型": "ViewConstructor",
+        "说明": "Custom view `StationIcon` is missing constructor used by tools: `(Context)` or `(Context,AttributeSet)` or `(Context,AttributeSet,int)`"
+      },
+      {
+        "级别": "Warning",
+        "类型": "ClickableViewAccessibility",
+        "说明": "`ZoomPhotoView#onTouchEvent` should call `ZoomPhotoView#performClick` when a click is detected"
+      },
+      {
+        "级别": "Warning",
+        "类型": "SetTextI18n",
+        "说明": "Do not concatenate text displayed with `setText`. Use resource string with placeholders."
+      },
+      {
+        "级别": "Warning",
+        "类型": "SetTextI18n",
+        "说明": "Do not concatenate text displayed with `setText`. Use resource string with placeholders."
+      },
+      {
+        "级别": "Warning",
+        "类型": "SetTextI18n",
+        "说明": "Do not concatenate text displayed with `setText`. Use resource string with placeholders."
+      }
+    ]
+  },
+  "证据图片校验": [
+    {
+      "图片": "emergency-exit-sign.jpg",
+      "SHA256": "340b771087a5b14bdc6cfa044150e92b3bfbef11fec91ef580558a9139a7f70c",
+      "与已确认原图一致": true
+    },
+    {
+      "图片": "escalator-a01.jpg",
+      "SHA256": "4a7962c8be76a349eba1eead46bbda376518bb0ee40cafe9fbf422e73d69426a",
+      "与已确认原图一致": true
+    },
+    {
+      "图片": "escalator-a02.jpg",
+      "SHA256": "f961dd18b4637ed5ff7e7eb197426e3b5080deef77c8b79f1f2275b78dfda905",
+      "与已确认原图一致": true
+    },
+    {
+      "图片": "flood-supplies.jpg",
+      "SHA256": "74e38b1bd6c645daf1122f8054ee8e2446358e4de29a22cdd5e804d88d762877",
+      "与已确认原图一致": true
+    },
+    {
+      "图片": "gate-running-status.jpg",
+      "SHA256": "fb49ee27cf302cefa01a2e75fdebd49e5cc6623fa0de0e67b11fe85e8c7ce9d0",
+      "与已确认原图一致": true
+    },
+    {
+      "图片": "hydrant-door.jpg",
+      "SHA256": "e1a58bc886e992c6dc8d600057ee68bd02bb1f1931c108c9170d39fee1f558b2",
+      "与已确认原图一致": true
+    },
+    {
+      "图片": "lighting-brightness.png",
+      "SHA256": "a571685f8faac8444d0e83a5c927b2b7ffe1f04bb2e32cd7569d0d00b8458457",
+      "与已确认原图一致": true
+    },
+    {
+      "图片": "passenger-fight.jpg",
+      "SHA256": "d3aa4ecf6a580fb54b0ba5867ebcb66b4c5fa08157a0ca7824f22ff52da0c172",
+      "与已确认原图一致": true
+    },
+    {
+      "图片": "passenger-lying.jpg",
+      "SHA256": "045cbcf9ca01ddcd72d2c67ce443c927889cf287301c0bb56966dbf3fc8544cb",
+      "与已确认原图一致": true
+    },
+    {
+      "图片": "rolling-door-status.png",
+      "SHA256": "83a24f87ae30bbeb67bcd96594a61d30b7bb6be7c3f4594da513356919b05c79",
+      "与已确认原图一致": true
+    },
+    {
+      "图片": "trash-overflow.jpg",
+      "SHA256": "c1e3dfb16dc3148e25ae7c2c88d2cf2d0a863daa1ca12c5943e53f19ee0ccf6a",
+      "与已确认原图一致": true
+    },
+    {
+      "图片": "tvm-status.jpg",
+      "SHA256": "22d408cde51cca63546170ae1045d7c104af4d8a1cfebb97f908bb50c42ef755",
+      "与已确认原图一致": true
+    }
+  ],
+  "界面文案检查": "当前业务源码和应用名未出现模拟、演示、示例、占位字样",
+  "网络": "最终 APK 无 INTERNET 权限",
+  "UI证据": "Robolectric API 33 原生图形运行时绘制，非实机；已查看关键页面",
+  "尺寸字体组合": {
+    "宽度dp": [
+      320,
+      390
+    ],
+    "字体比例": [
+      1,
+      1.25,
+      1.5
+    ],
+    "覆盖": [
+      "列表",
+      "详情",
+      "结果选择",
+      "材料填写"
+    ]
+  },
+  "实机": {
+    "ADB已连接数量": 0,
+    "MC62": "未验证",
+    "普通Android手机": "未验证",
+    "真实拍照和中文输入法": "未验证",
+    "后台锁屏及划掉任务后的定时通知": "未验证",
+    "声音与振动": "未验证"
+  },
+  "未执行": [
+    "Git 提交",
+    "Git 推送",
+    "大屏修改",
+    "旧联调服务",
+    "真实后台调用"
+  ]
+}

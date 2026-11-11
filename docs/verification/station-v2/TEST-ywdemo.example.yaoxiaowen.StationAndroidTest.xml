@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ywdemo.example.yaoxiaowen.StationAndroidTest" tests="15" skipped="0" failures="0" errors="0" timestamp="2026-11-11T08:01:14" hostname="yaowenM4.local" time="5.533">
+  <properties/>
+  <testcase name="hiddenEntryAndTargetSelectionNeverDefaultsToFirstOrder" classname="ywdemo.example.yaoxiaowen.StationAndroidTest" time="3.61"/>
+  <testcase name="confirmedRestartReturnsHomeAndEarlyReopenKeepsSelectedPlan" classname="ywdemo.example.yaoxiaowen.StationAndroidTest" time="0.264"/>
+  <testcase name="newActivityResetsSpeedButLeavingDebugDoesNot" classname="ywdemo.example.yaoxiaowen.StationAndroidTest" time="0.122"/>
+  <testcase name="notificationLaunchConsumedOnceAndRotationKeepsForm" classname="ywdemo.example.yaoxiaowen.StationAndroidTest" time="0.137"/>
+  <testcase name="recreationPreservesSelectedBranchAndDraft" classname="ywdemo.example.yaoxiaowen.StationAndroidTest" time="0.16"/>
+  <testcase name="disabledChannelAndExactAlarmAreCheckedSeparately" classname="ywdemo.example.yaoxiaowen.StationAndroidTest" time="0.007"/>
+  <testcase name="nativeMainFlowStartsInDetailAndCompletesPartsWithoutPhotos" classname="ywdemo.example.yaoxiaowen.StationAndroidTest" time="0.194"/>
+  <testcase name="everyEvidenceAssetCanBeDecodedAndNoNetworkPermissionIsDeclared" classname="ywdemo.example.yaoxiaowen.StationAndroidTest" time="0.127"/>
+  <testcase name="albumImportCopiesReadableFileAndSupportsRemoveUndoAndSubmit" classname="ywdemo.example.yaoxiaowen.StationAndroidTest" time="0.192"/>
+  <testcase name="systemAlarmAndSingleNotificationUseActualBatchCountAndPendingIntent" classname="ywdemo.example.yaoxiaowen.StationAndroidTest" time="0.074"/>
+  <testcase name="corruptStorageIsPreservedAndNeverReplacedWithDefaultOrders" classname="ywdemo.example.yaoxiaowen.StationAndroidTest" time="0.008"/>
+  <testcase name="privateSnapshotAndPhotoSurviveRepositoryReconstruction" classname="ywdemo.example.yaoxiaowen.StationAndroidTest" time="0.013"/>
+  <testcase name="deniedNotificationsPreserveOrdersOnRestart" classname="ywdemo.example.yaoxiaowen.StationAndroidTest" time="0.059"/>
+  <testcase name="cameraUsesFileProviderAndCancellationPreservesText" classname="ywdemo.example.yaoxiaowen.StationAndroidTest" time="0.107"/>
+  <testcase name="nativeLayoutSupports320And390WithLargeFontAcrossCorePages" classname="ywdemo.example.yaoxiaowen.StationAndroidTest" time="0.456"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+]]></system-err>
+</testsuite>

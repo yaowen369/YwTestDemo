@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ywdemo.example.yaoxiaowen.StationRepositoryTest" tests="38" skipped="0" failures="0" errors="0" timestamp="2026-11-11T08:01:19" hostname="yaowenM4.local" time="0.014">
+  <properties/>
+  <testcase name="persistenceFailureCancelsCandidateAndPreservesOldPlan" classname="ywdemo.example.yaoxiaowen.StationRepositoryTest" time="0.002"/>
+  <testcase name="serializedReopenKeepsDraftPhotosAndListContext" classname="ywdemo.example.yaoxiaowen.StationRepositoryTest" time="0.003"/>
+  <testcase name="uploadProgressHasThreePersistedStates" classname="ywdemo.example.yaoxiaowen.StationRepositoryTest" time="0.0"/>
+  <testcase name="clearingAllFailureLeavesOldScheduleActive" classname="ywdemo.example.yaoxiaowen.StationRepositoryTest" time="0.0"/>
+  <testcase name="realReadFailureDoesNotReportUploadSuccess" classname="ywdemo.example.yaoxiaowen.StationRepositoryTest" time="0.001"/>
+  <testcase name="waitingTimeRejectsBlankZeroNegativeDecimalAndOverflow" classname="ywdemo.example.yaoxiaowen.StationRepositoryTest" time="0.0"/>
+  <testcase name="clearMaterialsKeepsStartedStateButClearsEveryBranch" classname="ywdemo.example.yaoxiaowen.StationRepositoryTest" time="0.0"/>
+  <testcase name="normalAlsoRequiresPhoto" classname="ywdemo.example.yaoxiaowen.StationRepositoryTest" time="0.0"/>
+  <testcase name="removeAndUndoPersistOriginalPhotoAndPosition" classname="ywdemo.example.yaoxiaowen.StationRepositoryTest" time="0.001"/>
+  <testcase name="earlyReopenKeepsEmptyListAndOriginalDeadlineAndSelection" classname="ywdemo.example.yaoxiaowen.StationRepositoryTest" time="0.0"/>
+  <testcase name="handledRequiresTextAndAtLeastOnePhoto" classname="ywdemo.example.yaoxiaowen.StationRepositoryTest" time="0.001"/>
+  <testcase name="startIsIdempotentAndAllowsConcurrentProcessing" classname="ywdemo.example.yaoxiaowen.StationRepositoryTest" time="0.0"/>
+  <testcase name="repeatedSubmitDoesNotChangeDeadlineOrDuplicateCompletion" classname="ywdemo.example.yaoxiaowen.StationRepositoryTest" time="0.0"/>
+  <testcase name="failedResetPreservesPhotosAndState" classname="ywdemo.example.yaoxiaowen.StationRepositoryTest" time="0.001"/>
+  <testcase name="partsCanCompleteDespitePhotosInOtherBranch" classname="ywdemo.example.yaoxiaowen.StationRepositoryTest" time="0.0"/>
+  <testcase name="resetOneOrderLeavesOthersAndOriginalIdentityUntouched" classname="ywdemo.example.yaoxiaowen.StationRepositoryTest" time="0.0"/>
+  <testcase name="failedSubmitSavePreservesDraftAndNeverCompletes" classname="ywdemo.example.yaoxiaowen.StationRepositoryTest" time="0.0"/>
+  <testcase name="schedulingFailurePreservesOldPlanAndData" classname="ywdemo.example.yaoxiaowen.StationRepositoryTest" time="0.001"/>
+  <testcase name="resetInvalidatesExternalCameraCallback" classname="ywdemo.example.yaoxiaowen.StationRepositoryTest" time="0.0"/>
+  <testcase name="completedOrderCannotBeEdited" classname="ywdemo.example.yaoxiaowen.StationRepositoryTest" time="0.0"/>
+  <testcase name="fallbackAddsOrdersWithoutMarkingOrRepeatingNotification" classname="ywdemo.example.yaoxiaowen.StationRepositoryTest" time="0.0"/>
+  <testcase name="fileDisappearingDuringSubmitDoesNotComplete" classname="ywdemo.example.yaoxiaowen.StationRepositoryTest" time="0.0"/>
+  <testcase name="replacePlanLeavesOneEffectiveScheduleAndOldCallbackCannotAddOrders" classname="ywdemo.example.yaoxiaowen.StationRepositoryTest" time="0.001"/>
+  <testcase name="staleEditorCannotRestoreMaterialsAfterReset" classname="ywdemo.example.yaoxiaowen.StationRepositoryTest" time="0.0"/>
+  <testcase name="multipleRequiresTwoToTwelveUniqueKnownScenes" classname="ywdemo.example.yaoxiaowen.StationRepositoryTest" time="0.0"/>
+  <testcase name="resetDuringSubmitNeverResurrectsOldResult" classname="ywdemo.example.yaoxiaowen.StationRepositoryTest" time="0.0"/>
+  <testcase name="failedArrivalSaveCanBeRetriedWithoutPartialOrders" classname="ywdemo.example.yaoxiaowen.StationRepositoryTest" time="0.0"/>
+  <testcase name="firstRestartFailureKeepsExistingDraft" classname="ywdemo.example.yaoxiaowen.StationRepositoryTest" time="0.001"/>
+  <testcase name="twelveScenesAreIndependentAndImageBindingsStayUnchanged" classname="ywdemo.example.yaoxiaowen.StationRepositoryTest" time="0.0"/>
+  <testcase name="resultBranchesKeepIndependentTextAndPhotos" classname="ywdemo.example.yaoxiaowen.StationRepositoryTest" time="0.0"/>
+  <testcase name="allTwelveCanArriveAndFinishIndependently" classname="ywdemo.example.yaoxiaowen.StationRepositoryTest" time="0.0"/>
+  <testcase name="customArrivalIsAddedOnceWithActualArrivalTime" classname="ywdemo.example.yaoxiaowen.StationRepositoryTest" time="0.0"/>
+  <testcase name="allCurrentPhotosMustFinishUploading" classname="ywdemo.example.yaoxiaowen.StationRepositoryTest" time="0.001"/>
+  <testcase name="titleGateRequiresFourTapsWithinTwoSecondsAndResets" classname="ywdemo.example.yaoxiaowen.StationRepositoryTest" time="0.0"/>
+  <testcase name="initialOrdersAreExactlyDefaultThree" classname="ywdemo.example.yaoxiaowen.StationRepositoryTest" time="0.0"/>
+  <testcase name="invalidRestartDoesNotClearOrReplaceAnything" classname="ywdemo.example.yaoxiaowen.StationRepositoryTest" time="0.0"/>
+  <testcase name="clearingAllCancelsPlanAndRestoresThreeImmediately" classname="ywdemo.example.yaoxiaowen.StationRepositoryTest" time="0.0"/>
+  <testcase name="fastTimingOnlyAppliesToNewPhotoOperations" classname="ywdemo.example.yaoxiaowen.StationRepositoryTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

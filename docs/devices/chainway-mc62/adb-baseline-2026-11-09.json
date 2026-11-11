@@ -1,0 +1,306 @@
+{
+  "recorded_at": "2026-11-09T11:19:24+08:00",
+  "collection_scope": "只读设备属性、显示与输入能力；未安装 APK、修改设置、启动业务或记录实际键入内容",
+  "device_serial_masked": "HMC6***0492",
+  "properties": {
+    "ro.product.manufacturer": "CHAINWAY",
+    "ro.product.brand": "CHAINWAY",
+    "ro.product.model": "MC62",
+    "ro.product.name": "MC62",
+    "ro.product.device": "MC62",
+    "ro.build.version.release": "13",
+    "ro.build.version.sdk": "33",
+    "ro.build.version.security_patch": "2023-10-05",
+    "ro.build.display.id": "MC62_AD13_V1.20.1_CN_2025031208",
+    "ro.build.version.incremental": "1741737755",
+    "ro.build.fingerprint": "CHAINWAY/MC62/MC62:13/TP1A.220624.014/1741737755:user/release-keys",
+    "ro.build.type": "user",
+    "ro.build.tags": "release-keys",
+    "ro.hardware": "mt6762",
+    "ro.board.platform": "mt6765",
+    "ro.soc.manufacturer": "Mediatek",
+    "ro.soc.model": "MT8768A",
+    "ro.product.cpu.abilist": "arm64-v8a,armeabi-v7a,armeabi",
+    "ro.product.cpu.abi": "arm64-v8a",
+    "ro.opengles.version": "196610",
+    "ro.sf.lcd_density": "240"
+  },
+  "queries": {
+    "wm_size": {
+      "command": "adb shell wm size",
+      "exit_code": 0,
+      "output": "Physical size: 480x800",
+      "error": ""
+    },
+    "wm_density": {
+      "command": "adb shell wm density",
+      "exit_code": 0,
+      "output": "Physical density: 240",
+      "error": ""
+    },
+    "configuration": {
+      "command": "adb shell am get-config",
+      "exit_code": 0,
+      "output": "config: zh-rCN-ldltr-sw320dp-w320dp-h509dp-normal-long-notround-nowidecg-lowdr-port-notnight-hdpi-finger-keysexposed-nokeys-navhidden-nonav-800x480-v33\nabi: arm64-v8a,armeabi-v7a,armeabi",
+      "error": ""
+    },
+    "font_scale_setting": {
+      "command": "adb shell settings get system font_scale",
+      "exit_code": 0,
+      "output": "null",
+      "error": ""
+    },
+    "automatic_rotation": {
+      "command": "adb shell settings get system accelerometer_rotation",
+      "exit_code": 0,
+      "output": "0",
+      "error": ""
+    },
+    "user_rotation": {
+      "command": "adb shell settings get system user_rotation",
+      "exit_code": 0,
+      "output": "0",
+      "error": ""
+    },
+    "navigation_mode": {
+      "command": "adb shell settings get secure navigation_mode",
+      "exit_code": 0,
+      "output": "0",
+      "error": ""
+    },
+    "memory": {
+      "command": "adb shell head -n 5 /proc/meminfo",
+      "exit_code": 0,
+      "output": "MemTotal:        2922272 kB\nMemFree:           26532 kB\nMemAvailable:    1506692 kB\nBuffers:           70020 kB\nCached:          1393196 kB",
+      "error": ""
+    },
+    "data_filesystem": {
+      "command": "adb shell df -k /data",
+      "exit_code": 0,
+      "output": "Filesystem      1K-blocks   Used Available Use% Mounted on\n/dev/block/dm-7  23018924 488268  22383200   3% /storage/emulated/0/android/obb",
+      "error": ""
+    },
+    "cpu_count": {
+      "command": "adb shell getconf _NPROCESSORS_CONF",
+      "exit_code": 0,
+      "output": "8",
+      "error": ""
+    },
+    "cpu_policy0_max_khz": {
+      "command": "adb shell cat /sys/devices/system/cpu/cpufreq/policy0/cpuinfo_max_freq",
+      "exit_code": 0,
+      "output": "2001000",
+      "error": ""
+    },
+    "cpu_policy4_max_khz": {
+      "command": "adb shell cat /sys/devices/system/cpu/cpufreq/policy4/cpuinfo_max_freq",
+      "exit_code": 0,
+      "output": "1500000",
+      "error": ""
+    },
+    "device_time": {
+      "command": "adb shell date +%Y-%m-%dT%H:%M:%S%z",
+      "exit_code": 0,
+      "output": "2026-11-09T11:19:26+0800",
+      "error": ""
+    },
+    "timezone": {
+      "command": "adb shell getprop persist.sys.timezone",
+      "exit_code": 0,
+      "output": "Asia/Shanghai",
+      "error": ""
+    },
+    "auto_time": {
+      "command": "adb shell settings get global auto_time",
+      "exit_code": 0,
+      "output": "1",
+      "error": ""
+    },
+    "auto_time_zone": {
+      "command": "adb shell settings get global auto_time_zone",
+      "exit_code": 0,
+      "output": "1",
+      "error": ""
+    },
+    "keypad_capabilities": {
+      "command": "adb shell getevent -lp /dev/input/event0",
+      "exit_code": 0,
+      "output": "add device 1: /dev/input/event0\n  name:     \"mtk-kpd\"\n  events:\n    KEY (0001): KEY_ESC               KEY_1                 KEY_2                 KEY_3                \n                KEY_4                 KEY_5                 KEY_6                 KEY_7                \n                KEY_8                 KEY_9                 KEY_0                 KEY_BACKSPACE        \n                KEY_ENTER             KEY_DOT               KEY_CAPSLOCK          KEY_UP               \n                KEY_LEFT              KEY_RIGHT             KEY_DOWN              KEY_F15              \n                KEY_F16               KEY_F17               KEY_F18               KEY_FN               \n                KEY_NUMERIC_POUND    \n  input props:\n    <none>",
+      "error": ""
+    },
+    "keypad_codes": {
+      "command": "adb shell getevent -p /dev/input/event0",
+      "exit_code": 0,
+      "output": "add device 1: /dev/input/event0\n  name:     \"mtk-kpd\"\n  events:\n    KEY (0001): 0001  0002  0003  0004  0005  0006  0007  0008 \n                0009  000a  000b  000e  001c  0034  003a  0067 \n                0069  006a  006c  00b9  00ba  00bb  00bc  01d0 \n                020b \n  input props:\n    <none>",
+      "error": ""
+    },
+    "navigation_keys": {
+      "command": "adb shell getevent -lp /dev/input/event4",
+      "exit_code": 0,
+      "output": "add device 1: /dev/input/event4\n  name:     \"mtk-tpd-kpd\"\n  events:\n    KEY (0001): KEY_BACK              KEY_HOMEPAGE          KEY_APPSELECT        \n  input props:\n    <none>",
+      "error": ""
+    },
+    "power_keys": {
+      "command": "adb shell getevent -lp /dev/input/event1",
+      "exit_code": 0,
+      "output": "add device 1: /dev/input/event1\n  name:     \"mtk-pmic-keys\"\n  events:\n    KEY (0001): KEY_POWER             KEY_F14              \n  input props:\n    <none>",
+      "error": ""
+    },
+    "physical_storage_capacity": {
+      "command": "adb shell cat /sys/block/mmcblk0/size",
+      "exit_code": 1,
+      "output": "",
+      "error": "cat: /sys/block/mmcblk0/size: Permission denied"
+    }
+  },
+  "display_device_info": [
+    "DisplayDeviceInfo{\"内置屏幕\": uniqueId=\"已省略\", 480 x 800, modeId 1, defaultModeId 1, supportedModes [{id=1, width=480, height=800, fps=60.0, alternativeRefreshRates=[]}], colorMode 0, supportedColorModes [0], hdrCapabilities HdrCapabilities{mSupportedHdrTypes=[], mMaxLuminance=500.0, mMaxAverageLuminance=500.0, mMinLuminance=0.0}, allmSupported false, gameContentTypeSupported false, density 240, 234.461 x 233.563 dpi, appVsyncOff 2400001, presDeadline 28600000, touch INTERNAL, rotation 0, type INTERNAL, address {port=0}, deviceProductInfo null, state ON, frameRateOverride , brightnessMinimum 0.0, brightnessMaximum 1.0, brightnessDefault 0.4, FLAG_ALLOWED_TO_BE_DEFAULT_DISPLAY, FLAG_ROTATES_WITH_CONTENT, FLAG_SECURE, FLAG_SUPPORTS_PROTECTED_BUFFERS, installOrientation 0}"
+  ],
+  "global_configuration": [
+    "mGlobalConfiguration={1.0 ?mcc?mnc [zh_CN] ldltr sw320dp w320dp h509dp 240dpi nrml long port finger -keyb/v/h -nav/h winConfig={ mBounds=Rect(0, 0 - 480, 800) mAppBounds=Rect(0, 0 - 480, 800) mMaxBounds=Rect(0, 0 - 480, 800) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mDisplayWindowingMode=fullscreen mActivityType=undefined mAlwaysOnTop=undefined mRotation=ROTATION_0} s.8 fontWeightAdjustment=0}"
+  ],
+  "inset_sources": [
+    "InsetsSource type=ITYPE_STATUS_BAR frame=[0,0][480,36] visible=true insetsRoundedCornerFrame=false",
+    "InsetsSource type=ITYPE_LEFT_GESTURES frame=[0,0][0,0] visible=true insetsRoundedCornerFrame=false",
+    "InsetsSource type=ITYPE_RIGHT_GESTURES frame=[0,0][0,0] visible=true insetsRoundedCornerFrame=false",
+    "InsetsSource type=ITYPE_TOP_MANDATORY_GESTURES frame=[0,0][480,36] visible=true insetsRoundedCornerFrame=false",
+    "InsetsSource type=ITYPE_TOP_TAPPABLE_ELEMENT frame=[0,0][480,36] visible=true insetsRoundedCornerFrame=false",
+    "InsetsSource type=ITYPE_IME frame=[0,0][0,0] visibleFrame=[0,401][480,800] visible=false insetsRoundedCornerFrame=false"
+  ],
+  "cutout": [
+    "mDisplayCutout=DisplayCutout{insets=Rect(0, 0 - 0, 0) waterfall=Insets{left=0, top=0, right=0, bottom=0} boundingRect={Bounds=[Rect(0, 0 - 0, 0), Rect(0, 0 - 0, 0), Rect(0, 0 - 0, 0), Rect(0, 0 - 0, 0)]} cutoutPathParserInfo={CutoutPathParserInfo{displayWidth=0 displayHeight=0 physicalDisplayWidth=0 physicalDisplayHeight=0 density={0.0} cutoutSpec={} rotation={0} scale={0.0} physicalPixelDisplaySizeRatio={0.0}}}}"
+  ],
+  "hardware_features": [
+    "reqGlEsVersion=0x30002",
+    "android.hardware.audio.low_latency",
+    "android.hardware.audio.output",
+    "android.hardware.bluetooth",
+    "android.hardware.bluetooth_le",
+    "android.hardware.camera",
+    "android.hardware.camera.any",
+    "android.hardware.camera.autofocus",
+    "android.hardware.camera.capability.manual_post_processing",
+    "android.hardware.camera.capability.manual_sensor",
+    "android.hardware.camera.capability.raw",
+    "android.hardware.camera.flash",
+    "android.hardware.camera.front",
+    "android.hardware.camera.level.full",
+    "android.hardware.faketouch",
+    "android.hardware.hardware_keystore=41",
+    "android.hardware.location",
+    "android.hardware.location.gps",
+    "android.hardware.location.network",
+    "android.hardware.microphone",
+    "android.hardware.nfc",
+    "android.hardware.nfc.any",
+    "android.hardware.nfc.ese",
+    "android.hardware.nfc.hce",
+    "android.hardware.nfc.hcef",
+    "android.hardware.nfc.uicc",
+    "android.hardware.opengles.aep",
+    "android.hardware.ram.normal",
+    "android.hardware.screen.landscape",
+    "android.hardware.screen.portrait",
+    "android.hardware.se.omapi.uicc",
+    "android.hardware.security.model.compatible",
+    "android.hardware.sensor.accelerometer",
+    "android.hardware.sensor.gyroscope",
+    "android.hardware.sensor.light",
+    "android.hardware.sensor.proximity",
+    "android.hardware.sensor.stepcounter",
+    "android.hardware.sensor.stepdetector",
+    "android.hardware.telephony",
+    "android.hardware.telephony.gsm",
+    "android.hardware.telephony.ims",
+    "android.hardware.touchscreen",
+    "android.hardware.touchscreen.multitouch",
+    "android.hardware.touchscreen.multitouch.distinct",
+    "android.hardware.touchscreen.multitouch.jazzhand",
+    "android.hardware.usb.accessory",
+    "android.hardware.usb.host",
+    "android.hardware.vulkan.compute",
+    "android.hardware.vulkan.level",
+    "android.hardware.vulkan.version=4198400",
+    "android.hardware.wifi",
+    "android.hardware.wifi.direct",
+    "android.hardware.wifi.passpoint"
+  ],
+  "key_layout_source": "/system/usr/keylayout/Generic.kl",
+  "key_layout_subset": [
+    "key 1     ESCAPE",
+    "key 2     1",
+    "key 3     2",
+    "key 4     3",
+    "key 5     4",
+    "key 6     5",
+    "key 7     6",
+    "key 8     7",
+    "key 9     8",
+    "key 10    9",
+    "key 11    0",
+    "key 14    DEL",
+    "key 28    ENTER",
+    "key 52    PERIOD",
+    "key 58    CAPS_LOCK",
+    "key 103   DPAD_UP",
+    "key 105   DPAD_LEFT",
+    "key 106   DPAD_RIGHT",
+    "key 108   DPAD_DOWN",
+    "key 158   BACK",
+    "key 172   HOME",
+    "key 184   F14",
+    "key 185   F15",
+    "key 186   F16",
+    "key 187   F17",
+    "key 188   F18",
+    "key 464   FUNCTION",
+    "key 523   POUND",
+    "key 580   APP_SWITCH"
+  ],
+  "keyboard_notes": "getevent -lp 为驱动声明能力，键表为静态映射；未逐键实按，功能键与扫描键的实体键帽对应关系尚未验证。",
+  "camera_metadata": [
+    {
+      "metadata_order": 0,
+      "facing": "BACK",
+      "sensor_pixel_width": 4208,
+      "sensor_pixel_height": 3120,
+      "flash_available": "TRUE"
+    },
+    {
+      "metadata_order": 1,
+      "facing": "FRONT",
+      "sensor_pixel_width": 2592,
+      "sensor_pixel_height": 1944,
+      "flash_available": "FALSE"
+    },
+    {
+      "metadata_order": 2,
+      "facing": "BACK",
+      "sensor_pixel_width": 1280,
+      "sensor_pixel_height": 800,
+      "flash_available": "TRUE"
+    }
+  ],
+  "camera_notes": "元数据顺序不用于硬编码相机 ID；像素阵列不等于已实拍验证的输出尺寸。",
+  "graphics": [
+    "GLES: Imagination Technologies, PowerVR Rogue GE8320, OpenGL ES 3.2 build 1.13@5776728"
+  ],
+  "installed_app": {
+    "package": "ywdemo.example.yaoxiaowen",
+    "version_lines": [
+      "versionCode=5 minSdk=24 targetSdk=33",
+      "versionName=1.4"
+    ]
+  },
+  "derived_display": {
+    "density_scale": 1.5,
+    "width_dp": 320,
+    "full_height_dp": 533.3333333333334,
+    "configuration_height_dp": 509,
+    "observed_status_bar_px": 36,
+    "observed_status_bar_dp": 24,
+    "official_diagonal_inches": 4,
+    "ppi_from_official_diagonal": 233.23807579381202,
+    "notes": "可用高度与系统栏和输入法状态有关，后续必须按运行时窗口 Insets 计算。"
+  }
+}
